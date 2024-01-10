@@ -1,0 +1,32 @@
+<tr id="leave-category-<%= leave_category.id %>">
+  <td>
+    <%= leave_category.name %>
+  </td>
+  <td>
+    <%= truncate(leave_category.description, length: 30) %>
+  </td>
+  <td>
+    <% if leave_category.is_active %>
+        <div class="label label-success mr5">Active</div>
+    <% else %>
+        <div class="label label-default mr5">Deactivated</div>
+    <% end %>
+  </td>
+  <td class="actions">
+    <%= link_to leave_category_path(leave_category), remote: true, class: 'btn info-color' do %>
+        <i class="fa fa-eye"></i>
+    <% end %>
+    <%= link_to edit_leave_category_path(leave_category), remote: true, class: 'btn warning-color' do %>
+        <i class="fa fa-pencil-square-o"></i>
+    <% end %>
+    <% if leave_category.is_active %>
+        <%= link_to deactivate_leave_category_path(leave_category), remote: true, class: 'btn danger-color', title: 'Deactivate' do %>
+            <i class="fa fa-ban"></i>
+        <% end %>
+    <% else %>
+        <%= link_to activate_leave_category_path(leave_category), remote: true, class: 'btn success-color', title: 'Activate' do %>
+            <i class="fa fa-check-circle"></i>
+        <% end %>
+    <% end %>
+  </td>
+</tr>

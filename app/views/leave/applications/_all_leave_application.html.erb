@@ -1,0 +1,41 @@
+<div class="header-wrapper">
+  <h4>
+    <%= params[:q].present? ? params[:q].capitalize : 'All'.capitalize %> Leave Applications
+  </h4>
+</div>
+<div class="secondary-color">
+  <div class="content-body-wrapperx">
+
+    <div class="table-content">
+
+      <div class="content-body">
+        <div class="actions-button">
+          <div class="report-search-form">
+            <div class="form-group clearfix">
+              <%= form_tag '', method: 'get', remote: true, id: 'yearly-leave-applications-form' do %>
+                  <%#= label_tag 'Change Year : ' %>
+                  <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control pull-right"} %>
+                  <% if params[:q].present? %>
+                      <%= hidden_field_tag :q, params[:q] %>
+                  <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="table-warapper">
+          <%= render 'leave/applications/done_items' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#date_year').change(function () {
+            console.log($('#date_year').val());
+            $('#yearly-leave-applications-form').submit();
+        });
+    });
+</script>

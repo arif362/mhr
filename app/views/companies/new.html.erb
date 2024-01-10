@@ -1,0 +1,32 @@
+
+<div class="reg-wrap">
+
+  <div class="reg-container container">
+
+    <div class="reg-wrap-header">
+      <%= render 'shared/account_progress_bar', step_value: 1 %>
+
+      <h4>
+        To create your Company account provide your personal and company's profile information. This information
+        can be changed at anytime once your Company account is activated.
+      </h4>
+
+    </div>
+
+    <div class="reg-form-wrap">
+      <%= render 'companies/form' %>
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        $('#company-registration').syftValidator();
+    });
+</script>

@@ -1,0 +1,45 @@
+@import 'public_variables';
+
+.leave_application_view_header {
+  //height: 90px;
+  //background-color: $hover-color;
+  h4 {
+    //color: white;
+    font-family: "Laila", serif;
+    font-size: 18px;
+    line-height: 1.42857;
+    margin: 0;
+    text-shadow: 1px 1px 0 #fff;
+    align: center;
+  }
+}
+
+.leave_application_view {
+ // background-color: $hover-color;
+  h4 {
+   // color: white;
+    font-family: "Laila", serif;
+    font-size: 18px;
+    line-height: 1.42857;
+    margin: 0;
+    text-shadow: 1px 1px 0 #fff;
+    //align: center;
+  }
+}
+.attachment_and_requested_leave {
+  width: 100%;
+  height: 215px;
+  .attachment {
+    float: left;
+    width: 50%;
+    height: 215px;
+
+  }
+  .requested_leave {
+    float: left;
+    width: 50%;
+    height: 215px;
+
+  }
+}
+

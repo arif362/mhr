@@ -1,0 +1,62 @@
+<div class="provident-fund-rule-form">
+  <%= form_for @rule, html: {name: 'add_rule', id:'add_rule'} do |f| %>
+      <div class="form-group">
+        <%= f.label :company_contribution, 'Company contribution percentage in terms of basic salary' %>
+        <%= f.text_field :company_contribution, class: 'form-control reset-border-radius', data: {required: true} %>
+      </div>
+      <div class="form-group">
+        <%= f.label :employee_contribution, 'Employee contribution percentage in terms of basic salary' %>
+        <%= f.text_field :employee_contribution, class: 'form-control reset-border-radius', data: {required: true} %>
+      </div>
+      <div class="form-group">
+        <%= link_to_add_policy 'Add Return Policy', f, :return_policies, {klass: 'btn btn-default add-policy-link reset-border-radius'} %>
+        <i class="fa fa-info-circle btn btn-info pull-right reset-border-radius" data-toggle='popover' data-placement='top' title="Company contribution policy" data-content="If you have any policy to give company contribution like employee have to mature x year to get
+            percentage of company contribution, Then create your policy. Input year and percentage which indicate what
+            maturity year required to get this percentage of company contribution."></i>
+      </div>
+      <div class="return-policy-wrapper form-group">
+        <%= f.fields_for :return_policies do |builder| %>
+            <%= render 'return_policy_fields', builder: builder %>
+        <% end %>
+      </div>
+      <div class="actions clearfix">
+        <%= f.submit class: 'btn btn-default pull-right reset-border-radius' %>
+      </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#add_rule').syftValidator();
+        init();
+
+        $('.add-policy-link').click(function (event) {
+            time = new Date().getTime();
+            regexp = new RegExp($(this).data('id'), 'g');
+            $('.return-policy-wrapper').append($(this).data('fields').replace(regexp, time));
+            $('.policy-list-item').last().find('input').first().focus();
+            event.preventDefault();
+        });
+
+        $(document).on('click', '.remove-policy', function () {
+            var policyItem = $(this).parents('.policy-list-item');
+            var deleteMarkedField = policyItem.find('.removable');
+            if (deleteMarkedField.length > 0) {
+                deleteMarkedField.val(1);
+                policyItem.hide();
+            }
+            else {
+                policyItem.remove();
+            }
+            return false;
+        });
+    });
+
+    function init() {
+        setTimeout(function () {
+            if (<%= params[:add_policy].present? %>) {
+                $('.add-policy-link').trigger('click');
+            }
+        }, 200);
+    }
+</script>

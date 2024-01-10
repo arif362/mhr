@@ -1,0 +1,41 @@
+Attendance Report <br><br>
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <td> Name</td>
+        <% end_day = @end_date.day %>
+        <% (1..end_day).each do |day| %>
+            <td><label> <%= day %> </label> </td>
+        <% end %>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @attendance_report.each do |employee_id, value| %>
+          <tr>
+            <td>
+              <%= value[:employee].full_name if value[:employee].present? %>
+            </td>
+            <% (@start_date.day..@end_date.day).each do |day| %>
+                <td class="attendance-report-item">
+                  <% if value[day][:day_off].present? && value[day][:in_time].present? %>
+                      <%= value[day][:day_off].day_off_type[0] + 'P' %>
+                  <% elsif value[day][:day_off].present? %>
+                      <%= value[day][:day_off].day_off_type[0] %>
+                  <% elsif value[day][:in_time].present? %>
+                      p
+                  <% elsif value[day][:leave_status].present? %>
+                      L
+                  <% else %>
+                      A
+                  <% end %>
+                </td>
+            <% end %>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

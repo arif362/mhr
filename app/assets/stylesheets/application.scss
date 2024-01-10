@@ -1,0 +1,55 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require chosen
+ *= require_self
+ */
+
+#notification {
+  position: absolute;
+  width: 450px;
+  left: 35%;
+  top: -60px;
+  border-radius: 5px;
+  display: none;
+  text-align: center;
+  z-index: 99999;
+}
+
+body {
+  //background: #ffffff none repeat scroll 0 0;
+  //font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  // background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAQElEQVQIW2P89OvDfwYo+PHjJ4zJwMHBzsAIk0SXAKkCS2KTAEu++vQSbizIKGQAl0SXAJkGlsQmAbcT2Shk+wH0sCzAEOZW1AAAAABJRU5ErkJggg==);
+}
+
+.loading {
+  background: rgba(55, 55, 55, 0.8);
+  font-size: 40px;
+  padding: 0 10px;
+  position: fixed;
+  z-index: 9999999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  img {
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    width: 100px;
+    background: #ffffff;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+  }
+}

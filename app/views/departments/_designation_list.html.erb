@@ -1,0 +1,71 @@
+<div class="p10">
+  <div class="clearfix">
+    <div class="pull-right">
+      <div class="btn-group mr10 reset-padding">
+        <%= link_to new_designation_path(department: @department), remote: true, class: 'btn btn-default reset-border-radius' do %>
+            <i class="fa fa-plus"></i> Add New
+        <% end %>
+      </div>
+      <div class="btn-group">
+        <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To....'} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-warapper mt10">
+    <div class="table-warapper-body">
+      <table class="table action-table tablesorter beaccount-table designation-list-table table-responsive table-hover table-striped">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Responsibilities</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody id="designation-list">
+        <% @designations.each do |designation| %>
+            <%= render 'departments/templates/add_designation', designation: designation %>
+        <% end %>
+        </tbody>
+      </table>
+      <div id="pager1">
+        <%= render 'shared/pagination' if @designations.size > 10 %>
+      </div>
+      <div class="no-data-found">
+        <% unless @designations.present? %>
+            <%= render 'shared/no_data_found', message: 'No designation found' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        if ($(".designation-list-table").find("tbody").find("tr").size() > 0) {
+            $(".designation-list-table").tablesorter({
+                headers: {
+                    3: {
+                        sorter: false
+                    }
+                },
+                widthFixed: true,
+                widgets: ['zebra']
+            }).tablesorterPager({container: $("#pager1")});
+        }
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= designation_department_path(@department, 'pdf') %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= designation_department_path(@department, 'docx' ) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= designation_department_path( @department,'xls') %>'
+            }
+        });
+    });
+</script>

@@ -1,0 +1,63 @@
+<div class="community-profile-wrap">
+  <div class="community-profile-container mb15">
+    <div class="community-profile-item-wrap">
+      <div class="cpi-header clearfix">
+        <div class="cpi-header-image">
+          <%= image_tag @post.author.image.present? ? @post.author.image_url(:thumb) : 'employees/default_profile_image.png', width: 40, height: 40 %>
+        </div>
+
+        <div class="cpi-header-content mb15">
+          <h1><%= @post.title %></h1>
+
+          <div class="cpi-sub-content">
+            By <strong> <a href="#"> <%= @post.author.full_name %></a> </strong>
+            <span class="glyphicon glyphicon-time pl8"></span>
+            <%= @post.created_at.to_formatted_s(:long_ordinal) %>
+
+            <span class="pl8"> About <b>
+              <% if @post.community_category.present? %>
+                  <%= link_to community_root_path(community_category: @post.community_category.title) do %>
+                      <%= @post.community_category.title %>
+                  <% end %>
+              <% end %>
+            </b>
+            </span>
+            <br>
+
+          <span class="pull-rightx">
+            <%= link_to '#just_all_comments' do %>
+                  <% if @post.community_comments.present? %>
+                  <%= @post.community_comments.count %>
+                    <i class="fa fa-comments-o" aria-hidden="true"></i>
+                  <% end %>
+            <% end %>
+          </span>
+
+          </div>
+
+        </div>
+
+      </div>
+      <% if @post.attachment.present? %>
+          <div class="cpi-image-wrap  mb10">
+            <%= image_tag @post.attachment_url(:fullscreen), class: 'img-responsive' %>
+          </div>
+      <% end %>
+      <div class="cpi-description-wrap">
+        <%= @post.content.html_safe %>
+      </div>
+    </div>
+
+    <div id="comments-wrapper">
+      <%= render 'community/comments/comment', comments: @post.community_comments %>
+    </div>
+
+    <div class="comments-section-wrap">
+      <div class="leave-a-comment pb20" id="comment-form-wrapper">
+        <%= render 'community/comments/form', post: @post %>
+      </div>
+    </div>
+
+  </div>
+</div>
+

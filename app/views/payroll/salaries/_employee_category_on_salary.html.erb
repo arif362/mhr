@@ -1,0 +1,26 @@
+<div class="col-md-12 reset-padding form-group">
+  <div class="col-md-3 reset-padding">
+    <%= label_tag emp_category.category.name %></br>
+    <%= emp_category.category.is_add ? '( Addition' : '( Deduction' %>
+    <%= emp_category.category.is_percentage ? (', ' + emp_category.percentage.to_s + '% )') : ')' %>
+  </div>
+  <div class="col-md-9 salary-form-reset-padding">
+    <% if emp_category.category.is_percentage %>
+        <% if emp_category.category.is_add %>
+            <%= f.text_field 'addition_category['+emp_category.category.name.parameterize("_")+'_amount]', value: @employee.amount_from_percentage(emp_category.percentage), class: "form-control editable-amount",:data => {:category => 'add' }, readonly: "readonly" %>
+            <% @total_addition += @employee.amount_from_percentage(emp_category.percentage).to_f %>
+        <% else %>
+            <%= f.text_field 'deduction_category['+emp_category.category.name.parameterize("_")+'_deduct]', value: @employee.amount_from_percentage(emp_category.percentage), class: "form-control editable-amount",:data => {:category => 'deduct' }, readonly: "readonly" %>
+            <% @total_deduct += @employee.amount_from_percentage(emp_category.percentage).to_f %>
+        <% end %>
+    <% else %>
+        <% if emp_category.category.is_add %>
+            <%= f.text_field 'addition_category['+emp_category.category.name.parameterize("_")+'_amount]', value: emp_category.amount, class: "form-control editable-amount",:data => {:category => 'add' }, readonly: "readonly" %>
+            <% @total_addition += emp_category.amount.to_f %>
+        <% else %>
+            <%= f.text_field 'deduction_category['+emp_category.category.name.parameterize("_")+'_deduct]', value: emp_category.amount, class: "form-control editable-amount",:data => {:category => 'deduct' }, readonly: "readonly" %>
+            <% @total_deduct += emp_category.amount.to_f %>
+        <% end %>
+    <% end %>
+  </div>
+</div>

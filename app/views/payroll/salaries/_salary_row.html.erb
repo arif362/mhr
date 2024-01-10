@@ -1,0 +1,42 @@
+<tr id="employee-salary-<%= salary.id %>">
+
+  <% unless params[:tag].present? %>
+      <td>
+        <%= link_to employee_profile_path(salary.employee), remote: true do %>
+            <%= salary.employee.full_name %>
+        <% end %>
+      </td>
+  <% end %>
+
+  <td>
+    <%= salary.payment_method %>
+  </td>
+  <td>
+    <%= salary.total %>
+  </td>
+
+  <td>
+    <%= Date::MONTHNAMES[salary.month] %>
+  </td>
+
+  <td>
+    <%= salary.year %>
+  </td>
+  <td>
+    <%= format_date_3(salary.created_at) %>
+  </td>
+  <td>
+    <%= link_to payroll_salary_payslip_path(salary), class: 'btn info-color' do %>
+        Payslip
+    <% end %>
+    <%= link_to payroll_salary_path(salary), remote: true, class: 'btn info-color' do %>
+        <i class="fa fa-eye"> </i>
+    <% end %>
+    <%= link_to payroll_salaries_path(employee_id: salary.employee.id, date: {month: salary.month, year: salary.year}), remote: true, class: 'btn warning-color' do %>
+        <i class="fa fa-pencil"></i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: salary.id, state: Payroll::Salary::STATES[:list], action_on: 'payroll/salaries', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"></i>
+    <% end %>
+  </td>
+</tr>

@@ -1,0 +1,5 @@
+<% if @settings.errors.any? %>
+    popupMessage('Unable to update setting, Please check data and try again!', 'alert-danger');
+<% else %>
+    popupMessage('Setting has been updated successfully', 'alert-info');
+<% end %>

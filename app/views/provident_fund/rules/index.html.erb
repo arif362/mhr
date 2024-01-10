@@ -1,0 +1,80 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Provident Fund Rules
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper" id="provident-fund-rule-content">
+      <% if @rules.present? %>
+          <div class="row actions-button">
+            <div class="add-more-rule clearfix">
+              <%= link_to new_provident_fund_rule_path, class: 'btn btn-default pull-right' do %>
+                  <i class="fa fa-plus-circle"></i> Add More Rule
+              <% end %>
+            </div>
+          </div>
+          <div class="row content-body">
+            <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Company Contribution</th>
+                <th>Employee Contribution</th>
+                <th>Policy</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @rules.each do |rule| %>
+                  <tr>
+                    <td> #<%= rule.id %> </td>
+                    <td><%= rule.company_contribution %>% of basic</td>
+                    <td><%= rule.employee_contribution %>% of basic</td>
+                    <td>
+                      <ul class="return-policy-list">
+                        <% rule.return_policies.each do |policy| %>
+                            <li> <%= policy.company_percentage %> % of company contribution for <%= policy.year %> years
+                              maturity
+                            </li>
+                        <% end %>
+                        <% unless rule.return_policies.present? %>
+                            <div class="text-center table-cell">
+                              You don't have any policy
+                              <a class="link" data-toggle='popover' data-placement='top' title="Company contribution policy" data-content="If you have any policy to give company contribution like employee have to mature x year to get
+            percentage of company contribution, Then create your policy. Input year and percentage which indicate what
+            maturity year required to get this percentage of company contribution." href="#"> Learn more. </a>
+                              <%= link_to edit_provident_fund_rule_path(rule, add_policy: true), class: 'link' do %>
+                                  <i class="fa fa-plus-circle"></i>
+                              <% end %>
+                            </div>
+                        <% end %>
+                      </ul>
+                    </td>
+                    <td class="actions">
+                      <%= link_to edit_provident_fund_rule_path(rule), class: 'btn warning-color' do %>
+                          <i class="fa fa-pencil-square-o"></i>
+                      <% end %>
+                      <%= link_to provident_fund_rule_path(rule), class: 'btn danger-color', method: :delete, data: {confirm: 'Are you sure?'} do %>
+                          <i class="fa fa-times"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+      <% else %>
+          <div class="text-center table-cell">
+            <p>
+              You don't have any rule. <%#= link_to 'Learn more', '#', class: 'link' %>
+              <i class="fa fa-info-circle btn btn-info reset-border-radius" data-toggle='popover' data-placement='top' title="Provident Fund Rules" data-content="Click on the create new one button to create rules then it will show the rules list  "></i>
+            </p>
+            <%= link_to new_provident_fund_rule_path, class: 'btn btn-default reset-border-radius' do %>
+                <i class="fa fa-plus-circle"></i> Create new one
+            <% end %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

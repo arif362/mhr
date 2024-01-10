@@ -1,0 +1,215 @@
+<% if current_employee.role == Employee::ROLE[:admin] %>
+    <div class="reset-padding clearfix">
+      <div class="pull-right btn-group actions-button">
+        <%= link_to employee_path(@employee), remote: true, class: "btn btn-danger reset-border-radius" do %>
+            <i class="fa fa-times"></i>
+        <% end %>
+      </div>
+    </div>
+<% end %>
+<%= form_for @employee, url: update_info_employee_path(@employee), html: {method: :put, class: 'form-vertical'} do |f| %>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="thumbnail">
+          <%= image_tag @employee.image.present? ? @employee.image.large.url : 'employees/default_profile_image.png', class: "img-responsive avatar" %>
+          <div class="upload-button btn btn-default reset-margin reset-padding">
+            <span class="fa fa-photo fa-2x"></span>
+            <%= f.file_field :image, class: 'file-upload-btn' %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-9 basic-info">
+        <div class="row">
+          <div class="col-sm-12 form-group">
+            <div class="col-sm-12">
+              <%= label_tag '','Employee ID' %>
+            </div>
+            <div class="col-sm-12">
+              <%= f.text_field :id_card_no, placeholder: 'Id Card No', class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-12">
+            <div class="col-sm-6 input-field">
+              <%= f.label :first_name %>
+              <%= f.text_field :first_name, placeholder: 'First Name', class: 'form-control' %>
+            </div>
+            <div class="col-sm-6 input-field">
+              <%= f.label :last_name %>
+              <%= f.text_field :last_name, placeholder: 'First Name', class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="form-group col-sm-12">
+            <div class="col-sm-6 input-field">
+              <%= f.label :designation_id, 'Designation' %>
+              <%= f.select :designation_id, options_for_select(@designations.collect { |designation| [designation.name, designation.id] }, @employee.designation_id), {}, class: "custom-chosen chosen-container reset-border-radius form-control" %>
+            </div>
+            <div class="col-sm-6 input-field">
+              <%= f.label :basic_salary %>
+              <%= f.text_field :basic_salary, placeholder: 'Basic Salary', class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="additional-info">
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, class: "form-control" %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :mobile, for: "Mobile" %>
+          <%= f.text_field :mobile, autofocus: true, class: "form-control" %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :nid, 'National ID' %>
+          <%= f.text_field :nid, autofocus: true, class: "form-control" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label 'Type' %>
+          <%= f.select :employee_type, options_for_select(Employee::TYPE.map {|k,v| [v,k]}, f.object.employee_type ), {}, { class: "form-control"} %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :kin_name, for: "kin-name" %>
+          <%= f.text_field :kin_name, autofocus: true, class: "form-control" %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :kin_contact, for: "kin-contact" %>
+          <%= f.text_field :kin_contact, autofocus: true, class: "form-control" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :gender, 'Gender', class: 'control-label' %>
+          <%= f.select(:gender, options_for_select(['Male', 'Female', 'Others'], selected: f.object.gender.to_s), {}, {class: "form-control", id: 'gender'}) %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :blood_group, for: "blood-group" %>
+          <%= f.text_field :blood_group, autofocus: true, class: "form-control" %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :dob, 'Date of Birth:', class: 'control-label' %>
+          <%= f.text_field :dob, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :joining_date, for: "joining-date" %>
+          <%= f.text_field :joining_date, autofocus: true, class: "form-control", value: Date.today.strftime('%d-%m-%Y') %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :location, 'Location:', class: 'control-label' %>
+          <%= f.text_field :location, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :present_address, 'Present Address:', class: 'control-label' %>
+          <%= f.text_area :present_address, class: 'form-control' %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :permanent_address, 'Permanent Address:', class: 'control-label' %>
+          <%= f.text_area :permanent_address, class: 'form-control' %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :note %>
+          <%= f.text_area :note, rows: 4, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <%= f.submit 'Save changes', class: "btn btn-success" %>
+      </div>
+    </div>
+<% end %>
+<script type="text/javascript">
+    $(function () {
+        $('#employee_image').change(function () {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.avatar').attr('src', e.target.result)
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+        $('.custom-chosen').chosen();
+        $('.nav-item').click(function (e) {
+            $('.nav-item').removeClass('active-white');
+            $(this).addClass('active-white');
+            //resetContent();
+        });
+
+        $('#employee_dob').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'DD-MM-YYYY'
+            },
+            maxDate: '<%= 12.years.ago.strftime('%d-%m-%Y') %>'
+        });
+
+        $('#employee_joining_date').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'DD-MM-YYYY'
+
+            },
+            maxDate: '<%= Date.today.strftime('%d-%m-%Y') %>'
+        });
+
+    });
+
+
+    var autocomplete;
+    function init_autocomplete() {
+        var input = (document.getElementById('employee_location'));
+        autocomplete = new google.maps.places.Autocomplete(input);
+        google.maps.event.addDomListener(input, 'keydown', function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+            }
+        });
+        autocomplete.addListener('place_changed', get_place);
+    }
+
+    function get_place() {
+        $('#employee_present_address').val($('#employee_location').val());
+        $('#employee_permanent_address').val($('#employee_location').val());
+//        var place = autocomplete.getPlace();
+//        console.log(place);
+//      var lat = place.geometry.location.lat();
+//      var lng = place.geometry.location.lng();
+//      $("#event_lat").val(lat);
+//      $("#event_lng").val(lng);
+//        var components = place.address_components;
+//        for (i = 0; i < components.length; i++) {
+//            types = components[i].types;
+//            if (types[0] == 'administrative_area_level_2') {
+//                $('#employee_city').val(components[i].long_name);
+//            }
+//            else if (types[0] == 'administrative_area_level_1') {
+//                $('#employee_state').val(components[i].long_name);
+//            }
+//            else if (types[0] == 'country') {
+//                $('#employee_country').val(components[i].long_name);
+//            }
+//        }
+    }
+
+    function noSubmitOnReturn(e) {
+        if (e.keyCode == 13) {
+            return false;
+        }
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-m1XVD7c3PfBX_oxxKijOqeyNNqOSUW0&libraries=places&callback=init_autocomplete" async defer></script>

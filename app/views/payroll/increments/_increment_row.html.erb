@@ -1,0 +1,38 @@
+<tr class="employee_increment_<%= increment.id %>">
+  <% unless params[:tag].present? %>
+      <td>
+        <% if increment.employee %>
+            <%= link_to employee_profile_path(increment.employee), remote:true do %>
+                <%= increment.employee.full_name %>
+            <% end %>
+        <% end %>
+      </td>
+  <% end %>
+  <td><%= increment.incremented_by %></td>
+  <td><%= increment.increment_amount %></td>
+  <td><%= format_date_3(increment.created_at) %></td>
+  <td><%= format_date_3(increment.active_date) %></td>
+  <td><%= increment.is_active ? "Active" : "Inactive"  %></td>
+
+  <td class="actions">
+
+    <% unless increment.is_active  %>
+        <%= link_to  accept_payroll_increment_path(increment),title: 'Accept', class: 'btn success-color', remote: true do %>
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+        <% end %>
+    <% end %>
+    <%= link_to payroll_increment_path(increment), remote: true , class: 'btn info-color' do %>
+        <i class="fa fa-eye"> </i>
+    <% end %>
+    <% unless increment.is_active  %>
+        <%= link_to edit_payroll_increment_path(increment), remote: true , class: 'btn warning-color' do %>
+            <i class="fa fa-pencil"></i>
+        <% end %>
+        <%= link_to  payroll_increment_path(increment), method: :delete, class: 'btn danger-color', remote: true do %>
+            <i class="fa fa-times"> </i>
+        <% end %>
+
+
+    <% end %>
+  </td>
+</tr>

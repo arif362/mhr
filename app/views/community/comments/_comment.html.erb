@@ -1,0 +1,31 @@
+<div class="pl15 pr15">
+  <% comments.each do |comment| %>
+      <div class="community-profile-item-wrap" id="just_all_comments">
+
+        <div class="cpi-header clearfix">
+          <div class="cpi-header-image mb10">
+            <%= image_tag comment.author.image.present? ? comment.author.image_url(:thumb) : 'employees/default_profile_image.png', width: 32, height: 32 %>
+          </div>
+
+          <div class="cpi-header-content mb10">
+            <h1 class="mt40x"><%= comment.author.full_name %></h1>
+
+            <div class="cpi-sub-content">
+              <span class="glyphicon glyphicon-time"></span>
+              <%= comment.created_at.to_formatted_s(:long_ordinal) %>
+            </div>
+          </div>
+
+        </div>
+        <% if comment.attachment.present? %>
+            <div class="cpi-image-wrap  mb10">
+              <%= image_tag comment.attachment_url(:fullscreen), class: 'img-responsive' %>
+            </div>
+        <% end %>
+        <div class="cpi-description-wrap">
+          <%= comment.content.html_safe %>
+        </div>
+
+      </div>
+  <% end %>
+</div>

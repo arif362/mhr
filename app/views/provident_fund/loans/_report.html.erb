@@ -1,0 +1,56 @@
+<table class="table beaccount-table tablesorter table-responsive advance-report-list table-hover table-striped" id="loan-history-table">
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Taken</th>
+    <th>Return</th>
+    <th>Balance</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @history.each do |history| %>
+      <tr>
+        <td><%= formate_date(history.date) %></td>
+        <td><%= history.amount %></td>
+        <td><%= '-' %></td>
+        <td><%#= (@balance = calculate_balance(@balance, report[:given], report[:return])).abs %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<div id="pager1">
+  <%= render 'shared/pagination' if @history.size > 10 %>
+</div>
+<div class="no-data-found">
+  <% if @history.length == 0 %>
+      <%= render 'shared/no_data_found', message: 'No history found' %>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        if ($("#loan-history-table").find("tbody").find("tr").size() > 0) {
+            $("#advance-history-table").tablesorter({
+                widthFixed: true,
+                widgets: ['zebra'],
+                headers: {
+                    0: {
+                        sorter: false
+                    },
+                    1: {
+                        sorter: false
+                    },
+                    2: {
+                        sorter: false
+                    },
+                    3: {
+                        sorter: false
+                    },
+                    4: {
+                        sorter: false
+                    }
+                }
+            }).tablesorterPager({container: $("#pager1")});
+        }
+    });
+</script>

@@ -1,0 +1,8 @@
+<script type="text/javascript">
+    $(function () {
+        <% flash.each do |name, msg| -%>
+        popupMessage("<%=raw msg %>", "<%= flash_types.include?(name)  ? "alert-#{ name }" : "alert-info" %>");
+        <% end -%>
+        <% flash.clear %>
+    });
+</script>

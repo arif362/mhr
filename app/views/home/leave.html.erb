@@ -1,0 +1,78 @@
+<div class="mt75">
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="col-sm-9">
+        <div class="module-detail">
+          <h2 class="page-header"> Leave Management </h2>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/leave/employee_leave_appplication.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/leave/employee_leave_appplication.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6 text-justify">
+              mhr has a leave module. Employees do not need a paper based leave history card or leave application form.
+              This module helps them to ease the process by selecting leave categories which can be added from leave module and
+              determining what type of leave they want , you can add your own application and create a leave application
+            </div>
+          </div>
+
+
+          <div class="row mt20 mb80">
+
+            <div class="col-sm-6", style="text-align: justify">
+              You can also check how many employees are on leave and what the certain period for advanced leave planning is.
+              In the leave module dashboard you can see all the leave applications and also see how many people are already on leave recently
+              and track their duration. Also to help you more there is a leave calendar that can provide you with more clear view of employee leave dates.
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/leave/leave_dashboard.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/leave/leave_dashboard.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+          <div class="row mt20 mb80", style="text-align: justify">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/leave/leave_application_view.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/leave/leave_application_view.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6">
+
+              Leave rules can be seen, applied and approved or rejected online by all employees in a few clicks
+              and can also be bypassed in case an immediate superior is not present.
+
+            </div>
+
+          </div>
+          <div class="row mt20 mb80">
+
+            <div class="col-sm-6", style="text-align: justify">
+              Well, all leave records need to be stored somewhere for later usage. Complete statictic of
+              every employee leave requests , wheather they are paid or unpaid, how many days of leaves
+              the have all in one place to make the job of HR much simpler.
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/leave/summary.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/leave/summary.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <%= render 'home/feature_modules', modules:@modules %>
+
+    </div>
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.preview-attachment').attachmentPreview();
+    });
+</script>

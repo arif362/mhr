@@ -1,0 +1,47 @@
+<div class="step-content-wrapper">
+  <h2>Add Leave Categories</h2>
+  <div class="p10">
+    <!-- Add leave category starts-->
+
+    <div class="row mb10">
+      <div class="col-md-6">
+        <h4 class="mb0">Leave Categories</h4>
+      </div>
+      <div class="col-md-6 clearfix">
+        <%= link_to new_leave_category_path(department_id: @department.id, year: params[:date].present? ? params[:date][:year] : Date.today.year , all_settings: true), remote: true, class: 'btn btn-default pull-right reset-border-radius' do %>
+            <i class="fa fa-plus"> </i> New Leave Category
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Add leave category ends-->
+
+    <!-- Leave Category table starts-->
+
+    <div class="leave-list2">
+      <table class='table beaccount-table table-striped table-hover'>
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% @leave_categories.each do |leave_category| %>
+            <%= render 'departments/all_settings_partials/leave_item', leave_category: leave_category %>
+        <% end %>
+        </tbody>
+      </table>
+      <%= render 'shared/pagination' if @leave_categories.size > 10 %>
+      <div class="no-data-found">
+        <% unless @leave_categories.present? %>
+            <%= render 'shared/no_data_found', message: 'No leave category' %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Leave Category table ends-->
+  </div>
+</div>

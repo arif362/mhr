@@ -1,0 +1,6 @@
+<% if @leave_category_year.errors.any? %>
+    popupMessage("Days Couldn't be updated to the category", 'alert-danger');
+<% else %>
+    $('#leave-category-year-<%= @leave_category_year.leave_category_id %>').replaceWith('<%= escape_javascript(render 'settings/leave_days_row', leave_category_hash: @leave_category_hash) %>');
+    popupMessage("Days initialized to the category successfully", 'alert-success');
+<% end %>

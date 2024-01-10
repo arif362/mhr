@@ -1,0 +1,2 @@
+$('#global-modal').modal({backdrop: 'static', keyboard: false});
+$('#global-modal').modal('show').find('.modal-content').html("<%= escape_javascript(render 'daily_progress/tasks/backlog_tasks').html_safe %>");

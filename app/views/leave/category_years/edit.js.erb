@@ -1,0 +1,2 @@
+$('#leave-category-days-<%= @leave_category_year.leave_category_id %>').html('<%= escape_javascript(render 'leave/category_years/form').html_safe %>');
+$("#leave-category-days-actions-<%= @leave_category_year.leave_category_id %>").html('<%= escape_javascript(render 'leave/category_years/actions', leave_category_year: @leave_category_year ) %>');

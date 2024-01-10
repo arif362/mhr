@@ -1,0 +1,30 @@
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <div class="employee-pf-statement-title">
+      <p>
+        <label class="m0"> Payroll Categories </label><br>
+      </p>
+    </div>
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th> Name</th>
+        <th> Description</th>
+        <th> Type</th>
+        <th> Calculation Type</th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @categories.each do |category| %>
+          <tr id="payroll-category-<%= category.id %>" >
+            <td> <%= category.name %></td>
+            <td> <%= category.description %></td>
+            <td> <%= category.is_add ? 'Addition' : 'Deduction' %></td>
+            <td> <%= category.is_percentage ? 'Percentage' : 'Amount' %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

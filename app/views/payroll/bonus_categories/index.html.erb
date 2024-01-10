@@ -1,0 +1,26 @@
+<div class="row reset-padding secondary-color">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>Bonus Category</h4>
+    </div>
+    <div class="content-body-wrapper">
+      <div class="actions-button clearfix">
+          <div class="pull-right">
+            <%= link_to new_payroll_bonus_category_path, remote: true, class: 'btn btn-default reset-border-radius' do %>
+                <i class="fa fa-plus"> </i> New Category
+            <% end %>
+          </div>
+      </div>
+      <div class="content-body clearfix" id="categories">
+        <%= render 'bonus_categories_table' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/modal' %>
+<script type="text/javascript">
+    $(function(){
+
+    });
+</script>

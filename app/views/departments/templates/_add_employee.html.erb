@@ -1,0 +1,20 @@
+<script id="add-employee" type="text/x-handlebars-template">
+  <tr class="employees_{{id}}">
+    <td>{{first_name}} {{last_name}}</td>
+    <td>{{designation.name}}</td>
+    <td>{{email}}</td>
+    <td>{{address}}</td>
+    <td>{{mobile}}</td>
+    <td class="actions">
+      <a class="btn info-color" href="/employees/{{id}}">
+        <i class="fa fa-eye"> </i>
+      </a>
+      <a class="btn warning-color" href="/employees/{{id}}/edit">
+        <i class="fa fa-pencil"></i>
+      </a>
+      <a class="btn danger-color" href="/settings/confirm?deleting_name=employees&id={{id}}" data-remote="true">
+        <i class="fa fa-times"> </i>
+      </a>
+    </td>
+  </tr>
+</script>

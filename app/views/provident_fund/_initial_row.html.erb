@@ -1,0 +1,8 @@
+<tr style="background: #dfdfdf;">
+  <td style="border: none; border-right: solid 1px #333333">
+    TO <%= params[:daterange].split('To').first.to_date.strftime("%d %b, %Y") %> </td>
+  <td style="border: none; border-right: solid 1px #333333" class="text-center"> Initial Balance</td>
+  <td style="border: none; border-right: solid 1px #333333" class="text-center"> <%= @balance < 0 ? @balance : '-' %> </td>
+  <td style="border: none; border-right: solid 1px #333333" class="text-center"> <%= @balance > 0 ? @balance : '-' %> </td>
+  <td style="border: none; " class="text-center"> <%= @balance %> </td>
+</tr>

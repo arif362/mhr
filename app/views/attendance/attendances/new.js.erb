@@ -1,0 +1,5 @@
+<% if params[:is_attendance].present? %>
+    $('#global-modal').modal('show').find('.modal-content').html("<%= escape_javascript(render 'attendance/attendances/new_attendance_form', is_attendance: params[:is_attendance]) %>");
+<% else %>
+    $('#global-modal').modal('show').find('.modal-content').html("<%= escape_javascript(render 'attendance/attendances/new_attendance_form') %>");
+<% end %>

@@ -1,0 +1,97 @@
+<h2 class="mt0"> Unconfirmed contributions </h2>
+<table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped">
+  <thead>
+  <tr>
+    <th class="text-center">
+      <%= check_box_tag :confirm_all, 0, false, class: 'confirm-all-contribution' %>
+    </th>
+    <th>Employee</th>
+    <th>Email</th>
+    <th>Company Contribution</th>
+    <th>Employee Contribution</th>
+    <th>Session</th>
+    <th>
+      <div class="input-group-btn">
+        <button type="button" class="batch-actions-btn dropdown-toggle disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Batch Actions
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="#" class="batch-confirm-selected">Confirm Selected</a></li>
+        </ul>
+      </div>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <% contributions.each do |contribution| %>
+      <tr>
+        <td>
+          <%= raw custom_checkbox('confirm_contribution', contribution.id, {}, 'mt0 mb0 pull-left') %>
+          <%#= contribution.id %>
+        </td>
+        <td><%= link_to contribution.provident_fund_account.employee.full_name, employee_profile_path(contribution.provident_fund_account.employee), remote:true %> </td>
+        <td><%= contribution.provident_fund_account.employee.email %> </td>
+        <td>
+          <%= contribution.company_contribution %>
+        </td>
+        <td>
+          <%= contribution.employee_contribution %>
+        </td>
+        <td>
+          <%= Date::MONTHNAMES[contribution.month] %>, <%= contribution.year %>
+        </td>
+        <td class="actions">
+          <%= link_to edit_provident_fund_account_contribution_path(contribution.provident_fund_account_id, contribution), class: 'btn warning-color' do %>
+              <i class="fa fa-pencil-square-o"></i>
+          <% end %>
+          <%= link_to provident_fund_account_path(contribution), class: 'btn danger-color', method: :delete, data: {confirm: 'Are you sure?'} do %>
+              <i class="fa fa-times"></i>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+    $(function () {
+        $('.confirm-all-contribution').click(function () {
+            if ($(this).is(':checked')) {
+                $("[name='confirm_contribution']").prop('checked', true);
+                $(this).parents('table').find('.batch-actions-btn').removeClass('disabled');
+            }
+            else {
+                $("[name='confirm_contribution']").prop('checked', false);
+                $(this).parents('table').find('.batch-actions-btn').addClass('disabled');
+            }
+        });
+
+        $("[name='confirm_contribution']").click(function () {
+            if ($("[name='confirm_contribution']:checked").length > 0) {
+                $(this).parents('table').find('.batch-actions-btn').removeClass('disabled');
+            }
+            else {
+                $(this).parents('table').find('.batch-actions-btn').addClass('disabled');
+            }
+        });
+
+        $('.batch-confirm-selected').click(function () {
+            var allVals = [];
+            $("[name='confirm_contribution']:checked").each(function () {
+                allVals.push($(this).val());
+            });
+
+            $.ajax({
+                url: '<%= confirm_provident_fund_contributions_path %>',
+                type: 'post',
+                data: {contributions: allVals},
+                error: function () {
+                    alert('Unable to confirm contribution, Please try again!');
+                },
+                success: function () {
+                    window.location.reload();
+                }
+            });
+        });
+    });
+</script>

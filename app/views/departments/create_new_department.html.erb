@@ -1,0 +1,152 @@
+<div class="row">
+  <div class="dep-settings ">
+    <div class="dep-settings-table-cell">
+
+      <%= link_to '', class: 'btn btn-default reset-border-radius', id: 'create-new-dep' do %>
+          <i class="fa fa-plus"></i>
+          Create new department
+      <% end %>
+      <div class="display-none">
+        <div class="dep-settings-form dep-settings-table-cell display-nonex">
+          <form>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon fa fa-facebook" id="basic-addon1"></span>
+                <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="wrap-for-form-wizard display-none">
+    <h3 class="mb20 text-center">Complete your new department settings</h3>
+    <!-- SmartWizard html -->
+    <div id="smartwizard">
+      <ul>
+        <li><a href="#step-1">Step 1<br /><small>Create new department</small></a></li>
+        <li><a href="#step-2">Step 2<br /><small>Designation of departments employee</small></a></li>
+        <li><a href="#step-3">Step 3<br /><small>Create weekend of department</small></a></li>
+        <li><a href="#step-4">Step 4<br /><small>General settings</small></a></li>
+        <li><a href="#step-5">Step 5<br /><small>Leave categories</small></a></li>
+      </ul>
+r
+
+      <div>
+        <div id="step-1" class="">
+          <h2>Step 1 Content</h2>
+
+        </div>
+        <div id="step-2" class="">
+          <h2>Step 2 Content</h2>
+          <div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </div>
+        </div>
+        <div id="step-3" class="">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </div>
+        <div id="step-4" class="">
+          <h2>Step 4 Content</h2>
+          <div class="panel panel-default">
+            <div class="panel-heading">My Details</div>
+            <table class="table">
+              <tbody>
+              <tr> <th>Name:</th> <td>Tim Smith</td> </tr>
+              <tr> <th>Email:</th> <td>example@example.com</td> </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="step-5" class="">
+          <h2>Step 5 Content</h2>
+          <div class="panel panel-default">
+            <div class="panel-heading">My Details</div>
+            <table class="table">
+              <tbody>
+              <tr> <th>Name:</th> <td>Tim Smith</td> </tr>
+              <tr> <th>Email:</th> <td>example@example.com</td> </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        // Step show event
+        $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
+            //alert("You are on step "+stepNumber+" now");
+            if(stepPosition === 'first'){
+                $("#prev-btn").addClass('disabled');
+            }else if(stepPosition === 'final'){
+                $("#next-btn").addClass('disabled');
+            }else{
+                $("#prev-btn").removeClass('disabled');
+                $("#next-btn").removeClass('disabled');
+            }
+        });
+
+        // Toolbar extra buttons
+        var btnFinish = $('<button></button>').text('Finish')
+                .addClass('btn btn-info')
+                .on('click', function(){ alert('Finish Clicked'); });
+        var btnCancel = $('<button></button>').text('Cancel')
+                .addClass('btn btn-danger')
+                .on('click', function(){ $('#smartwizard').smartWizard("reset"); });
+
+
+        // Smart Wizard
+        $('#smartwizard').smartWizard({
+            selected: 0,
+            theme: 'arrows',
+            transitionEffect:'fade',
+            showStepURLhash: true,
+            toolbarSettings: {toolbarPosition: 'bottom',
+                toolbarExtraButtons: [btnFinish, btnCancel]
+            }
+        });
+
+
+        // External Button Events
+        $("#reset-btn").on("click", function() {
+            // Reset wizard
+            $('#smartwizard').smartWizard("reset");
+            return true;
+        });
+
+        $("#prev-btn").on("click", function() {
+            // Navigate previous
+            $('#smartwizard').smartWizard("prev");
+            return true;
+        });
+
+        $("#next-btn").on("click", function() {
+            // Navigate next
+            $('#smartwizard').smartWizard("next");
+            return true;
+        });
+
+        //Switch of works
+        $('#create-new-dep').click(function (e){
+            e.preventDefault();
+            $(this).addClass('display-none');
+            $('.dep-settings').addClass('display-none');
+            $('.wrap-for-form-wizard').removeClass('display-none');
+        });
+
+
+    });
+</script>

@@ -1,0 +1,55 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>Leave Dashboard</h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper">
+      <div class="content-body row mt10">
+        <h3 class="mt0"> Pending Leave Requests </h3>
+        <% if @pending_requests.present? %>
+            <div class="row">
+              <% @pending_requests.each do |app| %>
+                  <div class="col-sm-6">
+                    <div class="leave-slide-row">
+                      <div id="carousel-1" class="slide-avatar">
+                        <%= employee_avatar(app.employee) %>
+                      </div>
+                      <div class="slide-content">
+                        <h4><%= link_to app.employee.full_name, employee_profile_path(app.employee), remote:true %></h4>
+
+                        <p>
+                          Requested leave for <%= pluralize(app.leave_days.count, 'day') %>, <%= truncate(app.message, length: 70) %>
+                        </p>
+                      </div>
+                      <div class="slide-footer">
+                        <span class="pull-right buttons">
+                          <%= link_to leave_application_path(app, no_admin: true), remote: true, class: 'btn btn-sm btn-default reset-border-radius' do %>
+                            <i class="fa fa-fw fa-eye"></i> Show
+                          <% end %>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+              <% end %>
+            </div>
+        <% else %>
+            <div class="bs-callout bs-callout-info mt5 mb5 clearfix">
+              <h4> No recent leave request </h4>
+              <%= link_to leave_calendar_leave_applications_path, class: 'pull-right' do %>
+                  <i class="fa fa-calender"></i> View leave calender
+              <% end %>
+            </div>
+        <% end %>
+      </div>
+      <div class="row actions-button">
+        <div class="bs-callout bs-callout-info mt10 mb10">
+          <h4> Employees are going leave in recent </h4>
+          <%= pluralize(@approved_requests_today, 'employee') %> <%= @approved_requests_today == 1 ? 'is' : 'are' %> going for leave in today and another <%= pluralize(@other_requests_this_month, 'employee') %> <%= @other_requests_this_month == 1 ? 'is' : 'are' %> going for leave in recent.
+          <%= link_to leave_calendar_leave_applications_path, class: 'pull-right' do %>
+              <i class="fa fa-calendar"></i> View leave calender
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

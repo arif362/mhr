@@ -1,0 +1,14 @@
+<div class="login mb15">
+  <div class="login-page">
+    <div class="community-form mb0">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), remote: true, html: {class: 'community-login', id: 'community-login', role:'form'}) do |f| %>
+          <%= f.email_field :email, id: 'community-login-email', placeholder:'Email' %>
+          <%= f.password_field :password,  placeholder:'Password' %>
+          <%= f.button  do %>
+              Log In
+          <% end %>
+          <p class="message">Not registered? <%= link_to 'Create an account', new_employee_registration_path %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

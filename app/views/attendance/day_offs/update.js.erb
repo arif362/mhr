@@ -1,0 +1,14 @@
+if (<%= @day_off.errors.any? %>) {
+    popupMessage('Unable to update day off', 'alert-error');
+}
+else {
+    calenderArea = $('#calendar');
+    calenderArea.fullCalendar('removeEvents', [<%= @day_off.id %>]);
+    calenderArea.fullCalendar('renderEvent', {
+        id: <%= @day_off.id %>,
+        title: '<%= @day_off.title %>',
+        start: '<%= @day_off.date.strftime('%Y-%m-%d') %>'
+    });
+    $('#custom_holiday').modal('hide');
+    popupMessage('Day off updated successfully', 'alert-info');
+}

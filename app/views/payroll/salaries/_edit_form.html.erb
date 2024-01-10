@@ -1,0 +1,120 @@
+<%= form_for @salary, remote: true do |f| %>
+
+    <div class="col-md-12 reset-padding form-group" xmlns="http://www.w3.org/1999/html">
+      <div class="col-md-3 reset-padding">
+        <%= f.label :basic_salary %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field :basic_salary, value: @salary.basic_salary, class: "form-control editable-amount",:data => {:category => 'add' } , readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <%= f.hidden_field :employee_id, value: @salary.employee.id %>
+    <%= f.hidden_field :month, value: @salary.month %>
+    <%= f.hidden_field :year, value: @salary.year %>
+    <%= hidden_field_tag 'state', params[:state] %>
+
+
+    <% @salary.addition_category.each do |key, value| %>
+        <div class="col-md-12 form-group reset-padding">
+          <div class="col-md-3 reset-padding">
+            <%= f.label key.to_s %>
+          </div>
+          <div class="col-md-9 salary-form-reset-padding">
+            <%if key.to_s.include? "amount" %>
+                <%= f.text_field "addition_category[#{key.to_s}]", value: number_with_precision(value, precision: 2), class: "form-control editable-amount",:data => {:category => 'add' } %>
+            <% else %>
+                <%= f.text_field "addition_category[#{key.to_s}]", value: number_with_precision(value, precision: 2), class: "form-control", readonly: "readonly" %>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+
+
+    <% @salary.deduction_category.each do |key, value| %>
+        <div class="col-md-12 form-group reset-padding">
+          <div class="col-md-3 reset-padding">
+            <%= f.label key.to_s %>
+          </div>
+          <div class="col-md-9 salary-form-reset-padding">
+            <%if key.to_s.include? "deduct" %>
+                <%= f.text_field "deduction_category[#{key.to_s}]", value: number_with_precision(value, precision: 2), class: "form-control editable-amount",:data => {:category => 'deduct' }  %>
+            <%else%>
+                <%= f.text_field "deduction_category[#{key.to_s}]", value: number_with_precision(value, precision: 2), class: "form-control", readonly: "readonly" %>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+
+
+    <div class="col-md-12 form-group reset-padding">
+      <div class="col-md-3 reset-padding">
+        <%= f.label :total_addition, 'Total earnings' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field :total_addition, value: number_with_precision(@salary.total_addition, precision: 2), class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 form-group reset-padding">
+      <div class="col-md-3 reset-padding">
+        <%= f.label :total_deduction %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field :total_deduction, value: number_with_precision(@salary.total_deduction, precision: 2), class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 form-group reset-padding">
+      <div class="col-md-3 reset-padding">
+        <%= f.label :total %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field :total, value: number_with_precision(@salary.total, precision: 0), class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+    <div class="col-md-12 reset-padding form-group">
+      <%= f.submit class: 'btn primary-color-bg-with-hover invite-submit pull-right reset-border-radius' %>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $('.editable-amount').keyup(function(){
+        calculate_salary()
+    });
+    function calculate_salary() {
+        var total_add = 0
+        var total_deduct = 0
+        $('.editable-amount').each(function( index ) {
+            var value = ($(this).val())
+            if (value == null || value=='')
+            {
+                value = 0
+            }
+
+            else {
+                value = parseFloat(value)
+            }
+            console.log(value)
+            var  category =  $(this).data( "category" ) ;
+            if (category == 'add') {
+                total_add = total_add + value
+            }
+
+            else {
+                total_deduct = total_deduct + value
+            }
+            console.log((value))
+        });
+
+
+        $('#payroll_salary_total_addition').val(total_add);
+        $('#payroll_salary_total_deduction').val(total_deduct);
+        $('#payroll_salary_total').val((total_add - total_deduct).toFixed(2));
+    }
+
+</script>

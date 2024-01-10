@@ -1,0 +1,10 @@
+<% if @advances.present? %>
+    $("#employees-advance-return-advance").find('option:gt(0)').remove();
+    $('.advanse-return-advances-dropdown').show();
+    <% @advances.each do |advance| %>
+        <% returned = advance.returned %>
+        $("#employees-advance-return-advance").append("<option value=<%= advance.id %> amount='<%= advance.return_policy == AppSettings::ADVANCE_TYPES[:installment] ? advance.installment_amount : (advance.amount - returned) %>' > <%= 'Taken: ' + format_date(advance.date).to_s + ', Amount: ' + advance.amount.to_s + ', Returned: ' + returned.to_s + ', Due: ' + (advance.amount - returned).to_s %></option>");
+    <% end %>
+<% else %>
+    $('.advanse-return-advances-dropdown').hide();
+<% end %>

@@ -1,0 +1,202 @@
+.salary-form-reset-padding {
+  padding-left: 15px !important;
+  padding-right: 0px !important;
+}
+
+.fix-margin {
+  margin-top: 10px;
+  margin-bottom: 10px
+}
+
+.employee-salary-image {
+  width: 150px;
+  height: 150px;
+}
+
+.edit-cancel {
+  display: none;
+}
+
+.employee-select-check:after {
+  font-family: FontAwesome;
+  content: "\f00c";
+  color: green;
+  float: right;
+  clear: both;
+}
+
+.set-bottom-border {
+  border-bottom: thin dashed #cccccc;
+}
+
+.set-top-border {
+  border-top: thin dashed #cccccc;
+}
+
+#payslip {width: 644px;}
+#payslip, .payslip-wrap {
+  font-family: 'Helvetica Neue';
+  border: solid black 1px;
+  //width: 644px;
+  height: auto;
+  min-height: 450px;
+  margin: 10px auto auto auto;
+  position: relative;
+
+  .pay-slip-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 7px 0;
+    line-height: 21px;
+  }
+
+  .payslip-header {
+    text-align: center;
+  }
+
+  .payslip-logo {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .payslip-month {
+    text-align: center;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    font-weight: bold;
+  }
+
+  .authorised-signature {
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+  .pay-info-table {
+    width: 100%;
+    margin-bottom: 15px;
+    tr {
+      .info {
+        text-align: left;
+        text-indent: 7px;
+      }
+      td {
+        width: 24.9%;
+        font-size: 12px;
+      }
+    }
+  }
+  .pay-slip-table {
+    font-size: 13px;
+    width: 100%;
+    .info {
+      text-indent: 7px;
+      text-align: left;
+    }
+    .data-column {
+      width: 150px;
+      text-align: right;
+      padding-right: 10px;
+    }
+    .top-border {
+      border-top: solid 1px #333333;
+    }
+    .right-border {
+      border-right: solid 1px #333333;
+    }
+    .bottom-border {
+      border-bottom: solid 1px #333333;
+    }
+    .left-border {
+      border-left: solid 1px #333333;
+    }
+    table {
+      width: 100%;
+    }
+    td {
+      vertical-align: top;
+      //border-left: solid 1px #333333;
+    }
+  }
+  .padding-3-0 {
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  .net-pay {
+    font-size: 13px;
+    font-weight: bold;
+    padding: 4px;
+    text-indent: 4px;
+    .net-amount {
+      text-align: right;
+    }
+  }
+}
+
+#salary-detail-payslip {
+  font-family: 'Helvetica Neue';
+  border: solid black 1px;
+  width: 100%;
+  //height: 424px;
+  //min-height: 450px;
+  //margin: 10px auto auto auto;
+  position: relative;
+
+  .pay-info-table {
+    width: 100%;
+    margin-bottom: 15px;
+    tr {
+      .info {
+        text-align: left;
+        text-indent: 7px;
+      }
+      td {
+        width: 24.9%;
+        font-size: 15px;
+      }
+    }
+  }
+  .pay-slip-table {
+    font-size: 15px;
+    width: 100%;
+    .info {
+      text-indent: 7px;
+      text-align: left;
+    }
+    .data-column {
+      width: 150px;
+      text-align: right;
+      padding-right: 10px;
+    }
+    .top-border {
+      border-top: solid 1px #333333;
+    }
+    .right-border {
+      border-right: solid 1px #333333;
+    }
+    .bottom-border {
+      border-bottom: solid 1px #333333;
+    }
+    .left-border {
+      border-left: solid 1px #333333;
+    }
+    table {
+      width: 100%;
+    }
+    td {
+      vertical-align: top;
+    }
+  }
+  .padding-3-0 {
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  .net-pay {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 4px;
+    text-indent: 4px;
+    .net-amount {
+      text-align: right;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <div class="employee-pf-statement-title">
+      <p>
+        <label class="m0"> Employee Attendances </label><br>
+      </p>
+    </div>
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th> Name</th>
+        <th> Email</th>
+        <th> In Time</th>
+        <th> Out Time</th>
+        <th> Duration</th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @attendances.each do |attendance| %>
+          <tr id="attendance-item-<%= attendance.id %>">
+            <td>
+              <%= attendance.employee.full_name if attendance.employee.present? %>
+            </td>
+            <td><%= attendance.employee.email if attendance.employee.present? %></td>
+            <td><%= get_time_from_datetime(attendance.in_time) %></td>
+            <td><%= get_time_from_datetime(attendance.out_time) %></td>
+            <td><%= format_duration(attendance.duration) %></td>
+          </tr>
+      <% end %>
+      <% @absent_data.each do |data| %>
+          <tr id="absent-item-<%= data[:employee].id %>">
+            <td>
+              <%= data[:employee].full_name if data[:employee].present? %>
+            </td>
+            <td><%= data[:employee].email if data[:employee].present? %></td>
+            <td>
+              <% if data[:leave_application].present? %>
+                  <%= link_to leave_application_path(data[:leave_application], no_admin: true), class: 'info-color', remote: true do %>
+                      <%= data[:leave_application].leave_category.name %>
+                  <% end %>
+              <% else %>
+                  -
+              <% end %>
+            </td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

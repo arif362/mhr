@@ -1,0 +1,79 @@
+<div class="row toggleable-container reset-padding">
+  <%= render 'shared/toggleable_sidebar', sidebar_menu: @department.sidebar_menu_generator %>
+  <div class="main-content content-body-wrapper">
+    <div class="content-body clearfix" id="department-info">
+
+      <div class="">
+        <h4 class="m0"> Department Expense Budget</h4>
+        <%= form_tag expenses_budgets_path, id: 'expense_budget' do %>
+            <table class="table weekend-table">
+              <tbody>
+              <tr>
+                <td> <%= label_tag "Select Year" %> </td>
+                <td>
+                  <%= select_year(Date.today, {:prompt => "Select Year",
+                                               :start_year => Date.today.year, :end_year => current_department.year},
+                                  {:field_name => 'Year', :class => 'form-control reset-border-radius', id: 'budget-year', :required => true}) %>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="">
+              <table class="excel-table">
+                <thead>
+                <tr>
+                  <th> Expense Category</th>
+                  <th> Budget Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @expense_categories.each do |cat| %>
+                    <tr>
+                      <td>
+                        <%= label_tag cat.name %>
+                      </td>
+                      <td>
+                        <%= text_field_tag "amount[#{cat.id}]", '', class: 'form-controlx', placeholder: '0.0', data: {required: true} %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+              <div class="clearfix mt15">
+                <%= submit_tag "Create Budget", class: "primary-color-bg-with-hover budget_button pull-right" %>
+              </div>
+            </div>
+
+        <% end %>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#expense_budget').syftValidator();
+    });
+    $('#budget-year').change(function () {
+        load_budget($(this).val());
+    });
+
+    $(function () {
+        load_budget($('#budget-year').val());
+    });
+
+    //, value: Date.today.year
+
+    function load_budget(year) {
+        if (year != '') {
+            $.ajax({
+                url: "/expenses/budgets/get_budget",
+                type: 'get',
+                data: {year: year},
+                dataType: 'script'
+            });
+        }
+    }
+</script>

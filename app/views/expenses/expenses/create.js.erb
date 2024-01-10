@@ -1,0 +1,2 @@
+$('#expenses-table').find('tbody').prepend('<%= escape_javascript(render 'expenses/expenses/expense_item', expense: @expense).html_safe%>');
+$('#global-modal').modal('hide')

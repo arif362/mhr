@@ -1,0 +1,58 @@
+<div class="">
+  <div class="header-wrapper">
+    <h4>Payroll Salary</h4>
+  </div>
+
+  <div class="">
+    <div class="content-body-wrapper">
+      <div class="clearfix actions-button">
+        <div class="col-md-12 reset-padding">
+          <div class="col-md-6 reset-padding" id="salary-notifications">
+            <% if @is_pending %>
+                <div class="bs-callout bs-callout-info mt5 mb5 clearfix on-processing">
+                  Some salaries are on processing. After processing you will be notified to confirm them.
+                </div>
+            <% end %>
+            <% if @is_unconfirmed %>
+                <%= render 'confirm_page_link' %>
+            <% end %>
+          </div>
+          <div class="col-md-6 reset-padding clearfix">
+            <%= link_to process_salary_payroll_salaries_path, class: 'btn btn-default reset-border-radius pull-right' do %>
+                <i class="fa fa-cogs"> </i> Process Department Salary
+          <% end %>
+            <%= link_to process_combined_salary_payroll_salaries_path, class: 'btn btn-default reset-border-radius pull-right mr10' do %>
+                <i class="fa fa-cogs"> </i> Process Company Salary
+          <% end %>
+          </div>
+
+        </div>
+      </div>
+      <div class="content-body clearfix">
+        <div class="report-search-form">
+          <%= form_tag '', method: 'get', remote: true, id: 'payroll-salaries-sorting-form' do %>
+              <label for="employee_id"> Create/ View Salary </label>
+              <%= select_tag :employee_id, options_for_select(active_employees(@salary_month, @salary_year).collect { |emp| [emp.full_name, emp.id]}, params[:employee_id]), {class: 'custom-chosen form-control custom-label-select employee-change-select-submit', prompt: 'All Employee'} %> <!--{class: is_salary_initialized(emp, @salary_month, @salary_year) ? "employee-select-check" : "" }-->
+              <%= select_month @salary_month, {}, {class: "form-control payroll-salaries-month-select" } %>
+              <%= select_year @salary_year, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control payroll-salaries-year-select"} %>
+          <% end %>
+        </div>
+        <div class="col-sm-4 reset-padding fix-margin">
+
+        </div>
+        <div id="salaries">
+          <%= render 'payroll/salaries/salaries_table', salaries: @salaries %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.employee-change-select-submit, .payroll-salaries-month-select, .payroll-salaries-year-select').change(function(){
+            $('#payroll-salaries-sorting-form').submit();
+        });
+    });
+</script>

@@ -1,0 +1,88 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Expense Dashboard
+      </h4>
+    </div>
+    <div class="secondary-color full-content-wrapper">
+
+      <div class="content-body row mt15 mb10" style="background-color: #fff">
+        <div class="summary-wrap">
+          <h3 class="mt0"> Monthly Expenses </h3>
+          <div class="right-search-form">
+            <%= form_tag expense_summary_path, method: 'get', remote: true do %>
+                <%= select_month Date.today, {}, {class: "form-control"} %>
+                <%= select_year Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control"} %>
+                <%= submit_tag 'Search', class: 'primary-color-bg-with-hover reset-border-radius' %>
+            <% end %>
+          </div>
+          <div id="top-expenses" class="summary-table-wrap">
+            <%= render 'top_expenses' %>
+          </div>
+        </div>
+        <div class="monthly-summary-wrap">
+          <div class="monthly-summary-container col-md-12x mt10">
+            <%= render 'monthly_expenses_bar_chart' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-body row" style="background-color: #fff">
+        <div class="comparision-wrap">
+          <div class="comparision-container mt20x">
+            <h3 class="mt0">
+              Monthly expense Comparision
+            </h3>
+
+            <div class="row compare-form">
+              <%= form_tag expense_compare_path, method: 'get', class: 'text-rightxx', remote: true do %>
+                  <%= select_month @compare_data_1[:start_date], {field_name: 'month_1'}, {class: "form-control"} %>
+                  <%= select_year @compare_data_1[:start_date], {:start_year => Date.today.year, :end_year => current_department.year, field_name: 'year_1'}, {class: "form-control"} %>
+                  Vs
+                  <%= select_month @compare_data_2[:start_date], {field_name: 'month_2'}, {class: "form-control"} %>
+                  <%= select_year @compare_data_2[:start_date], {:start_year => Date.today.year, :end_year => current_department.year, field_name: 'year_2'}, {class: "form-control"} %>
+                  <%= submit_tag 'Compare', class: 'primary-color-bg-with-hover' %>
+              <% end %>
+            </div>
+            <div id="compare" class="row">
+              <%= render 'compare_months' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-body row mb30" style="background-color: #fff">
+        <div class="life-expense-wrap">
+          <div class="life-expense-container mt20x">
+            <h3 class="mt0">
+              Life Expense
+            </h3>
+
+            <div class="mt30x">
+              <div class="">
+                <div class="right-search-form pb15">
+                  <%= form_tag expense_yearly_path, method: 'get', remote: true, id: 'yearly-expense-bar-chart-form' do %>
+                      <%= select_year Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: 'form-control reset-border-radius', id: 'yearly-expense-bar-chart-year'} %>
+                      <%#= submit_tag 'Search', class: 'primary-color-bg-with-hover' %>
+                  <% end %>
+                </div>
+                <div id="yearly-expense-chart">
+                  <%= render 'yearly_expense_bar_chart' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+      $('#yearly-expense-bar-chart-year').change(function(){
+          $('#yearly-expense-bar-chart-form').submit();
+      });
+  });
+</script>

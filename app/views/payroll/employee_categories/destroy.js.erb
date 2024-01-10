@@ -1,0 +1,6 @@
+<% if @employee_category.errors.any? %>
+    popupMessage("Couldn't be deleted", 'alert-danger')
+<% else %>
+    popupMessage('Successfully deleted', 'alert-success')
+    $("#employee-category-taken-<%= @employee_category.id %>").replaceWith('<%= escape_javascript( render 'payroll/categories/not_taken_employee_category_table_row', employee_category: @category).html_safe %>');
+<% end %>

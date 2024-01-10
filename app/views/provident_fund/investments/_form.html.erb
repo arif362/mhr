@@ -1,0 +1,61 @@
+<div class="provident-fund-investment-form">
+  <%= form_for @provident_fund_investment, html: {id: 'provident_fund_investment_form'} do |f| %>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :title, 'Investment Title' %>
+            <%= f.text_field :title, class: 'form-control reset-border-radius', data: {required: true}, placeholder: 'Type Investment title' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :pf_type, 'Provident Fund Type' %>
+            <%= f.text_field :pf_type, class: 'form-control reset-border-radius', data: {required: true}, placeholder: 'Recognized/Unrecognized/Statutory/Public ' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :amount, 'Investment Amount' %>
+            <%= f.text_field :amount, class: 'form-control reset-border-radius',data: {required: true}, placeholder: 'Type Investment Amount' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :interest_rate, 'Interest Rate' %>
+            <%= f.text_field :interest_rate, class: 'form-control reset-border-radius', data: {required: true}, placeholder: 'Like: 3,5,10 and so on' %>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :no_year, 'No of Year' %>
+            <%= f.text_field :no_year, class: 'form-control reset-border-radius', data: {required: true}, placeholder: ' No of Year' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :date, 'Investment Date' %>
+            <%= f.text_field :date, class: 'form-control datepicker reset-border-radius', data: {required: true}, autocomplete: 'off', placeholder: ' Click to select date' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :maturity_date %>
+            <%= f.text_field :maturity_date, class: 'form-control datepicker reset-border-radius', data: {required: true}, autocomplete: 'off', placeholder: ' Click to select date' %>
+          </div>
+
+        </div>
+      </div>
+      <div class="actions">
+        <%= f.submit class: 'primary-color-bg-with-hover pull-rightx reset-border-radius' %>
+      </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#provident_fund_investment_form').syftValidator();
+        $('#provident_fund_investment_date').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+
+        $('#provident_fund_investment_maturity_date').datetimepicker({
+            format: 'YYYY-MM-DD',
+            minDate: '<%= Date.today %>'
+        });
+    });
+</script>

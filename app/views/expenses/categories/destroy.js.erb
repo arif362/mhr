@@ -1,0 +1,19 @@
+<% if @expense_category.errors.any? %>
+    popupMessage('Unable to delete expense category, Please try again later', 'alert-danger');
+<% else %>
+    <% if @sub_category_id.present? %>
+        popupMessage('Expense subcategory successfully deleted', 'alert-info');
+        $('#sub-categories-of-<%= @category_id %>').find('#expense-sub-category-table-body').find('#expense-sub-category-<%= @sub_category_id %>').remove();
+        if ($(".expense-sub-categories-<%= @category_id %>").find("tbody").find("tr").size() <= 0) {
+            $('.no-data-found-<%= @category_id %>').html("<%= escape_javascript(render 'subcategory_no_data_found', category: @category_id).html_safe %>")
+        }
+    <% else %>
+        popupMessage('Expense category successfully deleted', 'alert-info');
+        $('#expense-category-<%= @category_id %>').remove();
+        $('#sub-categories-of-<%= @category_id %>').remove();
+        if ($(".expense-categories-table").find("tbody").find("tr").size() <= 0) {
+            $('.no-data-found').html("<%= escape_javascript(render 'shared/no_data_found', message: 'No expense category').html_safe %>")
+        }
+    <% end%>
+    $('#global-modal').modal('hide');
+<% end%>

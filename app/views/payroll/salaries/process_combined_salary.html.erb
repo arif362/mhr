@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="header-wrapper">
+    <h4>Payroll Salary </h4>
+  </div>
+  <div class="clearfix content-body p0 mb30">
+    <div class="form-wrap">
+      <%= form_tag process_all_combined_salary_payroll_salaries_path, method: 'post', id: 'payroll-salaries-sorting-form' do %>
+          <table class="table reset-table-border m0">
+            <tbody>
+            <tr>
+              <td>
+                <%= select_month @combined_salary_month, {}, {class: "form-control payroll-salaries-month-select"} %>
+              </td>
+              <td>
+                <%= select_year @combined_salary_year, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control payroll-salaries-year-select"} %>
+              </td>
+              <td>
+                <div id="process-salary-btn-container">
+                  <% if @departments.present? %>
+                      <%= submit_tag 'Process Salary', class: 'primary-color-bg-with-hover', id: 'process-salary-btn' %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+
+          </table>
+
+          <div id="salary_bulk_department_select" class="col-sm-12">
+            <% if @departments.present? %>
+                <%= render 'bulk_departments' %>
+            <% else %>
+                <%= render 'shared/no_data_found', message: 'No due department in this month' %>
+            <% end %>
+          </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#date_month, #date_year').change(function () {
+            $.ajax({
+                url: '/payroll/salaries/payable_departments',
+                type: 'get',
+                dataType: 'script',
+                data: {date: {month: $('#date_month').val(), year: $('#date_year').val()}}
+            });
+        });
+    });
+</script>

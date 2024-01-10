@@ -1,0 +1,94 @@
+<div class="p10">
+  <div class="row mb10">
+    <div class="col-md-6">
+      <h4 class="mb0">Leave Categories</h4>
+    </div>
+    <div class="col-md-6 clearfix">
+      <%= link_to new_leave_category_path(department_id: @department.id, year: params[:date].present? ? params[:date][:year] : Date.today.year), remote: true, class: 'btn btn-default pull-right reset-border-radius' do %>
+          <i class="fa fa-plus"> </i> New Leave Category
+      <% end %>
+    </div>
+  </div>
+  <div class="leave-list">
+    <table class='table beaccount-table table-striped table-hover'>
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @leave_categories.each do |leave_category| %>
+          <%= render 'leave/categories/item', leave_category: leave_category %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render 'shared/pagination' if @leave_categories.size > 10 %>
+    <div class="no-data-found">
+      <% unless @leave_categories.present? %>
+          <%= render 'shared/no_data_found', message: 'No leave category' %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row mt40">
+    <div class="col-md-12">
+
+      <h4>Assign Leave Days</h4>
+      <p class="text-warning text-justify">
+        Above you have created leave category in this current year but there are no information how many leave days in every category in current year.
+        You should assign leave days by the click on the (+) button Which is very important to generate employee salary and others
+        reports.
+
+      </p>
+    </div>
+
+  </div>
+  <div class="row mt10">
+    <div class="col-md-12">
+      <div class="right-search-form mb10 ">
+        <%= form_tag leave_department_path(@department), method: 'get', remote: true, id: 'yearly-leave-categories-form' do %>
+            <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control"} %>
+            <%#= submit_tag 'Search', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="leave-category-years-table">
+    <table class='table beaccount-table action-table table-striped table-hover'>
+      <thead>
+      <tr>
+        <th>Category</th>
+        <th>Days</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody id="leave_category_days_table">
+      <% @leave_category_years.each do |leave_category_id, leave_category_hash| %>
+          <%= render 'settings/leave_days_row', leave_category_hash: leave_category_hash %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        if ($(".leave-categories-table").find("tbody").find("tr").size() > 0) {
+            $(".leave-categories-table").tablesorter({
+                headers: {
+                    3: {
+                        sorter: false
+                    }
+                },
+                widthFixed: true,
+                widgets: ['zebra']
+            }).tablesorterPager({container: $("#pager")});
+        }
+
+        $('#date_year').change(function () {
+            $('#yearly-leave-categories-form').submit();
+        });
+    });
+</script>

@@ -1,0 +1,14 @@
+<% if @leave_application.errors.any? %>
+    popupMessage('<%= escape_javascript( errors_to_message_string( @leave_application.errors ) ).html_safe %>', 'alert-danger');
+<% else %>
+    popupMessage('Leave application successfully <%= params[:is_approved]%>', 'alert-info');
+    <% if params[:q].present? && params[:q] == AppSettings::STATUS[:pending] %>
+        $("#leave-application-<%= @leave_application.id %>").remove();
+    <% else %>
+        $("#leave-application-<%= @leave_application.id %>").replaceWith('<%= escape_javascript( render 'leave/applications/list_item', leave_application: @leave_application).html_safe %>');
+    <% end %>
+    //$('#done-list').find('.application-list').append('<%#= escape_javascript( render 'leave/applications/list_item', leave_application: @leave_application)%>:')
+    //$('#total-pending').html(<%#= @pending_leave.count %>);
+    //$('#total-applications').html(<%#= @leave_applications.count %>);
+    $('#global-modal').modal('hide');
+<% end %>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mihisoft</title>
+  <link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <%= wicked_pdf_stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%#= wicked_pdf_javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <style type="text/css">
+      table {
+          page-break-inside: auto !important;
+      }
+
+      thead {
+          display: table-header-group !important;
+      }
+
+      tr {
+          page-break-inside: avoid !important;
+          page-break-after: auto !important;
+      }
+
+      td, th {
+          page-break-inside: avoid !important;
+      }
+
+      table thead tr {
+          page-break-inside: avoid;
+      }
+
+      table tbody tr {
+          page-break-inside: avoid;
+      }
+
+      .table-responsive {
+          overflow: visible !important;
+      }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+
+  <div class="row reset-padding">
+    <div class="content-wrapper">
+      <%= yield %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

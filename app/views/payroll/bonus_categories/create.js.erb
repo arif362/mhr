@@ -1,0 +1,31 @@
+<% if @bonus_category.errors.any? %>
+
+    popupMessage("Bonus Category couldn't be created", 'alert-danger');
+
+<% else %>
+
+    <% unless params[:inline].present? %>
+
+        popupMessage("Bonus Category created successfully", 'alert-success');
+        $('#payroll-bonus-categories').append('<%= escape_javascript(render 'payroll/bonus_categories/bouns_categories_table_row', bonus_category: @bonus_category).html_safe %>');
+        $('#global-modal').modal('hide');
+        $('#no-data-found').remove();
+
+    <% else %>
+
+        popupMessage("Bonus Category created successfully", 'alert-success');
+        $('#global-modal').modal('hide');
+        $('#reason').append("<option value='<%= @bonus_category.id %>' selected><%= @bonus_category.name %></option>");
+
+        <% if @employee.basic_salary.present? %>
+
+            $('#bonus-payments-form').html('<%= escape_javascript( render 'payroll/bonus_payments/bonus_form' ).html_safe %>')
+
+        <% else %>
+
+            $('#bonus-payments-form').html('<%= escape_javascript( render 'payroll/bonus_payments/employee_basic_unavailable' ).html_safe %>')
+
+        <% end %>
+
+    <% end %>
+<%end%>

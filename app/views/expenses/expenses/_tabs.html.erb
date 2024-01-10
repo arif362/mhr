@@ -1,0 +1,28 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" class="nav-item nav-item-all">
+    <%= link_to 'All', expenses_expenses_path, remote: true %>
+  </li>
+  <li role="presentation" class="nav-item nav-item-<%= AppSettings::REMARK_STATUS[:pending].downcase %>">
+    <%= link_to AppSettings::REMARK_STATUS[:pending].capitalize, expenses_expenses_path(q: AppSettings::REMARK_STATUS[:pending]), remote: true %>
+  </li>
+  <li role="presentation" class="nav-item nav-item-<%= AppSettings::REMARK_STATUS[:approved].downcase %> ">
+    <%= link_to AppSettings::REMARK_STATUS[:approved].capitalize, expenses_expenses_path(q: AppSettings::REMARK_STATUS[:approved]), remote: true %>
+  </li>
+  <li role="presentation" class="nav-item nav-item-<%= AppSettings::REMARK_STATUS[:remarked].downcase %>">
+    <%= link_to AppSettings::REMARK_STATUS[:remarked].capitalize, expenses_expenses_path(q: AppSettings::REMARK_STATUS[:remarked]), remote: true %>
+  </li>
+</ul>
+<script type="text/javascript">
+    $(function () {
+        $('.nav-tabs li a').click(function () {
+            var tabUrl = $(this).attr('href');
+            window.history.pushState("", "", tabUrl);
+        });
+        <% if params[:q].present? %>
+        $(".nav-item").removeClass('active-white');
+        $('.nav-item-<%= params[:q].downcase %>').addClass('active-white');
+        <%else%>
+        $('.nav-item-all').addClass('active-white');
+        <%end%>
+    });
+</script>

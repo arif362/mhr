@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title"> Send Employee Invitation </h4>
+</div>
+
+<%= form_for @employee, :url => employee_invitation_path(), data:{ type: 'json' }, remote:true, :html => {:method => :post, class: 'form-vertical'} do |f| %>
+    <div class="modal-body">
+      <%= devise_error_messages! %>
+
+      <% resource.class.invite_key_fields.each do |field| -%>
+          <div class="form-group">
+            <%= f.label field, for: 'field' %>
+            <%= f.text_field field, class: 'form-control', id: 'field' %>
+          </div>
+          <%= f.hidden_field :department_id, value: @department_id %>
+      <% end -%>
+    </div>
+
+    <div class="modal-footer">
+      <div class="pull-right">
+        <%= f.submit t("devise.invitations.new.submit_button"), class: 'btn btn-primary invite-submit' %>
+        <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+      </div>
+    </div>
+<% end %>
+<script type="text/javascript">
+    $(function(){
+        setScriptProperty('new_employee', 'employee', '');
+
+        $('#new_employee').on("ajax:success", function (e, data, status, xhr) {
+            var employeeListHtml = parseViewHtml('#add-employee', data);
+            $('#employee-list').append(employeeListHtml);
+            $('#global-modal-small').modal('hide');
+            popupMessage('Invitation has been sent Successully', 'alert-success');
+        }).on("ajax:error",function(e, data, status, xhr){
+            $(this).render_form_errors('employee', data.responseJSON);
+            $('.invite-submit').removeAttr('disabled');
+        });
+    });
+
+</script>

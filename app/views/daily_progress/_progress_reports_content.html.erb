@@ -1,0 +1,77 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Progress Reports
+      </h4>
+    </div>
+
+    <div class="secondary-color full-content-wrapper">
+      <div class="row actions-button">
+
+        <div class="col-md-6 p0 pt10">
+          <%= form_tag '', method: 'get', remote: true, id: 'daterange-progress-report-form' do %>
+              <div class="input-group">
+                <%= text_field_tag :daterange, '', value: params[:daterange], class: 'form-control reset-border-radius' %>
+                <span class="input-group-addon reset-border-radius" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+              </div>
+          <% end %>
+        </div>
+
+      </div>
+      <div class="content-body row mt10 mb10">
+          <%= render 'daily_progress/progress_report_bar_chart' %>
+      </div>
+
+      <div class="content-body row mb15" style="background-color: #fff">
+        <div class="comparision-wrap">
+          <div class="comparision-container mt20x">
+            <h3 class="mt0">
+              Employees Progress Comparision
+            </h3>
+
+            <div class="row compare-form">
+              <%= form_tag daily_progress_compare_progress_path , method: 'get', class: 'text-rightxx', remote: true do %>
+                  <%= select_tag 'employee_1', options_for_select(Employee.all.collect{ |emp| [emp.full_name, emp.id] }), {class:"form-control reset-border-radius", prompt:'Select an employee'} %>
+                  Vs
+                  <%= select_tag 'employee_2', options_for_select(Employee.all.collect{ |emp| [emp.full_name, emp.id] }), {class:"form-control reset-border-radius", prompt:'Select another employee'} %>
+                  <%= submit_tag 'Compare', class: 'primary-color-bg-with-hover' %>
+              <% end %>
+            </div>
+            <div id="progress_compare" class="row">
+              <%= render 'daily_progress/progress_report_compare' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function() {
+
+        var options = {
+            showDropdowns: true,
+            locale: {
+                format: 'DD-MM-YYYY',
+                separator: '  To  '
+            },
+            minDate: '<%= current_department.created_at.strftime('%d-%m-%Y') %>',
+            maxDate: '<%= Date.today.strftime('%d-%m-%Y') %>'
+        };
+
+        if (!<%= params[:daterange].present? %>) {
+            options.startDate = "<%= Date.today.beginning_of_month.strftime('%d-%m-%Y') %>";
+            options.endDate = "<%= Date.today.strftime('%d-%m-%Y') %>";
+        }
+
+        $('input[name="daterange"]').daterangepicker(options).on('apply.daterangepicker', function (ev, picker) {
+            $('#daterange-progress-report-form').submit();
+        });
+    });
+
+
+</script>

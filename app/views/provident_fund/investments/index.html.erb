@@ -1,0 +1,79 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Provident Fund Investments
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper" id="provident-fund-rule-content">
+      <% if @provident_fund_investments.present? %>
+          <div class="row actions-button">
+            <div class="add-more-rule clearfix">
+              <%= link_to new_provident_fund_investment_path, class: 'btn btn-default pull-right' do %>
+                  <i class="fa fa-plus-circle"></i> New Investment
+              <% end %>
+            </div>
+          </div>
+          <div class="row content-body">
+            <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Investment</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Interest Rate</th>
+                <th>Investment Date</th>
+                <th>Maturity Date</th>
+                <th>Number of Year</th>
+                <th>Number of Day</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @provident_fund_investments.each do |investment| %>
+                  <tr>
+                    <td> #<%= investment.id %> </td>
+                    <td><%= investment.title %></td>
+                    <td><%= investment.pf_type %></td>
+                    <td><%= investment.amount %></td>
+                    <td><%= investment.interest_rate %></td>
+                    <td><%= format_date(investment.date) %></td>
+                    <td><%= format_date(investment.maturity_date) %></td>
+                    <td><%= investment.no_year %></td>
+                    <td><%= investment.no_year * 365 if investment.no_year.present? %></td>
+                    <td>
+                      <% if investment.active %>
+                          <label class="label label-success"> Active </label>
+                      <% else %>
+                          <label class="label label-default"> Closed </label>
+                      <% end %>
+                    </td>
+                    <td class="actions">
+                      <%= link_to edit_provident_fund_investment_path(investment), class: 'btn warning-color' do %>
+                          <i class="fa fa-pencil-square-o"></i>
+                      <% end %>
+                      <%= link_to provident_fund_investment_path(investment), class: 'btn danger-color', method: :delete, data: {confirm: 'Are you sure?'} do %>
+                          <i class="fa fa-times"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+      <% else %>
+          <div class="text-center table-cell">
+            <p>
+              You don't have any investment. <%#= link_to 'Learn more', '#', class: 'link' %>
+              <i class="fa fa-info-circle btn btn-info reset-border-radius" data-toggle='popover' data-placement='top' title="Provident Fund Investment" data-content="Click on the new investment button to create investment then it will show the investment list  "></i>
+            </p>
+            <%= link_to new_provident_fund_investment_path, class: 'btn btn-default reset-border-radius' do %>
+                <i class="fa fa-plus-circle"></i> New Investment
+            <% end %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<%= content_for :email_subject do %>
+    <%= @contact.subject %>
+<% end %>
+<div style="background: #ebf4f8; padding: 10px; text-align: center;">
+  <h3>Quote From :<%= @contact.name %> (<%= @contact.email %>)</h3>
+
+  <p><%= @contact.message %></p>
+
+  <h2>Thanks</h2>
+</div>

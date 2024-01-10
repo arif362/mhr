@@ -1,0 +1,82 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Provident Fund Contribution Of <%= link_to @account.employee.full_name, employee_profile_path(@account.employee),remote:true %>
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper" id="provident-fund-rule-content">
+      <% if @contributions.present? %>
+          <div class="content-body row mt10">
+            <div class="mb10">
+              <canvas id="myChart" height="75"></canvas>
+            </div>
+            <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped">
+              <thead>
+              <tr>
+                <th>Contribution ID</th>
+                <th>Company Contribution</th>
+                <th>Employee Contribution</th>
+                <th>Session</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @contributions.each do |contribution| %>
+                  <tr>
+                    <td> #<%= contribution.id %> </td>
+                    <td>
+                      <%= contribution.company_contribution %>
+                    </td>
+                    <td>
+                      <%= contribution.employee_contribution %>
+                    </td>
+                    <td>
+                      <%= Date::MONTHNAMES[contribution.month] %>, <%= contribution.year %>
+                    </td>
+                    <td class="actions">
+                      <%= link_to edit_provident_fund_account_contribution_path(contribution.provident_fund_account_id, contribution), class: 'btn warning-color' do %>
+                          <i class="fa fa-pencil-square-o"></i>
+                      <% end %>
+                      <%= link_to provident_fund_account_path(contribution), class: 'btn danger-color', method: :delete, data: {confirm: 'Are you sure?'} do %>
+                          <i class="fa fa-times"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+      <% else %>
+          <p class="text-center"> No contributions found of this
+            account. <%= link_to 'Back to list', provident_fund_accounts_path %>
+          </p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: <%= raw @contributions.collect{|con| con.month.to_s + '/' + con.year.to_s} %>,
+            datasets: [{
+                label: 'Employee Contribution',
+                fill: false,
+                borderWidth: 3,
+                borderColor: 'rgba(49, 176, 213, 1)',
+                data: <%= @contributions.map(&:employee_contribution) %>,
+                backgroundColor: "rgba(49, 176, 213, 1)"
+            }, {
+                label: 'Company Contribution',
+                fill: false,
+                borderWidth: 3,
+                borderColor: 'rgba(241, 183, 99, 1)',
+                data: <%= @contributions.map(&:company_contribution) %>,
+                backgroundColor: "rgba(241, 183, 99, 1)"
+            }]
+        }
+    });
+</script>

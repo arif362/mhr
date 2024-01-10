@@ -1,0 +1,70 @@
+// Place all the styles related to the expenses/expenses controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.expense-sub-category {
+  display: none;
+}
+
+.expense-detail {
+  margin-bottom: 10px;
+}
+
+.subcategory-inside {
+  padding-left: 40px !important;
+}
+
+.new-expense-custom-upload-file-wrap {
+  display: table;
+  width: 20%;
+  height: 32px;
+  overflow: hidden;
+  position: relative;
+  span {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .new-expense-custom-upload-file-item {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+}
+.border{
+  border: 1px solid rgba(93, 86, 46, 0.22);
+}
+
+.width-fix {
+  min-width: 220px;
+}
+
+.monthly-expense-report-table {
+  overflow: auto;
+}
+
+.life-expense-item {
+  .life-expense-item-title {
+    float: left;
+    width: 118px;
+    line-height: 39px;
+  }
+  .life-expense-item-value {
+    padding-left: 118px;
+    p {
+      background-color: #89A54E;
+      color: #fff;
+      font-size: 13px;
+      font-weight: bold;
+      margin: 0;
+      min-width: 100px;
+      padding: 7px;
+      text-align: center;
+    }
+  }
+}

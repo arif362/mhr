@@ -1,0 +1,44 @@
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <div class="employee-pf-statement-title">
+      <p>
+        <label class="m0"> Expenses </label><br>
+      </p>
+    </div>
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th> Category</th>
+        <th> Subcategory</th>
+        <th> Date</th>
+        <th> Amount</th>
+        <th> Voucher Number</th>
+        <th> Status</th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% total_amount = 0 %>
+      <% @expenses.each do |expense| %>
+          <tr>
+            <td><%= expense.expense_category.name if expense.expense_category.present? %></td>
+            <td><%= expense.expense_sub_category.name if expense.expense_sub_category.present? %></td>
+            <td><%= format_date_3(expense.date) %></td>
+            <% total_amount += expense.amount %>
+            <td><%= expense.amount %></td>
+            <td><%= expense.voucher_number %></td>
+            <td><%= expense.status.capitalize %></td>
+          </tr>
+      <% end %>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><b>Total</b></td>
+        <td><b><%= total_amount %></b></td>
+        <td></td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

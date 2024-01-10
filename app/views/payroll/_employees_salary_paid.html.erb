@@ -1,0 +1,53 @@
+<div>
+  <h2> Employee List (who received last month's salary) </h2>
+</div>
+<div class="employee-list-wrap">
+  <div class="row employee-list-row">
+    <% @last_salaries.each do |salary| %>
+        <div class="col-md-3 employee-list-col">
+          <div class="dashboard-name-image-wrap text-center" >
+            <!--<div class="dashboard-name-image">ff</div>-->
+            <%= employee_avatar(salary.employee, 'avatar img-circle image_size') %>
+
+          </div>
+          <div class="dashboard-employee-info pt10">
+            <h4 class="m0">
+              <%= salary.employee.full_name %>
+            </h4>
+            <p>
+              <%= salary.employee.designation.name if salary.employee.designation.present?%>
+            </p>
+            <p>
+              <%= link_to payroll_salary_payslip_path(salary), class: 'info-color' do %>
+                  Payslip
+              <% end %>
+            </p>
+          </div>
+        </div>
+    <% end %>
+    <div class="no-data-found pl20 pr20">
+      <% unless @last_salaries.present? %>
+          <%= render 'shared/no_data_found', message: 'Salary was not given to any employee in the last month' %>
+      <% end %>
+    </div>
+    <!--<div class="col-md-3 employee-list-col">-->
+    <!--<div class="dashboard-name-image-wrap" >-->
+    <!--<div class="dashboard-name-image">ff</div>-->
+    <!--</div>-->
+    <!--<div class="dashboard-employee-info pt10">-->
+    <!--<p>-->
+    <!--<label> Name: </label>-->
+    <!--Tanvir hasan pias-->
+    <!--</p>-->
+    <!--<p>-->
+    <!--<label> Designation: </label>-->
+    <!--Software engeneer-->
+    <!--</p>-->
+    <!--<p>-->
+    <!--<label> Payslip: </label>-->
+    <!--I have no payslip-->
+    <!--</p>-->
+    <!--</div>-->
+    <!--</div>-->
+  </div>
+</div>

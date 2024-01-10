@@ -1,0 +1,39 @@
+<div class="row reset-padding secondary-color">
+  <div class="table-contentx content-wrapper">
+    <div class="header-wrapper">
+        <h4> Leave Calendar</h4>
+      </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper">
+      <div id="calendar" class="leave-calendar"></div>
+    </div>
+  </div>
+</div>
+
+
+<%= render 'shared/modal' %>
+
+<script type="text/javascript">
+  $(function(){
+      var calenderArea = $('#calendar');
+      calenderArea.fullCalendar({
+          defaultDate: '<%= Date.today %>',
+          editable: true,
+          eventLimit: true,
+          disableDragging: true,
+          events: <%= raw @day_offs.to_json %>,
+          eventRender: function(event, element) {
+              event.editable = false;
+              event.draggable = false;
+          },
+          eventClick: function(calEvent, jsEvent, view) {
+              //alert('Event: ' + calEvent.id);
+              $.ajax({
+                  url: '/leave/applications/' +calEvent.id,
+                  type: 'get',
+                  dataType: 'script',
+                  data: {no_admin: true}
+              });
+          }
+      });
+  });
+</script>

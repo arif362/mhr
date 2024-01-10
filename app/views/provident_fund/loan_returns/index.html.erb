@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Provident Fund Loan Returns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @provident_fund_loan_returns.each do |provident_fund_loan_return| %>
+      <tr>
+        <td><%= link_to 'Show', provident_fund_loan_return %></td>
+        <td><%= link_to 'Edit', edit_provident_fund_loan_return_path(provident_fund_loan_return) %></td>
+        <td><%= link_to 'Destroy', provident_fund_loan_return, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Loan return', new_provident_fund_loan_return_path %>

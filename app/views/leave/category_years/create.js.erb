@@ -1,0 +1,8 @@
+<% if @leave_category_year.errors.any? %>
+    popupMessage("Days Couldn't be initialised to the category", 'alert-danger');
+<% else %>
+    //$('#employee-category-not-taken-<%#= @leave_category_year.leave_category_id %>').remove();
+    //$('#payroll-employee-categories').prepend('<%#= escape_javascript( render 'payroll/categories/taken_employee_category_table_row', employee_category: @employee_category).html_safe%>');
+    $('#leave-category-year-<%= @leave_category_year.leave_category_id %>').replaceWith('<%= escape_javascript(render 'settings/leave_days_row', leave_category_hash: @leave_category_hash) %>');
+    popupMessage("Category initialized to the employee successfully", 'alert-success');
+<% end %>

@@ -1,0 +1,40 @@
+<canvas id="compareProgressReportsChart" width="400" height="140"></canvas>
+<script>
+    var ctx = document.getElementById("compareProgressReportsChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: '',
+            datasets: [
+                {
+                    label: <%= raw @employee_progress_1 %>,
+                    data: <%= raw @employee_progress_1 %>,
+                    backgroundColor: '#1BA261',
+                    borderColor: '#1BA261',
+                    borderWidth: 1
+
+                },
+                {
+                    label: <%= raw @employee_progress_2 %>,
+                    data: <%= raw @employee_progress_2 %>,
+                    backgroundColor: '#FFCE42',
+                    borderColor: '#FFCE42',
+                    borderWidth: 1
+
+                }
+                ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        steps: 10,
+                        stepValue: 10,
+                        max: 100
+                    }
+                }]
+            }
+        }
+    });
+</script>

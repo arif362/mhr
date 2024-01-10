@@ -1,0 +1,36 @@
+<div class="col-md-3 payroll-employee-brief">
+  <div class="thumbnailx">
+    <%= image_tag @employee.image.present? ? @employee.image.large.url : 'employees/default_profile_image.png', class: "img-responsive", width: '100%' %>
+  </div>
+  <div>
+    <%= link_to employee_path(@employee) do %>
+        <h3 class="m0"> <%= @employee.full_name %> </h3>
+    <% end %>
+    <p>
+      <%= @employee.designation.name if @employee.designation.present? %>
+    </p>
+
+    <% if @employee.basic_salary.present? %>
+        <div>
+          <%= label_tag 'Basic Salary: ' %>
+          <%= amount_with_currency('%.02f' % @employee.get_basic_salary) %>
+        </div>
+    <% end %>
+  </div>
+</div>
+<div class="col-md-9 pr0">
+  <% if params[:tag].present? && ['increments', 'salaries'].include?(params[:tag]) %>
+      <div>
+        <% if ['increments'].include?(params[:tag]) %>
+            <%= render "payroll/#{params[:tag]}/#{params[:tag]}_table", increments: @employee.payroll_increments %>
+        <% else %>
+            <%= render "payroll/#{params[:tag]}/#{params[:tag]}_table", salaries: @employee.payroll_salaries %>
+        <% end %>
+      </div>
+      <div>
+        <%= render "payroll/#{params[:tag]}/form" %>
+      </div>
+  <% else %>
+      <%= render "payroll/#{params[:tag]}/employee_salary_categories" %>
+  <% end %>
+</div>

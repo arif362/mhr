@@ -1,0 +1,29 @@
+<div class="table-warapper">
+  <div class="table-warapper-body">
+    <table class="table beaccount-table table-responsive table-hover table-striped">
+      <thead>
+      <tr>
+        <th>Employeee</th>
+        <th>Status</th>
+        <th>In Time</th>
+        <th>Out Time</th>
+        <th>Duration</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody id="dashboard-attendance-table">
+      <% @attendances.each do |attendance| %>
+          <%= render 'attendance/shared/dashboard_table_present_employee_row', attendance: attendance %>
+      <% end %>
+      <% @absent_employees.each do |employee| %>
+          <%= render 'attendance/shared/dashboard_table_absent_employee_row', employee: employee %>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="no-data-found">
+      <% if @attendances.size + @absent_employees.size <= 0 %>
+          <%= render 'shared/no_data_found', message: 'No attendance found' %>
+      <% end %>
+    </div>
+  </div>
+</div>

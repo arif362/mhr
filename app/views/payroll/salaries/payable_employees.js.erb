@@ -1,0 +1,9 @@
+<% if @employees.present? %>
+    $('#salary_bulk_employee_select').html('<%= escape_javascript(render 'bulk_employees').html_safe %>');
+    if (!$('#process-salary-btn').length) {
+        $('#process-salary-btn-container').html('<%= submit_tag 'Process Salary', class: 'btn btn-info', id: 'process-salary-btn' %>');
+    }
+<% else %>
+    $('#salary_bulk_employee_select').html('<%= escape_javascript(render 'shared/no_data_found', message: 'No due salary in this month').html_safe %>');
+    $('#process-salary-btn').remove();
+<% end %>

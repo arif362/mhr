@@ -1,0 +1,186 @@
+<footer class="footer-wrapper">
+  <div class="footer-wrapper-container container">
+    <div class="row">
+      <div id="footer-logo-section" class="col-md-3 col-xs-12">
+
+        <%= link_to root_path do %>
+            <%= image_tag('icon.svg', width: 50) %>
+        <% end %>
+
+        <p class="mb40 mt10">We have a very co-operative team, which is waiting to hear from you and to virtualize
+          your requirement. Visit the Mihisoft HQ, and share a cup of coffee with them.  </p>
+
+        <ul class="common-ul-style" id="footer-menu">
+
+          <li>
+            <i class="fa fa-angle-right"></i>
+            <%= link_to root_path do %>
+                home
+            <% end %>
+          </li>
+
+          <li>
+            <i class="fa fa-angle-right"></i>
+            <%= link_to community_root_path do %>
+                Community
+            <% end %>
+          </li>
+          <!--<li>-->
+            <!--<i class="fa fa-angle-right"></i>-->
+            <!--<%#= link_to pricing_path do %>-->
+                <!--Pricing-->
+            <!--<#% end %>-->
+          <!--</li>-->
+          <li>
+            <i class="fa fa-angle-right"></i>
+            <a href="#">about</a>
+          </li>
+          <li>
+            <i class="fa fa-angle-right"></i>
+            <%= link_to community_root_path do %>
+                FAQ
+            <% end %>
+          </li>
+          <li>
+            <i class="fa fa-angle-right"></i>
+            <a href="<%= contact_us_path %>#contact_us">contact</a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-location-section" class="col-md-3 col-xs-12">
+        <h3 class="common-h3-style footer-title-fixed-height">location</h3>
+        <ul class="common-ul-style" id="footer-location">
+
+          <li>
+            <i class="fa fa-map-marker"></i>
+
+            <p>
+              Flat #301 (2nd-floor), House #321,
+              Road #04, Mirpur DOHS, Dhaka 1216
+            </p>
+          </li>
+          <li>
+            <i class="fa fa-phone"></i>
+
+            <p>
+              +8801759408174
+            </p>
+          </li>
+          <li>
+            <i class="fa fa-envelope"></i>
+
+            <p>
+              <a href="mailto:info@mihisoft.com">info@mihisoft.com</a>
+            </p>
+          </li>
+        </ul>
+
+        <h3 class="social-title common-h3-style mt30 mb30">SOCIALIZE WITH US</h3>
+
+        <ul class="common-ul-style" id="footer-social-item">
+          <li>
+            <a target="_blank" href="">
+              <i aria-hidden="true" class="fa fa-twitter"></i>
+
+            </a>
+          </li>
+          <li>
+            <a target="_blank" href="">
+              <i aria-hidden="true" class="fa fa-facebook"></i>
+
+            </a>
+          </li>
+
+          <li>
+            <a target="_blank" href="">
+              <i aria-hidden="true" class="fa fa-linkedin"></i>
+
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+      <div class="footer-work-section col-md-3 col-xs-12">
+        <h3 class="common-h3-style footer-title-fixed-height">VISITING HOURS</h3>
+
+        <p class="mb30">Our visiting hours are entitled below:</p>
+        <ul class="common-ul-style" id="footer-working-item">
+          <li>
+            <table class="working-hours">
+              <tbody>
+              <tr>
+                <th>Monday</th>
+                <td>10am &gt; 6pm</td>
+              </tr>
+              <tr>
+                <th>Tuesday</th>
+                <td>10am &gt; 6pm</td>
+              </tr>
+              <tr>
+                <th>Wendsday</th>
+                <td>10am &gt; 6pm</td>
+              </tr>
+              <tr>
+                <th>Thursday</th>
+                <td>10am &gt; 6pm</td>
+              </tr>
+              <tr>
+                <th>Friday</th>
+                <td>10am &gt; 6pm</td>
+              </tr>
+              <tr>
+                <th>Saturday</th>
+                <td>10am &gt; 6pm</td>
+              </tr>
+              <tr>
+                <th style="color: #00a5df">Sunday</th>
+                <td>Closed</td>
+              </tr>
+              </tbody>
+            </table>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-news-section col-md-3 col-xs-12">
+        <h3 class="common-h3-style footer-title-fixed-height">Community</h3>
+        <ul class="common-ul-style" id="footer-news-item">
+          <div class="footer_community_title_color">
+            <% latest_community_posts.each do |post| %>
+                <li>
+                  <%= link_to truncate(post.title, length: 40), community_post_path(post), class: '' %>
+
+                  <div>
+                    <i class="fa fa-calendar"></i>
+                    <span><%= post.created_at.to_formatted_s(:long_ordinal) %></span>
+                  </div>
+                </li>
+            <% end %>
+          </div>
+
+          <li>
+            <h3 class="widget-title common-h3-style footer-title-fixed-height">SUBSCRIBE</h3>
+            <!--<div class="footer-empty-space"></div>-->
+
+            <div class="subscribe-wrapper" id="subscription-form">
+              <%= render 'shared/subscription_form_footer' %>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="copyright-footer">
+    <div class="container">
+      <div class="row">
+        <div class="textwidget"><span>M</span>HR | &copy; <%= Date.today.year %>
+          <a href="https://mihisoft.com/" target="_blank" class="primary-link-style">Mihisoft Technologies</a>, All rights reserved
+          <%= link_to 'Privacy & Policy', terms_and_conditions_path, target: '_blank' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

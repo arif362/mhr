@@ -1,0 +1,17 @@
+<div class="right text-center">
+  <%= image_tag(employee.image_url(:large), class: 'img-circle img-responsive') %>
+</div>
+
+<h4 class="brief">
+  <i><%= employee.designation.name %></i>
+</h4>
+
+<div class="left">
+  <h2>
+    <%= link_to employee.full_name, employee_path(employee.id) %></h2>
+
+  <ul class="list-unstyled">
+    <li><i class="fa fa-envelope-o"></i> <%= employee.email %> </li>
+    <li><i class="fa fa-phone"></i> <%= employee.mobile %> </li>
+  </ul>
+</div>

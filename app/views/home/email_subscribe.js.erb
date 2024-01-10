@@ -1,0 +1,11 @@
+<% unless @subscription.errors.any? %>
+<% if @subscription.new_record? %>
+popupMessage('You have already subscribed.','alert-danger');
+$('#subscription-form').html('<%= escape_javascript( render 'shared/subscription_form_footer' ).html_safe %>');
+<% else %>
+popupMessage('You have been successfully subscribed.','alert-info');
+$('#subscription-form').html('<%= escape_javascript( render 'shared/subscription_form_footer' ).html_safe %>');
+<% end %>
+<% else %>
+popupMessage('Unable to subscribed, Please try again!', 'alert-danger');
+<%end%>

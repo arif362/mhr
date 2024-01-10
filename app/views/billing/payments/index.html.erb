@@ -1,0 +1,54 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Payment
+      </h4>
+    </div>
+
+    <div class="secondary-color">
+      <div class="content-body-wrapper">
+
+        <div class="row actions-button mb10">
+          <div class="col-md-6 reset-padding pull-right">
+            <div class="pull-right">
+              <div class="btn-group">
+                <%= link_to unpaid_invoices_billing_invoices_path , class: 'btn btn-default reset-border-radius', remote:true do %>
+                    <i class="fa fa-plus"></i> New Payment
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row content-body">
+          <div class="payment">
+            <div class="content_middle">
+              <div class="table-warapper">
+                <div class="table-warapper-body">
+                  <table cellpadding="0" cellspacing="0" class="table action-tablex beaccount-table custom-table tablesorter table-responsive table-hover table-striped">
+                    <colgroup>
+                      <col class="one"/>
+                      <col class="two"/>
+                      <col class="three"/>
+                      <col class="four"/>
+                      <col class="five"/>
+                      <col class="six"/>
+                      <col class="seven"/>
+                    </colgroup>
+                    <thead id="payments_head">
+                    <%= render partial: 'payments_header' %>
+                    </thead>
+                    <tbody id="payment_body">
+                    <%= render 'payment' %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<% if @day_off.errors.any? %>
+alert("Something wrong please check your data and try again!");
+<% else %>
+    calenderArea = $('#calendar');
+    calenderArea.fullCalendar('renderEvent', {
+        id: <%= @day_off.id %>,
+        title: '<%= @day_off.title %>',
+        start: '<%= @day_off.date.strftime('%Y-%m-%d') %>',
+        allDayDefault: true
+    });
+    $('#custom_holiday').modal('hide');
+    popupMessage('Day off created successfully', 'alert-info');
+<% end %>

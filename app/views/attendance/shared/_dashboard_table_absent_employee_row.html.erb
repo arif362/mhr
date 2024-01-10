@@ -1,0 +1,16 @@
+<tr id="<%= "#{ employee.class.name.downcase }-absent-#{ employee.id }" %>">
+  <td>
+    <%= link_to employee_profile_path(employee), remote: true do %>
+        <%= employee.full_name %>
+    <% end %>
+  </td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>
+    <%= link_to stats_attendance_attendances_path(employee_id: employee.id), class: 'attendance-report-link', title: 'Attendance Stats' do %>
+        <i class="fa fa-line-chart"> </i>
+    <% end %>
+  </td>
+</tr>

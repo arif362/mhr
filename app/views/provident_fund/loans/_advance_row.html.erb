@@ -1,0 +1,26 @@
+<tr class="provident-fund-load-<%= pf_loan.id %>">
+  <td>
+    <% if pf_loan.provident_fund_account.present? %>
+        <%= link_to employee_profile_path(pf_loan.provident_fund_account.employee), remote:true do %>
+            <%= pf_loan.provident_fund_account.employee.full_name %>
+        <% end %>
+    <% end %>
+  </td>
+  <td><%= pf_loan.amount %></td>
+  <td><%= return_amount = pf_loan.returned %></td>
+  <td><%= pf_loan.amount - return_amount %></td>
+  <td><%= pf_loan.is_closed ? "Completed" : "Incomplete" %></td>
+  <td><%= format_date_2(pf_loan.date) %></td>
+  <td><%= pf_loan.return_policy %></td>
+  <td class="actions">
+    <%= link_to provident_fund_loan_path(pf_loan), title: "View", class: 'btn info-color' do %>
+        <i class="fa fa-eye"> </i>
+    <% end %>
+    <%= link_to edit_provident_fund_loan_path(pf_loan), class: 'btn warning-color' do %>
+        <i class="fa fa-pencil-square-o"></i>
+    <% end %>
+    <%= link_to provident_fund_loan_path(pf_loan), class: 'btn danger-color', method: :delete, data: {confirm: 'Are you sure?'} do %>
+        <i class="fa fa-times"></i>
+    <% end %>
+  </td>
+</tr>

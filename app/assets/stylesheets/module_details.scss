@@ -1,0 +1,20 @@
+.module-features-list {
+  li {
+    a {
+      line-height: 15px;
+      text-decoration: none;
+      display: block;
+      background-color: #FDFDFD;
+      color: #555;
+      border-bottom: 1px solid #ddd;
+      i {
+        float: left;
+        display: inline-block;
+        font-size: 20px
+      }
+      p {
+        padding-left: 35px
+      }
+    }
+  }
+}

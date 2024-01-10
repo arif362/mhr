@@ -1,0 +1,2 @@
+module Expenses::BudgetHelper
+end

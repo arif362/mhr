@@ -1,0 +1,20 @@
+<%= form_for Subscription.new, url: email_subscribe_path, html:{id:'subscription-form'}, remote: true do |f| %>
+    <div id="subscribe-input-widget" class="subscribe-container input-group">
+      <%= f.email_field :email, class: "form-control reset-border-radius ", placeholder: 'Email*' %>
+      <span class="input-group-addon fa fa-envelope reset-border-radius" onclick="$(this).parents('form').submit();"></span>
+    </div>
+<% end %>
+
+<script>
+    $(function(){
+        $('#subscription-form').submit(function(e){
+            var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+            var subscriptionEmail = $(this).find('#subscription_email').val();
+            if( !subscriptionEmail.match(emailPattern) ){
+                e.stopPropagation();
+                e.preventDefault();
+                popupMessage('Please insert valid email', 'alert-danger');
+            }
+        });
+    });
+</script>

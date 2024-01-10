@@ -1,0 +1,9 @@
+<% if @attendance.errors.any? %>
+    popupMessage('<%= escape_javascript( errors_to_message_string(@attendance.errors)).html_safe %>', 'alert-danger');
+<% else %>
+    $('#global-modal').modal('hide');
+    popupMessage("Attendance of <%= @attendance.employee.full_name %> updated successfully.", 'alert-success');
+    $('#attendance-item-<%= @attendance.id %>').replaceWith("<%= escape_javascript(render 'attendance/attendances/attendance_item_row', attendance: @attendance).html_safe %>");
+<% end %>
+
+

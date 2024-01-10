@@ -1,0 +1,9 @@
+<%= form_for @task, remote: true do |form| %>
+    <div class="field form-group">
+      <%= form.text_area :title, class: 'form-control' %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit class: 'btn btn-success' %>
+    </div>
+<% end %>

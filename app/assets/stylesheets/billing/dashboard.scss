@@ -1,0 +1,36 @@
+.billing-dashboard {
+  .dashboard-box {
+    float: left;
+    width: 92.9%;
+    padding: 22px 29px 29px 28px;
+    border: 1px solid #d7d7d7;
+    border-radius: 4px;
+    &.custom {
+      width: 100%;
+      float: none;
+      .amount-box {
+        //width: 175px;
+        //padding-right: 15px;
+        //margin-right: 0px;
+      }
+    }
+  }
+}
+
+.custom-table {
+  margin-bottom: 0px;
+  thead {
+    background: #0C6A83;
+    color: #fdfdfd;
+    tr {
+      th {
+        font-size: 13px;
+        padding: 8px 8px;
+
+        a{
+          color: #fff;
+        }
+      }
+    }
+  }
+}

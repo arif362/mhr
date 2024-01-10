@@ -1,0 +1,28 @@
+
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <i class="fa fa-newspaper-o"></i>
+  <h4 class="modal-title"> Category </h4>
+</div>
+<div class="modal-body">
+  <div class="">
+    <table class="table table-user-information">
+      <tbody>
+      <tr>
+        <td> <%= label_tag 'Name' %> </td>
+        <td> <%= @category.name %> </td>
+      </tr>
+      <tr style="border-top: inherit">
+        <td> <%= label_tag 'Description' %> </td>
+        <td> <%= @category.description %> </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+</div>

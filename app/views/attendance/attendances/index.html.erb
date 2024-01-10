@@ -1,0 +1,142 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Employee Attendance
+      </h4>
+    </div>
+    <div class="content-body rowx mt20 mb30">
+      <div class="site-header">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-sm-9">
+                <div class="col-sm-2 reset-padding">
+                  <label class="custom-label"> Attendance: </label>
+                </div>
+                <%= form_tag '', method: 'get', id: 'filter-date', class: 'col-sm-6 row' do %>
+                    <div class="input-group">
+                      <%= text_field_tag :date, '', value: params[:date].present? ? params[:date] : Date.today, class: 'form-control reset-border-radius' %>
+                      <span class="input-group-addon reset-border-radius" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                    </div>
+                <% end %>
+                <div class="col-sm-4">
+                  <div class="btn-group">
+                    <%= link_to attendance_attendances_path(date: @prev), class: 'btn btn-default reset-border-radius', title: @prev.strftime("%A %d, %Y") do %>
+                        <i class="fa fa-angle-double-left" aria-hidden="true"></i> Prev
+                    <% end %>
+                    <%= link_to attendance_attendances_path(date: @next), class: 'btn btn-default reset-border-radius', title: @next.strftime("%A %d, %Y") do %>
+                        Next <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <table class="pull-right">
+                  <tr>
+                    <td>
+                      <% if employee_role == 'admin' %>
+                          <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To....'} %>
+                      <% end %>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center pt15 pb10">
+          <h3 class="mb0">
+            Employee attendance of <%= (params[:date] || Date.today).to_date.strftime('%B %d, %Y') %> (<%= (params[:date] || Date.today).to_date.strftime('%A') %>)
+          </h3>
+          <span> Attend total employee : </span>
+          <b class="total-attend-employee"><%= total_attend_employee(params[:date].present? ? params[:date] : Date.today) %></b>
+          <h5 class="mb0">
+            <% @weekend.each do |week| %>
+                 <%= week.day_off_type %>
+                <% if week.hours.present?  %>
+                    , Duration: <%= week.hours %> hour(s)
+                <% end %>
+            <% end %>
+          </h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-warapper">
+            <div class="table-warapper-body">
+              <table id="attendances-table" class="table beaccount-table action-table slim-attendance table-responsive table-hover table-striped attendance-table">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>In Time</th>
+                  <th>Out Time</th>
+                  <th>Duration</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody id="attendance-list-table">
+                <% @attendances.each do |attendance| %>
+                    <%= render 'attendance/attendances/attendance_item_row', attendance: attendance %>
+                <% end %>
+                <% @absent_data.each do |data| %>
+                    <%= render 'attendance/attendances/absent_employee_row', data: data %>
+                <% end %>
+                </tbody>
+              </table>
+              <%= render 'shared/pagination' if (@attendances.size + @absent_data.size) > 10 %>
+              <div class="no-data-found">
+                <% if @absent_data.size + @attendances.size <= 0 %>
+                    <%= render 'shared/no_data_found', message: 'No attendance found' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/modal' %>
+
+<script type="text/javascript">
+    $(function () {
+        $('input[name="date"]').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'YYYY-MM-DD'
+            },
+            minDate: '<%= current_department.created_at %>',
+            maxDate: '<%= Date.today %>'
+
+        }, function (start, end, label) {
+            $('#date').val(start.format('YYYY-MM-DD'));
+            $('#filter-date').submit();
+        });
+
+        if ($(".beaccount-table").find("tbody").find("tr").size() > 0) {
+            $(".beaccount-table").tablesorter({
+                widthFixed: true,
+                widgets: ['zebra']
+            }).tablesorterPager({container: $("#pager")});
+        }
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= attendance_attendances_path('pdf', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= attendance_attendances_path('docx', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= attendance_attendances_path('xls',  params) %>'
+            }
+        });
+
+    });
+</script>

@@ -1,0 +1,88 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Monthly Salary Sheet
+      </h4>
+    </div>
+
+    <div class="content-body-wrapper">
+      <div class="content-body clearfix">
+
+        <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius pull-right', prompt: 'Export To....'} %>
+        <div class="report-search-form clearfix">
+          <%= form_tag '', method: :get, id: 'month-year-salary-sheet-form' do %>
+              <%= select_month @month, {}, {class: "form-control"} %>
+              <%= select_year @year, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control"} %>
+              <%= submit_tag 'Search', class: 'primary-color-bg-with-hover' %>
+          <% end %>
+        </div>
+
+        <div class="table-warapper">
+          <div class="table-warapper-body">
+          <table class="excel-table" style="font-size: 16px">
+            <thead>
+            <tr>
+              <th></th>
+              <th> Employee ID</th>
+              <th> Name</th>
+              <th> Basic Salary</th>
+              <th> Addition</th>
+              <th> Gross Salary</th>
+              <th> Deduction</th>
+              <th> Net Salary</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <% @salaries.each_with_index do |salary, index| %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td><%= salary.employee.id_card_no if salary.employee.present? %></td>
+                  <td><%= salary.employee.full_name if salary.employee.present? %></td>
+                  <td><%= salary.basic_salary %></td>
+                  <td><%= salary.total_addition - salary.basic_salary %></td>
+                  <td><%= salary.total_addition %></td>
+                  <td><%= salary.total_deduction %></td>
+                  <td><%= salary.total %></td>
+                </tr>
+            <% end %>
+            </tbody>
+
+          </table>
+            <div class="no-data-found">
+              <% unless @salaries.present? %>
+                  <%= render 'shared/no_data_found', message: 'No data found' %>
+              <% end %>
+            </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(function (){
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= monthly_sheet_payroll_salaries_path('pdf', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= monthly_sheet_payroll_salaries_path('docx', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= monthly_sheet_payroll_salaries_path('xls',  params) %>'
+            }
+        });
+    })
+
+</script>
+

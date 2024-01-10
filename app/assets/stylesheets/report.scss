@@ -1,0 +1,153 @@
+/*
+*= require public
+*= require uility.css.erb
+*= require payroll/salaries
+*/
+@import "public_variables";
+@import "leave";
+
+.employee-pf-statement-container {
+  .employee-pf-statement-info {
+    font-size: 12px;
+  }
+}
+
+.right-statement-info-wrap {
+  width: 50%;
+  float: left;
+}
+
+.statement-info-ul-wrap {
+  font-size: 12px;
+  li {
+    display: block;
+    font-size: 10px;
+    span {
+      font-size: 12px;
+      display: inline-block;
+      min-width: 70px;
+    }
+  }
+}
+
+.employers-signature-details {
+  li {
+    margin-top: 10px;
+  }
+}
+
+.leave-sms-wrap, .leave-remark-container {
+  font-size: 12px;
+}
+
+.employee-pf-statement-title {
+  p {
+    span {
+      font-size: 12px;
+    }
+  }
+}
+
+.pf-statement-body-wrap {
+  .pf-statement-body-container {
+    .custom-pf-table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 100%;
+      font-size: 10px;
+      text-align: center;
+      .custom-pf-table-thead {
+        tr {
+          td, th {
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            font-weight: bold;
+          }
+        }
+      }
+      .custom-pf-table-tbody {
+        tr {
+          td, th {
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+          }
+        }
+        .total-pf-amount {
+          background-color: $glass-color;
+        }
+      }
+    }
+  }
+}
+
+.pf-statement-header-wrap {
+  .pdf-report-logo-wrap {
+    .pdf-report-logo {
+      width: 70px;
+      float: left;
+    }
+    .pdf-report-title-wrap {
+      padding-left: 70px;
+      .pdf-report-title-container {
+        background-color: $glass-color;
+        .pdf-report-left-title {
+          width: 70%;
+          float: left;
+        }
+        .pdf-report-right-title {
+          width: 30%;
+          float: left;
+          font-size: 10px;
+        }
+      }
+    }
+  }
+}
+
+.authorised-signature {
+  .left-signature {
+    width: 50%;
+    padding-left: 8px;
+    float: left;
+  }
+  .right-signature {
+    width: 50%;
+    padding-right: 8px;
+    float: left;
+    text-align: right;
+  }
+}
+
+.signature-wrap {
+  font-size: 12px;
+}
+
+/* Design for employee attendance pdf */
+.nb-pdf-wrap {
+  font-size: 10px;
+  ul {
+    li {
+      float: left;
+      display: inline-block;
+      padding-right: 5px;
+      margin-bottom: 5px;
+      color: #555;
+      &:last-child {
+        padding-right: 0;
+        margin-bottom: 0;
+      }
+      span, i {
+        font-size: 10px;
+        display: inline-block;
+        padding-left: 5px;
+        padding-right: 5px;
+        background-color: green;
+        color: #fff;
+      }
+    }
+  }
+}
+
+
+

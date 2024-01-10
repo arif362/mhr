@@ -1,0 +1,31 @@
+<tr class="employee_advance-<%= advance.id %>">
+  <td>
+    <% if advance.employee.present? %>
+        <%= link_to employee_profile_path(advance.employee), remote:true do %>
+            <%= advance.employee.full_name %>
+        <% end %>
+    <% end %>
+  </td>
+  <td><%= advance.amount %></td>
+  <td><%= return_amount = advance.returned %></td>
+  <td><%= advance.amount - return_amount if advance.amount.present?%></td>
+  <td><%= advance.is_completed ? "Completed" : "Incomplete" %></td>
+  <td><%= format_date_2(advance.date) %></td>
+  <td><%= advance.return_policy %></td>
+  <td class="actions">
+    <%= link_to employees_advance_path(advance), title:"View", class: 'btn info-color' do %>
+        <i class="fa fa-eye"> </i>
+    <% end %>
+    <%= link_to edit_employees_advance_path(advance), remote: true , title:"Edit", class: 'btn warning-color' do %>
+        <i class="fa fa-pencil"></i>
+    <% end %>
+    <!--<%#= link_to employees_advance_path(advance), method: :delete, class: 'btn danger-color', title:"Delete", data: {confirm: "Are you sure?"} do %>-->
+        <!--<i class="fa fa-times"> </i>-->
+    <!--<%# end %>-->
+
+    <%= link_to confirm_settings_path(action_item_id: advance.id, action_on: 'employees/advances', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"></i>
+    <% end %>
+
+  </td>
+</tr>

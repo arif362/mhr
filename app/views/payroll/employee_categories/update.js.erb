@@ -1,0 +1,6 @@
+<% if @employee_category.errors.any? %>
+    popupMessage("Category Couldn't be updated to the employee", 'alert-danger')
+<% else %>
+    $('#employee-category-taken-<%= @employee_category.id %>').replaceWith('<%= escape_javascript( render 'payroll/categories/taken_employee_category_table_row', employee_category: @employee_category).html_safe%>');
+    popupMessage("Category initialized to the employee successfully", 'alert-success')
+<% end %>

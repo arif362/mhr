@@ -1,0 +1,12 @@
+<% if @attendance.errors.any? %>
+    popupMessage('<%= escape_javascript( errors_to_message_string(@attendance.errors)).html_safe %>', 'alert-danger');
+<% else %>
+    $('#global-modal').modal('hide');
+    popupMessage("Attendance of <%= @attendance.employee.full_name %> created successfully.", 'alert-success');
+    <% if params[:is_attendance].present? %>
+        $('#attendance-list-table').prepend("<%= escape_javascript(render 'attendance/attendances/attendance_item_row', attendance: @attendance).html_safe %>");
+    <% else %>
+        $('#absent-item-<%= params[:employee_id] %>').replaceWith("<%= escape_javascript(render 'attendance/attendances/attendance_item_row', attendance: @attendance).html_safe %>");
+        $('.total-attend-employee').html("<%= total_attend_employee(params[:in_date]) %> ");
+    <% end %>
+<% end %>

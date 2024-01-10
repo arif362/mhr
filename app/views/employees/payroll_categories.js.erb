@@ -1,0 +1,2 @@
+$('#<%= params[:tag].to_s %>').html('<%= escape_javascript( render 'payroll/shared/employee_brief').html_safe %>');
+$('#new-payroll-category-button').replaceWith('<%= escape_javascript( render 'payroll/categories/link_to_payroll_categories').html_safe %>');

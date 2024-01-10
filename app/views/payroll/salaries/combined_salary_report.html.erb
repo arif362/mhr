@@ -1,0 +1,65 @@
+<div class="">
+  <div class="header-wrapper">
+    <h4> Salaries of All Departments </h4>
+  </div>
+
+  <div class="">
+    <div class="content-body-wrapper">
+      <div class="clearfix actions-button">
+        <div class="col-md-12 reset-padding">
+          <div class="col-md-6 reset-padding">
+
+            <% if @pending_jobs.present? %>
+                <div class="bs-callout bs-callout-info mt5 mb5 clearfix">
+                  Some salaries are on processing. After processing you will be notified to confirm them.
+                </div>
+            <% end %>
+            <% if @unconfirmed_salaries.present? && @unconfirmed_salaries > 0.0 || @unconfirmed_salaries < 0.0  %>
+                <div class="bs-callout bs-callout-info mt5 mb5 clearfix">
+                  Some salaries are still unconfirmed. <%= link_to 'Click here', department_unconfirmed_salaries_payroll_salaries_path %> to confirm them.
+                </div>
+            <% end %>
+          </div>
+          <div class="col-md-6 reset-padding clearfix">
+            <%= link_to process_combined_salary_payroll_salaries_path, class: 'btn btn-default reset-border-radius pull-right' do %>
+                <i class="fa fa-cogs"> </i> Process Full Salary
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="content-body clearfix">
+        <div class="report-search-form">
+          <%= form_tag '',method: 'get' do%>
+              <%= select_month @combined_salary_month, {prompt: 'All Month'}, {class:"form-control"} %>
+              <%= select_year @combined_salary_year,{start_year: Date.today.year, end_year: current_department.year}, {class:"form-control"}  %>
+              <%= submit_tag 'Search', class: 'primary-color-bg-with-hover reset-border-radius' %>
+              <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radiusx pull-right', style: 'border-radius: 0 !important', prompt: 'Export To....'} %>
+          <%end%>
+        </div>
+        <div class="combined-salary">
+          <%= render 'payroll/salaries/combined_salary_table', payroll_salaries:@payroll_salaries, unconfirmed_salaries: @unconfirmed_salaries  %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href =  '<%= combined_salary_report_payroll_salaries_path('pdf',params) %>';
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= combined_salary_report_payroll_salaries_path('xls',params) %>';
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= combined_salary_report_payroll_salaries_path('docx',params) %>';
+            }
+        });
+
+    });
+
+</script>
+

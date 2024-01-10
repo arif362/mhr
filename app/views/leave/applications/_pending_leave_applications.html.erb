@@ -1,0 +1,22 @@
+<div class="table-content">
+  <div class="content-body row mt10 mb10">
+    <div class="site-header secondary-color">
+      <div class="text-center">
+        <h3>Pending Leave Applications </h3>
+        <span id="total-pending"> Total <%= @pending_leave_applications.count %> </span>
+
+        <div class="row text-center">
+          <%= form_tag leave_applications_path, remote: true, method: :get, id: 'filter-date', class: 'leave-date-range' do %>
+              <div class="input-group">
+                <%= text_field_tag :date_range, '', value: params[:date_range], class: 'form-control reset-border-radius' %>
+                <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="table-warapper " id="pending-list">
+      <%= render 'leave/applications/pending_items', leave_applications: @pending_leave_applications %>
+    </div>
+  </div>
+</div>

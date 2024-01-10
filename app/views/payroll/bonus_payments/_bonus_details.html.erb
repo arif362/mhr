@@ -1,0 +1,48 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span></button>
+  <i class="fa fa-newspaper-o"></i>
+  <h4 class="modal-title"> Bonus Payment details </h4>
+</div>
+  <div class="modal-body">
+    <div>
+      <table class="table table-user-information beaccount-table">
+        <tbody>
+        <tr>
+          <td> <label> Purpose </label> </td>
+          <td> <p><%= @bonus_payment.reason %></p> </td>
+        </tr>
+
+        <tr>
+          <td> <label>Amount</label> </td>
+          <td> <p><%= "#{current_currency} #{@bonus_payment.amount}"  %></p> </td>
+        </tr>
+
+        <tr>
+          <td> <label>Date</label> </td>
+          <td> <p><%= format_date @bonus_payment.date %></p> </td>
+        </tr>
+
+        <tr>
+          <td> <label>Payment Method</label> </td>
+          <td> <p><%= @bonus_payment.payment_method  %></p> </td>
+        </tr>
+
+        <tr>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="message-wrap pt30">
+        <label>Message</label>
+        <p><%= @bonus_payment.message %></p>
+      </div>
+
+    </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+  </div>

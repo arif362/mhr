@@ -1,0 +1,103 @@
+$body-color: white;
+$bg-color: white;
+$bg-box-color: white;
+$bd-radius: 5px;
+
+.body-wrapper {
+  background: $body-color;
+  background: white none repeat scroll 0 0;
+  position: relative;
+}
+
+.bg-box {
+  background-color: $bg-box-color;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+  width: 440px;
+}
+
+.sign-in-box {
+  margin-top: 20px;
+  padding-left: 25px;
+  padding-right: 25px;
+  .circle-logo {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background: #074e6a none repeat scroll 0 0;
+    border: 5px solid #f0f0f0;
+    height: 120px;
+    margin: auto auto 20px auto;
+    text-align: center;
+    width: 120px;
+    i.fa-user, .fa-lock {
+      color: #fff;
+      margin-top: 17px;
+    }
+  }
+}
+
+.signin-inputs-wrapper {
+  .sign-in-title {
+    font-size: 25px;
+    padding-bottom: 15px;
+    text-align: center;
+  }
+}
+
+.input-field-height {
+  height: 38px;
+}
+
+.bg-box-1 {
+  background-color: $bg-color;
+  border: 1px solid #00a4e4;
+  border-radius: $bd-radius;
+  height: auto;
+  margin: 10px auto 20px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+  width: 960px;
+}
+
+.bg-box-2 {
+  background-color: menutext;
+  border-radius: 5px;
+  margin: 10px auto;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  width: 340px;
+}
+
+.bg-box-forget-pass {
+  background-color: menutext;
+  border-radius: $bd-radius;
+  margin: 0 auto 20px;
+  padding-bottom: 15px;
+  padding-top: 30px;
+}
+
+.btn-section {
+  .sign-in-btn {
+    text-decoration: none;
+    background: #074e6a none repeat scroll 0 0;
+    border: medium none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #666464 inset;
+    color: #ececec;
+    cursor: pointer;
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    margin-top: 4%;
+    padding: 3%;
+    width: 99%;
+    &:hover {
+      background: #0C6A85;
+    }
+  }
+}
+
+
+
+

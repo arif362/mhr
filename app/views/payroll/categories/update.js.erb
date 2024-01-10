@@ -1,0 +1,6 @@
+<% if @category.errors.present? %>
+    popupMessage(<%= @category.errors.as_json %>, 'alert-warning')
+<% else %>
+    $('#global-modal').modal('hide');
+    $('#payroll-category-<%= @category.id%>').replaceWith('<%= escape_javascript( render 'payroll/categories/category_table_row', category: @category) %>')
+<% end %>

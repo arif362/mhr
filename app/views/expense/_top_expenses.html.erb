@@ -1,0 +1,30 @@
+<h3 class="mt0"> Top Expense </h3>
+<table class="table beaccount-table table-hover table-responsive table-striped mt15">
+  <thead>
+  <tr>
+    <td>Category</td>
+    <td> Budget(Month) </td>
+    <td>Expense</td>
+    <td>%</td>
+    <td>Daily</td>
+  </tr>
+  </thead>
+  <tbody>
+  <% @summary_data[:grouped_expenses].each_with_index do |expense, index| %>
+      <% break if index > 4 %>
+      <tr>
+        <td><%= expense.expense_category.name if expense.expense_category.present? %> </td>
+        <td><%= expense.expense_category.monthly_budget(params[:year]) %></td>
+        <td><%= expense.sum_amount %></td>
+        <td><%= calculate_percentage(expense.sum_amount, @summary_data[:total]) %></td>
+        <td><%= calculate_daily_expense(expense.sum_amount, @summary_data[:start_date], @summary_data[:end_date]) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<div class="no-data-found">
+  <% unless @summary_data[:grouped_expenses].present? %>
+      <%= render 'shared/no_data_found', message: 'No expense found' %>
+  <% end %>
+</div>

@@ -1,0 +1,11 @@
+<% if @designation.destroyed?  %>
+    $('#designation-<%= params[:id] %>').remove();
+    $('#global-modal').modal('hide');
+    popupMessage('Designation has been deleted successfully', 'alert-success');
+    if ($(".designation-list-table").find("tbody").find("tr").size() <= 0) {
+        $('.no-data-found').html("<%= escape_javascript(render 'shared/no_data_found', message: 'No designation found').html_safe %>")
+    }
+<% else %>
+    $('#global-modal').modal('hide');
+    popupMessage('<%= escape_javascript( errors_to_message_string( @designation.errors)) %>', 'alert-danger');
+<% end %>

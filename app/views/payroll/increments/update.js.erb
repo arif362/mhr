@@ -1,0 +1,7 @@
+<% unless @increment.errors.present? %>
+    $('#global-modal').modal('hide');
+    popupMessage("Updated successfully", 'alert-success');
+    $('#increments-list').find('#employee_increment_<%= @increment.id %>').replaceWith('<%= escape_javascript( render 'payroll/increments/increment_row', increment: @increment ).html_safe%>');
+<% else %>
+    popupMessage("Couldn't be Updated", 'alert-danger');
+<% end %>

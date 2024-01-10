@@ -1,0 +1,7 @@
+<% if @comment.errors.any? %>
+popupMessage('<%= escape_javascript( errors_to_message_string(@comment.errors) ).html_safe %>', 'alert-danger');
+<% else %>
+$('#comment-form-wrapper').html('<%= escape_javascript( render 'community/comments/form', post: @comment.community_post ).html_safe %>');
+$('#comments-wrapper').html('<%= escape_javascript( render 'community/comments/comment', comments: @comment.community_post.community_comments ).html_safe %>');
+popupMessage('Your comments has added to the post successfully.', 'alert-success');
+<% end %>

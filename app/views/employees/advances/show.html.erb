@@ -1,0 +1,59 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="advances-content">
+    <div class="header-wrapper">
+      <h4>Advance Details</h4>
+    </div>
+    <div class="content-body-wrapper">
+      <div class="content-body clearfix">
+        <table class="table table-user-information table-striped beaccount-table">
+          <tbody>
+          <tr>
+            <td> <label> Given To </label> </td>
+            <td>
+              <%= link_to employee_profile_path(@advance.employee), remote:true do %>
+                  <%= @advance.employee.full_name %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td> <label> Amount </label> </td>
+            <td> <%= @advance.amount %> </td>
+          </tr>
+          <tr>
+            <td> <label> Returned </label> </td>
+            <td> <%= return_amount = @advance.returned %> </td>
+          </tr>
+          <tr>
+            <td> <label> Due </label> </td>
+            <td> <%= @advance.amount - return_amount %> </td>
+          </tr>
+          <tr>
+            <td> <label> Status </label> </td>
+            <td> <%= @advance.is_completed ? "Completed" : "Incomplete" %> </td>
+          </tr>
+          <tr>
+            <td> <label> Date </label> </td>
+            <td> <%= format_date(@advance.date) %> </td>
+          </tr>
+          <tr>
+            <td> <label> Return Policy </label> </td>
+            <td> <%= @advance.return_policy %> </td>
+          </tr>
+
+          <tr>
+            <% if @advance.return_policy.present? && @advance.return_policy == AppSettings::ADVANCE_TYPES[:installment] %>
+                <td> <label> Number Of Installment (Month) </label> </td>
+                <td> <%= @advance.installment %> </td>
+            <% end %>
+          </tr>
+          </tbody>
+
+        </table>
+        <div id="advances-history">
+          <h4>History</h4>
+          <%= render 'advance_report' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

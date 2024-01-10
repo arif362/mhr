@@ -1,0 +1,90 @@
+<div id="sidebar">
+  <ul>
+    <li>
+      <a href="#" class="toggle-sidebar-menu" data-toggle=".toggleable-container" title="<%= sidebar_menu[:tooltip] %>">
+        <span> <%= sidebar_menu[:title] %> </span>
+        <span id="sidebar-toggle" class="pull-right ">
+           <i class="fa fa-chevron-right"></i>
+        </span>
+      </a>
+    </li>
+    <% sidebar_menu[:menus].each do |menu| %>
+        <% if menu[:title] == 'Settings' && current_employee == @employee %>
+            <li class="<%= menu[:class] %>">
+              <%= link_to menu[:url], data:{ remote: true }, title: menu[:tooltip] do%>
+                  <span> <%= menu[:title] %> </span>
+                  <span><i class="fa <%= menu[:icon] %> pull-right"></i></span>
+              <% end %>
+            </li>
+        <% end %>
+        <% unless menu[:title] == 'Settings' %>
+            <li class="<%= menu[:class] %>">
+              <%= link_to menu[:url], data:{ remote: true }, title: menu[:tooltip] do%>
+                  <span> <%= menu[:title] %> </span>
+                  <span><i class="fa <%= menu[:icon] %> pull-right"></i></span>
+              <% end %>
+            </li>
+        <% end %>
+    <% end %>
+  </ul>
+</div>
+<div class="swipe-area mobile-menu"></div>
+<script type="text/javascript">
+    $(window).load(function () {
+        $("[data-toggle]").click(function () {
+            var toggle_el = $(this).data("toggle");
+            $(toggle_el).toggleClass("open-sidebar");
+            if ($(this).find('.fa-chevron-left').length) {
+                $(this).find('.fa-chevron-left').addClass('fa-chevron-right').removeClass('fa-chevron-left');
+            }
+            else {
+                $(this).find('.fa-chevron-right').addClass('fa-chevron-left').removeClass('fa-chevron-right');
+            }
+            updateCookie();
+        });
+
+        $(".swipe-area").swipe({
+            swipeStatus: function (event, phase, direction, distance, duration, fingers) {
+                updateCookie();
+                if (phase == "move" && direction == "right") {
+                    $(".toggleable-container").addClass("open-sidebar");
+                    return false;
+                }
+                if (phase == "move" && direction == "left") {
+                    $(".toggleable-container").removeClass("open-sidebar");
+                    return false;
+                }
+            }
+        });
+
+        if (Cookies.get('sidebar_open') == null || Cookies.get('sidebar_open') == 'false') {
+            $(".toggleable-container").addClass('open-sidebar');
+        }
+
+        $('[title]').tooltip({placement: 'right', container: 'body'});
+    });
+
+    function updateCookie() {
+        next_state = (Cookies.get('sidebar_open') == 'false' || Cookies.get('sidebar_open') == null) ? true : false
+        Cookies.set('sidebar_open', next_state);
+    }
+
+    $(function () {
+        var nav_items = $("#sidebar li");
+        nav_items.click(function () {
+            activate_current_tab(nav_items, $(this));
+            link = $(this).find('a');
+            if (link.attr('href') != '') {
+                window.history.pushState("Department Settings", link.attr('text'), link.attr('href'));
+            }
+        });
+        var current_tab_class = "<%= action_name == 'show' ? 'information' : action_name %>";
+        activate_current_tab(nav_items, $("#sidebar ." + current_tab_class));
+    });
+
+    function activate_current_tab(itemsObj, element) {
+        itemsObj.removeClass('sidebar-menu-active');
+        element.addClass('sidebar-menu-active');
+    }
+
+</script>

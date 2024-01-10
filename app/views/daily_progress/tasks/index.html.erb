@@ -1,0 +1,86 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Daily Progress My Work
+      </h4>
+    </div>
+
+    <div class="secondary-color full-content-wrapper">
+      <div class="row actions-button">
+        <h4 style="float: left;"> Personal Progress of <%= @date %> </h4>
+        <%= link_to 'Next', daily_progress_tasks_path(date: @next_day), class: 'btn btn-default reset-border-radius pull-right mt10' %>
+        <%= link_to 'Previous', daily_progress_tasks_path(date: @prev_day), class: 'btn btn-default reset-border-radius pull-right mt10 mr3' %>
+      </div>
+
+      <div class="content-body row mt10 mb10 dropdown">
+        <%= form_tag batch_update_daily_progress_tasks_path(date: @date) do %>
+            <div class="task-lists-wrapper">
+              <p class="all-check">
+                <input type="checkbox" id="checkAllTasks"/>
+                Check All
+              </p>
+              <ul class="task-lists-action task-lists">
+                <% @tasks.each do |task| %>
+                    <li id="task-<%= task.id %>">
+                      <%= check_box_tag 'completed[]', task.id, task.is_complete %>
+                      <%= task.title %>
+                      <% unless task.is_complete.present? %>
+                          <%= link_to edit_daily_progress_task_path(task), title:'Edit Task', class:'m10', remote:true  do %>
+                              <i class="fa fa-pencil text-secondary" aria-hidden="true"></i>
+                          <% end %>
+                      <% end %>
+
+                      <% if task.forward_from_date.present? %>
+                          <%= link_to daily_progress_tasks_path(date: task.forward_from_date), title:"Forward From #{task.forward_from_date}" do %>
+                              <i class="fa fa-arrow-circle-o-left text-secondary" aria-hidden="true"></i>
+                          <% end %>
+                      <% elsif task.forward_to_date.present? %>
+                          <%= link_to daily_progress_tasks_path(date: task.forward_to_date), title:"Forward To #{task.forward_to_date}" do %>
+                              <i class="fa fa-arrow-circle-o-right text-danger" aria-hidden="true"></i>
+                          <% end %>
+                      <% end %>
+
+                    </li>
+                <% end %>
+              </ul>
+            </div>
+
+            <% if @date == Date.today.to_s %>
+
+                <a href="" class="btn btn-default reset-border-radius dropdown-toggle" data-toggle="dropdown">
+                  Task
+                  <b class="caret"></b>
+                </a>
+
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item " href="<%= new_daily_progress_task_path(date: @date) %>" data-remote="true">
+                      <i class="fa fa-plus-circle p5"></i>
+                      Create New
+                    </a>
+                  </li>
+
+                  <li>
+                    <a class="dropdown-item " href="<%= import_backlog_daily_progress_tasks_path %>" data-remote="true">
+                      <i class="fa fa-arrow-circle-up p5"></i>
+                      From Backlog
+                    </a>
+                  </li>
+                </ul>
+
+                <%= submit_tag 'Update Progress', class: 'btn btn-default reset-border-radius' %>
+            <% end %>
+
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $("#checkAllTasks").change(function () {
+        $("input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+</script>

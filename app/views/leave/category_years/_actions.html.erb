@@ -1,0 +1,20 @@
+<a href="javascript:void(0)" data-id="<%= leave_category_year.id %>" data-cat-id="<%= leave_category_year.leave_category_id %>" data-dept-id="<%= leave_category_year.department_id %>" data-value="<%= leave_category_year.days %>" class="btn danger-color cancel-btn">
+  <i class="fa fa-times"></i>
+</a>
+<script type="text/javascript">
+    $(function(){
+        $('.cancel-btn').click(function(){
+            if( $(this).attr('data-value')){
+                var tagElement = '<a class="btn warning-color" data-remote="true" href="/leave/category_years/'+ $(this).attr('data-id') +'/edit?department_id=' + <%= @department.id %> + '&year='+ <%= params[:year] %> + '"><i class="fa fa-pencil-square-o"></i></a><a href="/leave/category_years/'+ $(this).attr('data-id') +'?department_id=' + <%= @department.id %> + '"data-remote="true" data-method="delete" class="btn danger-color"><i class="fa fa-times"></i></a>';
+                $('#leave-category-days-'+$(this).attr('data-cat-id')).html($(this).attr('data-value'));
+                $('#leave-category-days-actions-'+$(this).attr('data-cat-id')).html(tagElement);
+            }
+            else{
+                var tagElement = '<a class="warning-color" data-remote="true" href="/leave/category_years/new?leave_category_id=' + $(this).attr('data-cat-id') + '&department_id='+ <%= @department.id %> + '&year='+ <%= params[:year] %> + '"><i class="fa fa-plus-circle" style="font-size: 20px"></i></a>';
+                $('#leave-category-days-'+$(this).attr('data-cat-id')).html('----');
+                $('#leave-category-days-actions-'+$(this).attr('data-cat-id')).html(tagElement);
+            }
+
+        });
+    });
+</script>

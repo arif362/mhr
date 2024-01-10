@@ -1,0 +1,356 @@
+
+/* Add All Varriable */
+@import "public_variables";
+
+/************/
+
+
+.community-profile-item-wrap {
+  padding: 15px 30px 5px;
+}
+.cpi-header-image {
+  float: left;
+  //height: 60px;
+  //width: 60px;
+}
+.cpi-header-content {
+  padding-left: 55px;
+  width: 100%;
+}
+.cpi-header-content h1 {
+  font-family: roboto;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+  color: $primary-color;
+}
+//.cpi-header-content span {
+//  color: #999;
+//  font-size: 10px;
+//  font-style: italic;
+//}
+.cpi-sub-content {
+  color: #999;
+  font-size: 10px;
+  font-style: italic;
+}
+
+.cpi-header-content p {
+  font-family: roboto;
+  font-weight: 300;
+  margin: 0;
+}
+.cpi-header-date {
+  color: #999;
+  font-family: roboto;
+  font-weight: 400;
+}
+.cpi-image-wrap img {
+  border: 2px solid $hover-color;
+}
+.cpi-description-wrap {
+  color: #333;
+  font-family: roboto;
+  font-weight: 300;
+  width: 100%;
+  word-wrap: break-word;
+}
+.cpi-description-wrap p {
+  text-align: justify;
+}
+
+
+
+.comments-section-wrap {
+  margin-top: 5px;
+  background-color: #fbfbfb;
+  font-family: roboto;
+  padding: 30px 30px 0;
+}
+.leave-a-comment {
+  background-color: #fbfbfb;
+  font-family: "Roboto", sans-serif;
+  h4 {
+    color: $primary-color;
+    font-weight: 400;
+  }
+}
+#comments-wrapper {
+  background-color: #fff;
+}
+
+
+
+
+
+/************/
+.community-wrap {
+  background: #F7F7F7;
+}
+
+.community-header {
+  background: image_url("hr-banner.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 302px;
+  width: 100%;
+  position: relative;
+  .overlay-item {
+    background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .text-item {
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 30%;
+    h1 {
+      color: #ffffff;
+      font-family: f_conv_delicatesans_bold,sans-serif;
+      font-size: 50px;
+    }
+  }
+}
+.community-body {
+  background: #FFFFFF;
+  .latest-activity {
+    padding: 30px;
+    //background: #f9fefe;
+    p {
+      font-family: f_conv_delicatesans_bold,sans-serif;
+      font-size: 16px;
+      //color: #000;
+    }
+    .new-discussion-wrap {
+      font-family: "Roboto",sans-serif;
+      a {
+        cursor: pointer;
+        color: $hover-color;
+        font-weight: 300;
+        i {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
+.community-form-focus-border{
+  border: 1px solid $hover-color;
+}
+
+
+
+/* Community SignIn Form Section Design */
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.login-page {
+
+}
+.community-form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  //max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px 30px;
+  text-align: center;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.1);
+}
+.community-form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.community-form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: $primary-color;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.community-form button:hover,.community-form button:active,.community-form button:focus {
+  background: $hover-color;
+  opacity: 0.9;
+}
+.community-form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.community-form .message a {
+  color: #129894;
+  text-decoration: none;
+}
+
+/* Create Community Discussion Form Section Design */
+.community-discussion-wrap {
+  margin: 0;
+  margin-top: 10px;
+}
+
+.comments-and-reply-wrap {
+  background: #fff;
+  p {}
+  .comments-item-wrap {
+    //padding: 30px 20px 0;
+    .comments-item-container {
+      .comments-item-row {
+        //width: 742px;
+        div {
+          .comments-notification-number-wrap {
+            float: left;
+            .cnn-container {
+              .cnn-item {
+
+              }
+            }
+          }
+          .comments-profile-img-wrap {
+            float: left;
+            width: 50px;
+            height: 50px;
+            .cpi-container {
+              a {
+                img {
+                  width: 40px;
+                  height: 40px;
+                }
+              }
+            }
+          }
+          .post-content-wrap {
+            width: 100%;
+            padding-left: 55px;
+            font-family: "Roboto",sans-serif;
+            h3 {
+              font-weight: 400;
+              a {
+                color: $hover-color;
+                font-size: 20px;
+              }
+            }
+            .user-span-item {
+              color: #999;
+              font-size: 10px;
+              font-style: italic;
+            }
+            .user-description-item {
+              div {
+                font-size: 14px;
+                color: #333;
+                font-family: "Roboto", sans-serif;
+                font-weight: 300;
+                width: 100%;
+                word-wrap: break-word;
+              }
+            }
+            .user-description-span-item {
+              a {
+                color: #129894;
+                &:hover {
+                  text-decoration: none;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Comments Notification Number Design */
+.comments-notification-number-wrap {
+  .cnn-container {
+    width: 50px;
+    height: 50px;
+    background: #00BBEA;
+    display: table;
+    .cnn-item {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      span {
+        color: #FFFFFF;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.comments-profile-img-wrap {
+  .cpi-container {
+    a {
+      display: inline-block;
+      //border: 4px solid #00bbea;
+      img {
+        width: 90px;
+        height: 90px;
+        //border: 1px solid #00BBEA;
+      }
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+/* Category Section Design */
+.community-status {
+  background: #FFFFFF;
+  .community-status-header {
+    p {
+      padding: 15px;
+      border-bottom: 1px solid #f9f9f9;
+      text-align: center;
+    }
+  }
+  .community-status-body {
+    .community-status-item {
+      ul {
+        padding: 15px;
+        li {
+          padding: 8px 15px;
+          margin-bottom: 10px;
+          background: $hover-color;
+          color: #FFFFFF;
+          font-family: "Roboto",sans-serif;
+          font-weight: bold;
+          a {
+            margin: 0;
+            color: #FFFFFF;
+            &:hover{
+              text-decoration: none;
+              cursor: pointer;
+            }
+            span {
+              float: right;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+

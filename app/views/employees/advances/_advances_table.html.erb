@@ -1,0 +1,43 @@
+<table id="advance_employee_table" class="table action-table beaccount-table tablesorter table-responsive advances-list table-hover table-striped">
+  <thead>
+  <tr>
+    <th>Employee</th>
+    <th>Amount</th>
+    <th>Returned</th>
+    <th>Due</th>
+    <th>Status</th>
+    <th>Date</th>
+    <th>Policy</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody id="advance-list">
+  <% advances.each do |advance| %>
+      <%= render 'advance_row', advance: advance %>
+  <% end %>
+  </tbody>
+</table>
+<div id="pager2">
+  <%= render 'shared/pagination' if advances.size > 10 %>
+</div>
+<div class="no-data-found">
+  <% unless advances.present? %>
+      <%= render 'shared/no_data_found', message: 'No advance found' %>
+  <% end %>
+</div>
+<script type="text/javascript">
+    if ($("#advance_employee_table").find("tbody").find("tr").size() > 0) {
+        $("#advance_employee_table").tablesorter({
+            widthFixed: true,
+            widgets: ['zebra'],
+            headers: {
+                7: {
+                    sorter: false
+                }
+            }
+        }).tablesorterPager({container: $("#pager2")});
+    }
+</script>
+
+
+

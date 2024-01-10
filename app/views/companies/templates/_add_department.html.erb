@@ -1,0 +1,16 @@
+<tr class="departments_<%= department.id %>">
+  <td><%= department.name %></td>
+  <td><%= truncate(department.description, length: 100) %></td>
+  <td><%= department.employees.count %></td>
+  <td class="actions">
+    <%= link_to department_path(department), class: 'btn info-color' do %>
+        <i class="fa fa-eye"> </i>
+    <% end %>
+    <%= link_to department_path(department), class: 'btn warning-color' do %>
+        <i class="fa fa-pencil"> </i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: department.id, action_on: 'departments', action_type: AppSettings::ACTIONS[:delete] ), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"> </i>
+    <% end %>
+  </td>
+</tr>

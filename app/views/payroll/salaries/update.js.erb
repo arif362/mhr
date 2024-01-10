@@ -1,0 +1,20 @@
+<% if @salary.errors.any? %>
+    popupMessage('Unable to update salary. Please try again!', 'alert-danger');
+<% else %>
+
+    <% if params[:state] == Payroll::Salary::STATES[:list] %>
+        $('#employee-salary-<%= @salary.id %>').replaceWith("<%= escape_javascript(render 'salary_row', salary: @salary).html_safe %>");
+        $('#global-modal').modal('hide');
+    <% elsif params[:state] == Payroll::Salary::STATES[:detail] %>
+        $('#employee-salary-detail-section').html("<%= escape_javascript(render 'salary_detail').html_safe %>");
+        $('#edit-from-detail').show();
+        $('#edit-cancel-from-detail').hide();
+    <% elsif params[:state] == Payroll::Salary::STATES[:summary] %>
+        $('#employee-sum-salary-<%= @salary.id %>').replaceWith("<%= escape_javascript(render 'salary_summary_row', salary: @salary).html_safe %>");
+        $('#global-modal').modal('hide');
+    <% end %>
+
+    popupMessage('Salary successfully updated.', 'alert-info');
+
+<% end %>
+

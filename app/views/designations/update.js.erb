@@ -1,0 +1,8 @@
+if(<%= @designation.errors.any? %>) {
+    popupMessage("<%= escape_javascript( errors_to_message_string( @designation.errors ) ).html_safe %>",'alert-danger')
+}
+else {
+    $('#global-modal').modal('hide');
+    popupMessage("Designation has been updated successfully",'alert-success')
+    $('#designation-<%= @designation.id %>').replaceWith('<%= escape_javascript(render 'departments/templates/add_designation', designation: @designation)%>');
+}

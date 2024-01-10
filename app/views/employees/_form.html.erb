@@ -1,0 +1,738 @@
+<div id="employee-form-wizard">
+  <div class="wizard-modal in">
+    <div class="wizard-modal-header modal-header">
+      <button class="wizard-close close" data-dismiss="modal" type="button">x</button>
+      <h3 class="wizard-title"><%= @employee.new_record? ? "Create New Employee" : "Edit Employee" %></h3>
+      <span class="wizard-subtitle"></span>
+    </div>
+
+    <div class="pull-left wizard-steps">
+      <div class="wizard-nav-container">
+        <ul class="nav nav-list form-wizard-nav-list pb30">
+          <li class="wizard-nav-item active already-visited">
+            <a class="wizard-nav-link"> Account Information </a>
+          </li>
+          <li class="wizard-nav-item <%= 'already-visited' unless @employee.new_record? %>">
+            <a class="wizard-nav-link"> Employee Information </a>
+          </li>
+          <li class="wizard-nav-item <%= 'already-visited' unless @employee.new_record? %>">
+            <a class="wizard-nav-link"> Personal Information </a>
+          </li>
+          <li class="wizard-nav-item <%= 'already-visited' unless @employee.new_record? %>">
+            <a class="wizard-nav-link"> Contact Information </a>
+          </li>
+          <li class="wizard-nav-item <%= 'already-visited' unless @employee.new_record? %>">
+            <a class="wizard-nav-link"> Emergency Contact </a>
+          </li>
+          <li class="wizard-nav-item <%= 'already-visited' unless @employee.new_record? %>">
+            <a class="wizard-nav-link"> Payroll </a>
+          </li>
+          <li class="wizard-nav-item <%= 'already-visited' unless @employee.new_record? %>">
+            <a class="wizard-nav-link"> Access Rights </a>
+          </li>
+          <li class="wizard-nav-item <%= 'already-visited' unless @employee.new_record? %>">
+            <a class="wizard-nav-link"> Welcome </a>
+          </li>
+        </ul>
+      </div>
+      <div class="wizard-progress-container">
+        <div class="progress progress-striped">
+          <div class="progress-bar progress-bar-primary hover-color-bg" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+            <span>0% Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= form_for @employee, url: (@employee.new_record? ? add_employees_path : update_info_employee_path), remote: true, method: (@employee.new_record? ? :post : :put), html: {id: 'employee-form', multipart: true} do |f| %>
+        <div class="wizard-cards">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <div class="wizard-card-container">
+
+            <div class="wizard-card account-info-wrap" data-onvalidated="setServerName" data-cardname="name" style="display: block;">
+              <h3><span>Account Information</span></h3>
+
+              <div class="wizard-input-section account-info-input-section-wrap">
+
+                <div class="form-group">
+                  <%= f.label :first_name, "*First name" %>
+                  <%= f.text_field :first_name, autofocus: true, data: {required: true}, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Enter your first name' %>
+                  <p></p>
+                  <%= f.hidden_field :department_id %>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :last_name, '*Last name' %>
+                  <%= f.text_field :last_name, autofocus: true, data: {required: true}, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Enter your last name' %>
+                  <p></p>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :email, '*Email' %>
+                  <%= f.email_field :email, autofocus: true, data: {required: true}, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Enter your email' %>
+                  <p></p>
+                </div>
+
+                <div class="checkbox">
+                  <%= label_tag 'employee_account' do %>
+                      <%= check_box_tag 'employee_account', class: 'form-control form-group' %>
+                      <span class="cr">
+                        <i class="cr-icon fa fa-check"></i>
+                      </span> Don't create employee account for login.
+                  <% end %>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="wizard-card employee-info-wrap" data-cardname="group">
+              <h3><span>*Employee Information</span></h3>
+
+              <div class="wizard-input-section employee-info-input-section-wrap">
+
+                <div class="row">
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= label_tag '', "*Employee ID" %>
+                      <%= f.text_field :id_card_no, autofocus: true, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type your employee ID' %>
+                      <p></p>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :designation_id %>
+                      <%= f.select :designation_id, options_for_select(@designations.collect { |designation| [designation.name, designation.id] }, f.object.designation_id), {}, data: {required: true}, class: "form-control modal-input-field-height reset-border-radius", id: 'designation' %>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="row">
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label "Type" %>
+                      <%= f.select :employee_type, options_for_select(Employee::TYPE.map { |k, v| [v, v] }, f.object.employee_type), {}, {class: "form-control modal-input-field-height reset-border-radius"} %>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :joining_date, '*Joining Date' %>
+                      <%= f.text_field :joining_date, autofocus: true, data: {required: true}, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Select your joining date' %>
+                      <p></p>
+                    </div>
+                    <!--<div class="form-group">-->
+                    <!--<%#= f.label :salary, "*Basic Salary" %>-->
+                    <!--<%#= f.text_field :basic_salary, autofocus: true, data: {required: true}, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type your Salary' %>-->
+                    <!--<p></p>-->
+                    <!--</div>-->
+                  </div>
+
+                </div>
+
+
+                <div class="row">
+                  <!--<div class="col-md-6">-->
+                  <!--<div class="form-group">-->
+                  <!--<%#= f.label :joining_date, '*Joining Date' %>-->
+                  <!--<%#= f.text_field :joining_date, autofocus: true, data: {required: true}, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Select your joining date' %>-->
+                  <!--<p></p>-->
+                  <!--</div>-->
+                  <!--</div>-->
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <%= f.label :bank_account_number, "Bank Account Number" %>
+                      <%= f.text_field :bank_account_number, autofocus: true, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type Bank Account Number' %>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :bank_details, "Bank Details" %>
+                  <%= f.text_area :bank_details, autofocus: true, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type Bank Details (Bank Name, Branch Name, Address, Swiftcode etc)' %>
+                  <p></p>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :previous_employment_history, "Previous Employeement History" %>
+                  <%= f.text_area :previous_employment_history, autofocus: true, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type Employee Previous Details (Company Name, Designation, Address etc)' %>
+                  <p></p>
+                </div>
+
+
+              </div>
+
+            </div>
+
+            <div class="wizard-card personal-info-wrap">
+
+              <h3><span>Personal Information</span></h3>
+
+              <div class="wizard-input-section personal-info-input-section-wrap">
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :nid, 'National Identity (NID)' %>
+                      <%= f.text_field :nid, autofocus: true, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type your NID number' %>
+                      <p></p>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :country, '*Country' %>
+                      <%= country_select(:employee, :country, {selected: f.object.country, include_blank: 'Select a country'}, {class: 'form-control custom-chosen modal-input-field-height reset-border-radius', data: {required: true}}) %>
+                      <p></p>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :gender, '*Gender' %>
+                      <%= f.select :gender, options_for_select(['Male', 'Female'], f.object.gender), {include_blank: 'Select type of gender'}, {class: "form-control modal-input-field-height reset-border-radius", data: {required: true}} %>
+                      <p></p>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :blood_group %>
+                      <%= f.select :blood_group, options_for_select(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], f.object.blood_group), {include_blank: 'Select blood group'}, {class: "form-control modal-input-field-height reset-border-radius", data: {required: true}} %>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :dob, '*Date of birth' %>
+                      <%= f.text_field :dob, autofocus: true, data: {required: true}, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Whats your date of birth? ' %>
+                      <p></p>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :marital_status, '*Marital Status' %>
+                      <%= f.select :marital_status, options_for_select(['Married', 'Unmarried', 'Divorced'], f.object.marital_status), {include_blank: 'Select marital status'}, {class: "form-control modal-input-field-height reset-border-radius", data: {required: true}} %>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :nationality, 'Nationality' %>
+                      <%= f.text_field :nationality, autofocus: true, data: {required: true}, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type your nationality ' %>
+                      <p></p>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :religion, 'Religion' %>
+                      <%= f.select :religion, options_for_select(['Islam', 'Christianity ', 'Hinduism', 'Nonreligious', 'Buddhism', 'Chinese traditional religion'], f.object.religion), {include_blank: 'Select your religion'}, {class: "form-control modal-input-field-height reset-border-radius", data: {required: true}} %>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+
+            <div class="wizard-card contact-info-wrap" data-cardname="services">
+              <h3><span>Contact Information</span></h3>
+
+              <div class="wizard-input-section contact-info-input-section-wrap">
+
+                <div class="row">
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :mobile, "*Mobile" %>
+                      <%= f.text_field :mobile, autofocus: true, data: {required: true}, class: "form-control input-field-height reset-border-radius", placeholder: 'Type your mobile number' %>
+                      <p></p>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= f.label :location %>
+                      <%= f.text_field :location, autofocus: true, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type your location' %>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :present_address, '*Present Address' %>
+                  <%= f.text_area :present_address, autofocus: true, class: "form-control input-field-height reset-border-radius", placeholder: 'Type your present address' %>
+                  <p></p>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :permanent_address, '*Permanent Address' %>
+                  <%= f.text_area :permanent_address, autofocus: true, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type your permanent address' %>
+                  <p></p>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="wizard-card kin-info-wrap" data-onload="" data-cardname="location">
+              <h3><span> Emergency Contact </span></h3>
+
+              <div class="wizard-input-section kin-info-input-section-wrap">
+
+                <p>
+                  A person's next of kin (NOK) is that person's closest living blood relative or relatives name and
+                  address.
+                </p>
+
+                <div class="form-group">
+                  <%= f.label :kin_name, '*Kin Name' %>
+                  <%= f.text_field :kin_name, autofocus: true, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type your kin name' %>
+                  <p></p>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :kin_contact, '*Kin Contact' %>
+                  <%= f.text_field :kin_contact, autofocus: true, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type your kin contact address' %>
+                  <p></p>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :kin_relationship, '*Relationship' %>
+                  <%= f.text_field :kin_relationship, autofocus: true, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Whats the relation with you like parents, brother, uncle etc ?' %>
+                  <p></p>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="wizard-card welcome-info-wrap">
+              <h3><span>Payroll</span></h3>
+
+              <div class="wizard-input-section welcome-info-input-section-wrap">
+
+                <div class="payroll-ticket">
+                  <div class="form-group">
+                    <%= f.label :salary, "*Basic Salary" %>
+                    <%= f.text_field :basic_salary, autofocus: true, data: {required: true}, class: "form-control modal-input-field-height reset-border-radius", placeholder: 'Type your Salary' %>
+                    <p></p>
+                  </div>
+
+                  <table class="table table-borderless excel-tablex">
+                    <thead>
+                    <th> Category Name</th>
+                    <th> Category Details</th>
+                    </thead>
+                    <tbody>
+                    <%= f.fields_for :payroll_employee_categories do |ff| %>
+                        <tr>
+                          <td>
+                            <%= ff.object.category.name %>
+                            <%= ff.hidden_field :category_id %>
+                          </td>
+                          <td class="text-right">
+                            <% if ff.object.category.is_percentage? %>
+
+                                <div class="input-group">
+                                  <%= ff.text_field :percentage, class: 'form-control reset-border-radius', 'aria-describedby' => 'basic-addon1' %>
+                                  <span class="input-group-addon reset-border-radius" id="basic-addon1">% of basic salary</span>
+                                </div>
+
+                            <% else %>
+                                <div class="input-group">
+                                  <%= ff.text_field :amount, class: 'form-control reset-border-radius', 'aria-describedby' => 'basic-addon2' %>
+                                  <span class="input-group-addon reset-border-radius" id="basic-addon2"><%= current_currency %></span>
+                                </div>
+                            <% end %>
+                          </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                  <div class="no-data-found">
+                    <% unless @employee.payroll_employee_categories.present? %>
+                        <p class="warning-color">
+                          <i class="fa fa-exclamation-triangle"></i>
+                          There are no payroll categories. No problem ! Later you can add payroll categories from payroll module and assign it to this employee.</p>
+                        <%#= render 'shared/no_data_found', message: 'No payroll categories found. Add categories from payroll module.' %>
+                    <% end %>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="wizard-card welcome-info-wrap">
+              <h3><span>Access Right</span></h3>
+
+              <div class="wizard-input-section welcome-info-input-section-wrap">
+                <div class="row">
+
+                  <%= f.fields_for :access_right do |ff| %>
+
+                      <% AccessRight::PERMISSION_LIST.each do |key, value| %>
+                          <% if is_available_module?(key) %>
+                              <div class="col-sm-12">
+                                <div class="panel panel-default reset-border-radius">
+                                  <div class="panel-heading reset-border-radius"> <%= key %> </div>
+                                  <div class="panel-body reset-border-radius">
+                                    <% value.each do |controller| %>
+                                        <div class="form-group select clearfix">
+                                          <label class="col-sm-3 control-label">
+                                            <%= controller.to_s.humanize.camelize %>
+                                          </label>
+
+                                          <div class="col-sm-8">
+                                            <% if can_access? 'edit', 'access_rights' %>
+                                                <%= select_tag :"employee[access_right_attributes][permissions][#{key.to_s}][#{controller.to_s}]",
+                                                               options_for_select(AccessRight::PERMISSION_TYPES, ff.object.permissions.present? && ff.object.permissions[key].present? ? ff.object.permissions[key][controller] : nil),
+                                                               :class => "select form-control input-sm reset-border-radius" %>
+                                            <% else %>
+                                                <%= ff.object.get_permission_type(ff.object.permissions[key][controller]) %>
+                                            <% end %>
+                                          </div>
+                                          <div class="col-sm-1">
+                                            <i class="fa fa-spinner fa-lg fa-spin green hidden"></i>
+                                            <i class="fa fa-check fa-lg green"></i>
+                                          </div>
+                                        </div>
+                                    <% end %>
+                                  </div>
+                                </div>
+                              </div>
+                          <% end %>
+                      <% end %>
+                      <!--<div class="col-sm-12">-->
+                        <!--<div class="panel panel-default reset-border-radius">-->
+                          <!--<div class="panel-heading reset-border-radius"> Custom Permissions</div>-->
+                          <!--<div class="panel-body reset-border-radius">-->
+                            <!--<#% AccessRight::CUSTOM_PERMISSION_LIST.each do |item| %>-->
+
+                                <!--<div class="form-group select">-->
+                                  <!--<label class="col-sm-3 control-label">-->
+                                    <!--<%#= item.to_s.humanize %>-->
+                                  <!--</label>-->
+
+                                  <!--<div class="col-sm-8">-->
+                                    <!--<#% if can_access? 'edit', 'access_rights' %>-->
+                                        <%#= select_tag :"employee[access_right_attributes][custom_permissions][#{item.to_s}]",
+#                                                        options_for_select(AccessRight::CUSTOM_PERMISSION_TYPES, ff.object.custom_permissions[item]),
+                                                       :class => "select form-control input-sm reset-border-radius" %>
+                                    <!--<#% else %>-->
+                                        <!--<%#= f.object.get_custom_permission_type(ff.object.custom_permissions[item]) %>-->
+                                    <!--<#% end %>-->
+                                  <!--</div>-->
+                                  <!--<div class="col-sm-1">-->
+                                    <!--<i class="fa fa-spinner fa-lg fa-spin green hidden"></i>-->
+                                    <!--<i class="fa fa-check fa-lg green"></i>-->
+                                  <!--</div>-->
+                                <!--</div>-->
+
+                            <!--<#% end %>-->
+                          <!--</div>-->
+                        <!--</div>-->
+                      <!--</div>-->
+                  <% end %>
+
+                </div>
+              </div>
+            </div>
+
+
+            <div class="wizard-card welcome-info-wrap">
+              <h3><span>Welcome</span></h3>
+
+              <div class="wizard-input-section welcome-info-input-section-wrap">
+                <div class="row">
+
+                  <div class="col-md-4">
+
+                    <p> Upload profile image. </p>
+                    <!--<div class="employee-avatar-wrap">-->
+                    <!--<div class="employee-avatar-container">-->
+                    <%#= image_tag @employee.image.present? ? @employee.image.large.url : 'employees/default_profile_image.png', class: 'img-responsive employee-profile-image-preview' %>
+                    <!--</div>-->
+                    <!--<div class="upload-button custom-upload-file-wrap avater-file-browse-placement">-->
+                    <!--<label for="employee-profile-image" class="btn btn-default">-->
+                    <!--<span class="fa fa-photo"> </span>-->
+                    <!--<%#= f.file_field :image, class: 'custom-upload-file-item hidden', id: 'employee-profile-image' %>-->
+                    <!--</label>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="employee-avater-wrap">
+                      <div class="employee-avater-container">
+                        <%#= image_tag 'company/company.png', class: 'img-responsive avatarx' %>
+                        <%= image_tag @employee.image.present? ? @employee.image.large.url : 'employees/default_profile_image.png', class: 'img-responsive employee-profile-image-preview', id: 'employee-logo' %>
+                      </div>
+
+                      <div class="custom-upload-file-wrap avater-file-browse-placement" id="upload-employee-logo">
+                        <span class="fa fa-photo"> </span>
+                        <input type="file" id="employee_image" name="employee[image]" class="custom-upload-file-item">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <p>Select user identity color (Optional) </p>
+
+                      <div class="color-select-wrap">
+                        <%= f.text_field :color %>
+                        <!--, type: 'color'-->
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-8">
+                    <p>Write comments/note for the employee. </p>
+
+                    <div class="form-group">
+                      <%= f.text_area :note, placeholder: 'Free text (Note)', class: 'form-control reset-border-radius', rows: '3' %>
+                    </div>
+
+                    <div class="form-group">
+                      <p>Upload identity document. </p>
+
+                      <div class="add-attechment-wrap">
+                        <div class="custom-upload-file-wrap reset-border-radius">
+                          <label for="employee-attachment" class="btn btn-default">
+                            <span><i class="fa fa-paperclip"></i> Attachment</span>
+                            <%= f.file_field :attachment, class: 'custom-upload-file-item hidden', id: 'employee-attachment' %>
+                          </label>
+                        </div>
+                      </div>
+                      <span class="attachment-file-name"></span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+            <div class="wizard-error">
+              <div class="alert alert-error">
+                <strong>There was a problem</strong> with your submission.
+                Please correct the errors and re-submit.
+              </div>
+            </div>
+
+            <div class="wizard-failure">
+              <div class="alert alert-error">
+                <strong>There was a problem</strong> submitting the form.
+                Please try again in a minute.
+              </div>
+            </div>
+
+            <div class="wizard-success">
+              <div class="alert alert-success">
+                <span class="create-server-name"></span>
+                was created <strong>successfully.</strong>
+              </div>
+              <a class="btn btn-primary im-done">Done</a>
+            </div>
+
+          </div>
+
+          <div class="wizard-modal-footer">
+            <div class="wizard-buttons-container">
+              <button class="btn btn-default reset-border-radius wizard-cancel wizard-close" type="button" data-dismiss="modal" style="display: inline-block;">Cancel</button>
+              <div class="btn-group-single pull-right">
+                <button class="btn reset-border-radius wizard-back" type="button">Back</button>
+                <button class="btn wizard-next reset-border-radius mr20" type="button">Next</button>
+                <button class="btn wizard-submit reset-border-radius mr20" type="submit">Submit</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'employees/form_validate' %>
+<script type="text/javascript">
+    var currentStep = 0;
+    var lastStep = 7;
+
+    $(function () {
+
+        $('#employee_color').spectrum({
+            preferredFormat: "hex3",
+            color: "<%= !@employee.new_record? && @employee.color.present? ? @employee.color : '#ffffff' %>"
+        });
+        /* Upload profile image and attached file */
+//        $('#employee_image').change(function () {
+//            var reader = new FileReader();
+//            reader.onload = function (e) {
+//                $('#employee-logo').attr('src', e.target.result)
+//            };
+//            reader.readAsDataURL(this.files[0]);
+//        });
+        function validPayloadLenght(payload){
+            var payloadLenght = payload/1024/1024;
+            return payloadLenght < 1 ? true : false;
+        }
+
+        $('#employee_image').change(function () {
+            var reader = new FileReader();
+
+            if(validPayloadLenght(this.files[0].size)){
+                reader.onload = function (e) {
+                    $('#employee-logo').attr('src', e.target.result)
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+            else{
+
+                popupMessage('This image is not supported. File Size too large. ', 'alert-danger');
+                $('#employee_image').val(null);
+
+
+            }
+
+        });
+
+
+        $('.wizard-next').click(function () {
+            stepValidation(currentStep, 'l');
+        });
+
+        $('.wizard-back').click(function () {
+            stepValidation(currentStep, 'r');
+        });
+
+        $(document).on('click', 'li.already-visited a', function () {
+            var index = $('.form-wizard-nav-list li').index($(this).parents('li'));
+            stepValidation(currentStep, 'unknown', index);
+        });
+
+        if (currentStep == 0) {
+            $('.wizard-back').hide();
+        }
+    });
+
+    function stepValidation(step, direction, destination) {
+        var validateStatus = true;
+        step = validator[step];
+        var fields = step.fields;
+
+        $.each(fields, function (key, validation) {
+            var fieldObj = $('#' + key);
+            var value = fieldObj.val();
+            var field = fields[key];
+            fieldObj.parent().removeClass('has-error');
+            fieldObj.parent().find("p").html('').removeClass('danger-color');
+            if (validation.required && (value == '' || value == null)) {
+//                var message = step["fields"][key] ["message"];
+//                fieldObj.parent().find("p").addClass('danger-color').html(message);
+//                fieldObj.parent().addClass('has-error');
+                viewErrorMessage(key, "message", fieldObj, step);
+                validateStatus = false;
+            }
+            else if (key == 'employee_email') {
+                if (!validationOfEmail(value)) {
+                    viewErrorMessage(key, "pattern_message", fieldObj, step);
+//                    var message = step["fields"][key] ["pattern_message"];
+//                    fieldObj.parent().find("p").addClass('danger-color').html(message);
+//                    fieldObj.parent().addClass('has-error');
+                    validateStatus = false;
+                }
+            }
+        });
+
+        if (validateStatus) {
+            switchStep(step, direction, destination);
+        }
+
+        if (validateStatus == true && currentStep == 0) {
+            $('.wizard-back').hide();
+        }
+        else {
+            $('.wizard-back').show();
+        }
+
+        if (validateStatus == true && currentStep == lastStep) {
+            $('.wizard-next').hide();
+            $('.wizard-submit').show();
+        }
+        else {
+            $('.wizard-next').show();
+            $('.wizard-submit').hide();
+
+        }
+    }
+
+    function viewErrorMessage(key, message_key, fieldObj, step) {
+        var message = step["fields"][key][message_key]; //pattern_message
+        fieldObj.parent().find("p").addClass('danger-color').html(message);
+        fieldObj.parent().addClass('has-error');
+    }
+
+    function validationOfEmail(email) {
+        var emailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+        return (email.match(emailPattern) == null) ? false : true;
+    }
+
+    function switchStep(step, direction, destination) {
+        if (direction == 'l') {
+            currentStep = currentStep + 1;
+            if (currentStep > lastStep) {
+                currentStep = lastStep;
+            }
+            $('.wizard-card').hide().eq(currentStep).show();
+            $('.wizard-nav-item').removeClass('active').eq(currentStep).addClass('already-visited active');
+        }
+        else if (direction == 'unknown') {
+            $('.wizard-card').hide().eq(destination).show();
+            $('.wizard-nav-item').removeClass('active').eq(destination).addClass('already-visited active');
+            currentStep = destination;
+        }
+        else {
+            currentStep = currentStep - 1;
+            if (currentStep <= -1) {
+                currentStep = 0;
+            }
+            $('.wizard-card').hide().eq(currentStep).show();
+            $('.wizard-nav-item').removeClass('active').eq(currentStep).addClass('active');
+        }
+        updateProgressBar();
+    }
+
+    function updateProgressBar() {
+        perc = (currentStep * 100) / lastStep;
+        $('.progress-bar').css('width', perc + '%').find('span').text(perc.toFixed(2) + '% Completed');
+    }
+
+    /* Added datepicker for birth & joining date */
+    $('#employee_dob').datetimepicker({
+        format: 'YYYY-MM-DD',
+        maxDate: '<%= 16.year.ago %>'
+    });
+
+    $('#employee_joining_date').datetimepicker({
+        format: 'YYYY-MM-DD',
+        maxDate: 'now'
+    });
+
+</script>

@@ -1,0 +1,129 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Attendance Report
+      </h4>
+    </div>
+    <div class=" secondary-color pl15 pr15">
+      <div class="content-body-wrapper">
+        <div class="content-body report-table-wrapper mt10">
+          <div class="site-header" xmlns="http://www.w3.org/1999/html">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="report-search-form clearfix">
+                  <%= form_tag '', method: :get, id: 'month-year-attendance-report-form' do %>
+                      <%= select_month params[:date].present? ? params[:date][:month].to_i : Date.today, {}, {class: "form-control"} %>
+                      <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control"} %>
+                      <%= submit_tag 'Search', class: 'primary-color-bg-with-hover' %>
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <table class="pull-right">
+                  <tr>
+                    <td>
+                      <% if employee_role == 'admin' %>
+                          <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To....'} %>
+                      <% end %>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="text-center pt10">
+              <h3 class="mb0">
+                Attendance report from <%= @start_date.strftime('%B %d, %Y') %>
+                to <%= @end_date.strftime('%B %d, %Y') %>
+              </h3>
+              <p> Total employee <%= @attendance_report.count %> </p>
+            </div>
+          </div>
+          <div class="p10 glass-color-bg">
+            <span class="label label-success"><i class="fa fa-check" aria-hidden="true"></i></span> Present
+            <span class="label label-success ml15"><i class="fa fa-times" aria-hidden="true"></i></span> Absent
+            <span class="label label-success ml15">L</span> In Leave
+            <span class="label label-success ml15">W</span> Weekend
+            <span class="label label-success ml15">WP</span> Weekend But Present
+            <span class="label label-success ml15">H</span> Holiday
+            <span class="label label-success ml15">HP</span> Holiday But Present
+            <span class="label label-success ml15">C</span> Custom Holiday
+            <span class="label label-success ml15">CP</span> Custom Holiday But Present
+          </div>
+          <div class="panelx table-warapperx">
+            <div class="table-warapper-body">
+              <table class="table beaccount-table attendance-report-table table-responsive table-hover table-bordered">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <% end_day = @end_date.day %>
+                  <% (1..end_day).each do |day| %>
+                      <th><%= day %></th>
+                  <% end %>
+                </tr>
+                </thead>
+                <tbody>
+                <% @attendance_report.each do |employee_id, value| %>
+                    <tr>
+                      <td>
+                        <div class="col-sm-10 reset-padding">
+                          <% if value[:employee].present? %>
+                              <%= link_to employee_profile_path(value[:employee]), title: value[:employee].full_name, remote:true do %>
+                                  <%= truncate(value[:employee].full_name, length: 15) %>
+                              <% end %>
+                          <% end %>
+                        </div>
+                        <div class="col-sm-2 reset-padding">
+                          <%= link_to employee_wise_report_attendance_attendances_path(employee_id: employee_id, date: {month: @end_date.month, year: @end_date.year}) do %>
+                              <i class="fa fa-eye"> </i>
+                          <% end %>
+                        </div>
+                      </td>
+                      <% (@start_date.day..@end_date.day).each do |day| %>
+                          <%= render 'report_item', value: value, day: day %>
+                      <% end %>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+              <%= render 'shared/pagination' if @attendance_report.size > 10 %>
+              <div class="no-data-found">
+                <% if @attendance_report.size <= 0 %>
+                <%= render 'shared/no_data_found', message: 'No employee found' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        if ($(".beaccount-table").find("tbody").find("tr").size() > 0) {
+            $(".beaccount-table").tablesorter({
+                headers: {
+                    5: {
+                        sorter: false
+                    }
+                },
+                widthFixed: true,
+                widgets: ['zebra']
+            }).tablesorterPager({container: $("#pager")});
+        }
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= report_attendance_attendances_path('pdf', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= report_attendance_attendances_path('docx', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= report_attendance_attendances_path('xls',  params) %>'
+            }
+        });
+    });
+</script>

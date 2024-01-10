@@ -1,0 +1,41 @@
+<%= render 'shared/modal_header', modal_title: 'New Attendance' %>
+<%= form_for(@attendance, remote: true) do |f| %>
+    <div class="modal-body">
+
+      <div class="pb10">
+        <label class="pr10">Name: </label><span><%= @employee.full_name %></span><br>
+        <label class="pr10">Attendance Date: </label><span><%= @selected_date %></span>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :in_time %><br>
+        <%= f.text_field :in_time, class: "form-control", id: "attendance_in_time", required:true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :out_time %><br>
+        <%= f.text_field :out_time, class: "form-control", id: "attendance_out_time" %>
+      </div>
+
+      <%= hidden_field_tag :employee_id, @employee.id %>
+      <%= hidden_field_tag :in_date, @date %>
+      <% if params[:is_attendance].present? %>
+          <%= hidden_field_tag :is_attendance, params[:is_attendance] %>
+      <% end %>
+
+    </div>
+    <div class="modal-footer">
+      <div class="pull-right">
+        <%= f.submit class: 'btn btn-primary' %>
+        <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+      </div>
+    </div>
+  <% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $('#attendance_in_time, #attendance_out_time').datetimepicker({
+            format: 'LT'
+        });
+    });
+</script>

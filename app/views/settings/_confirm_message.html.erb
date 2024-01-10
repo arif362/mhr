@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <i class="fa fa-<%= @action_type == AppSettings::ACTIONS[:delete] ? 'exclamation-triangle' : 'newspaper-o' %>"></i>
+  <h4 class="modal-title"> <%= @action_type.capitalize %> <%= @action_on.split('/').count > 1 ? "#{ @action_on.split('/').first.capitalize + ' ' + @action_on.split('/').last.capitalize }" : @action_on.split('/').first.capitalize %> </h4>
+</div>
+<div class="modal-body">
+  <h3> Really, are you want to <%= @action_type %> this record ?</h3>
+</div>
+<div class="modal-footer">
+  <% if @action_type == AppSettings::ACTIONS[:delete] %>
+      <%= link_to 'Yes', {controller: @action_on, action: 'destroy', id: @action_on_item, extras: params, additionals: @action_data}, class: 'btn btn-danger', method: :delete, remote: true %>
+  <% elsif @action_type == AppSettings::ACTIONS[:approve] %>
+      <%= link_to 'Yes', {controller: @action_on, action: 'update', id: @action_on_item, is_approved: AppSettings::ACTIONS[:approve]}, class: 'btn btn-success', method: :put, remote: true %>
+  <% elsif @action_type == AppSettings::ACTIONS[:reject] %>
+      <%= link_to 'Yes', {controller: @action_on, action: 'update', id: @action_on_item, is_approved: AppSettings::ACTIONS[:reject]}, class: 'btn btn-danger', method: :put, remote: true %>
+  <% elsif @action_type== AppSettings::ACTIONS[:deactivate] %>
+      <%= link_to 'Yes', {controller: @action_on, action: 'destroy', id: @action_on_item, extras: params, additionals: @action_data}, class: 'btn btn-danger', method: :delete, remote: true %>
+  <% elsif @action_type== AppSettings::ACTIONS[:active] %>
+      <%= link_to 'Yes', {controller: @action_on, action: 'activation', id: @action_on_item, extras: params, additionals: @action_data}, class: 'btn btn-success', method: :put, remote: true %>
+
+  <% end %>
+
+  <div class="btn btn-default" data-dismiss="modal"> No</div>
+</div>

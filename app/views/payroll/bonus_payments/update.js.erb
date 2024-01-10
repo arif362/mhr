@@ -1,0 +1,11 @@
+<% if @bonus_payment.errors.any? %>
+    popupMessage('<%= escape_javascript( errors_to_message_string( @bonus_payment.errors ) ).html_safe %>','alert-danger');
+<% else %>
+popupMessage("Updated successfully", 'alert-success');
+    $('#bonus-<%= @bonus_payment.id %>').replaceWith('<%= escape_javascript( render 'payroll/bonus_payments/bonus_row', bonus: @bonus_payment ) %>');
+    if ($('#bonus-detail-<%= @bonus_payment.id %>').length)
+    {
+        $('#bonus-detail-<%= @bonus_payment.id %>').replaceWith('<%= escape_javascript(render 'bonus_view').html_safe %>');
+    }
+    $('#global-modal').modal('hide');
+<% end %>

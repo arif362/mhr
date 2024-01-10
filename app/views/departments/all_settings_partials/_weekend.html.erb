@@ -1,0 +1,24 @@
+<div class="step-content-wrapper">
+  <h2>Add Weekend</h2>
+  <div class="m10">
+    <div class="mb20">
+      <%= form_tag generate_attendance_day_offs_path(department: @department), remote: true, id: 'dayoff-generator-form'  do %>
+
+          <table class="table weekend-table">
+            <tbody>
+            <tr>
+              <td> <%= label_tag :weekend, 'Select Weekend' %> </td>
+              <td>
+                <%= select_tag :weekend, options_for_select(7.times.collect { |day| Date::DAYNAMES[day] }), {prompt: 'Select weekend for current year', class: 'form-control'} %>
+              </td>
+              <td>
+                <input type="submit" class="primary-color-bg-with-hover" value="Generate Weekend List" name="commit" data-toggle='popover' data-placement='bottom' data-content="This option for generating weekend for current year. You have to generate weekend in every year." id="leaveSubmit">
+              </td>
+            </tr>
+            </tbody>
+          </table>
+      <% end %>
+    </div>
+  </div>
+</div>
+

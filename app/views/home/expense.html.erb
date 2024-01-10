@@ -1,0 +1,87 @@
+<div class="mt75">
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="col-sm-9">
+        <div class="module-detail">
+          <h2 class="page-header"> Expenses Management </h2>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/expense/expense_dashboard.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/expense/expense_dashboard.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6", style="text-align: justify">
+              mhr has developed a range of expense management solutions to streamline purchasing
+              and simplify reporting and reconciliation processes for work related expenses. This helps
+              an HR to reduce loads of paper work and saves time by keeping track of every bit of their
+              expense through the database from this software.
+            </div>
+          </div>
+
+          <div class="row mt20 mb80", style="text-align: justify">
+            <div class="col-sm-6">
+              Any kind of expense of an organization can be added by this module very easily.
+              You can enter expense items and an estimated monetary amount for each one. For example, if you are taking a business trip,
+              you might select an “airfare” expense item, which can be added from expense category and enter the estimated cost of the tickets,
+              and note the destination in the “Description” field.
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/expense/add_expense.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/expense/add_expense.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/expense/expense.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/expense/expense.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6", style="text-align: justify">
+              You can see all upcoming expenses of your employees as well, thus you can approve or reject expenses, and you can also
+              create expenses and add a receipt with it.
+            </div>
+          </div>
+          <div class="row mt20 mb80", style="text-align: justify">
+            <div class="col-sm-6">
+              An expense report is commonly used for recording business expenses such as transportation, food, lodging, and conference
+              fees and so on. But an expense report can also be used to document any business expense for which an employee needs to be reimbursed.
+              You can see expense reports of every month in this section.
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/expense/monthly_expense_report.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/expense/monthly_expense_report.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/expense/yearly_expense_report.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/expense/yearly_expense_report.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6", style="text-align: justify">
+              An expense report provides an accurate record of a business’s spending, which is important for budget planning and tax reporting.
+              Providing receipts for all expenses listed on a report helps prevent mistakes and prepares businesses for filing taxes and completing audits.
+              For this reason yearly expense report is also available in expense module too.
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <%= render 'home/feature_modules', modules:@modules %>
+
+    </div>
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.preview-attachment').attachmentPreview();
+    });
+</script>

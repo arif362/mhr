@@ -1,0 +1,81 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Employee monthly attendance analysis <i class="fa fa-line-chart"></i>
+      </h4>
+    </div>
+    <div class="report-table-wrapper content-body">
+      <div class="site-header" xmlns="http://www.w3.org/1999/html">
+        <div class="report-search-form clearfix text-center">
+          <%= form_tag '', method: :get, id: 'month-year-attendance-state' do %>
+              <%= select_tag :employee_id, options_for_select(current_department.employees.collect { |emp| [emp.full_name, emp.id] }, params[:employee_id]), {class: "form-control mb10", prompt: 'Select Employee'} %>
+              <%= select_month params[:date].present? ? params[:date][:month].to_i : Date.today, {}, {class: "form-control mb10"} %>
+              <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control mb10"} %>
+              <%= submit_tag 'Search', class: 'primary-color-bg-with-hover' %>
+          <% end %>
+        </div>
+        <div class="text-center pt10">
+          <h3 class="mb0">
+            <%= @stats[:month] %> attendance report
+          </h3>
+
+          <p> <%= @employee.present? ? @employee.full_name : 'Selected Employee' %> </p>
+        </div>
+      </div>
+      <% if @attendances.present? %>
+          <div class="clearfix">
+            <div class="col-lg-12 clearfix">
+              <div class="row employee-attendance-state">
+                <div class="col-sm-5 pull-right">
+                  <div class="panel p0 mt10">
+                    <div class="panel-body p0">
+                      <table class="attendance-state-report-table table-striped">
+                        <tr>
+                          <td> Average IN Time</td>
+                          <td><%= format_duration @stats[:total_in_time] %></td>
+                        </tr>
+                        <tr>
+                          <td> Average OUT Time</td>
+                          <td><%= format_duration @stats[:total_out_time] %></td>
+                        </tr>
+                        <tr>
+                          <td> Average Working Hours</td>
+                          <td><%= format_duration @stats[:avg_hours] %></td>
+                        </tr>
+                        <tr>
+                          <td> Total Present</td>
+                          <td><%= @stats[:total_present] %></td>
+                        </tr>
+                        <tr>
+                          <td> Total Working Hours</td>
+                          <td><%= format_duration @stats[:total_hours] %></td>
+                        </tr>
+                        <tr>
+                          <td> Performance</td>
+                          <td>^</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-7 pull-left">
+                  <%#= @stats.inspect %>
+                  <%= render 'employees/attendances_table', object: @attendances %>
+                </div>
+              </div>
+            </div>
+          </div>
+      <% else %>
+          <div class="content-body-wrapper full-content-wrapper">
+            <div class="table-cell">
+              <p class="text-warning" style="max-width: 500px; margin: auto">
+                Employee monthly attendance analysis. Please select a employee to analysis his/her monthly attendance
+                report, average in/out time, total working hours, average daily time spent etc.
+              </p>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

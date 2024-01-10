@@ -1,0 +1,24 @@
+
+
+<div class="reg-wrap site-container">
+
+  <div class="reg-container container">
+
+    <div class="reg-wrap-header">
+      <%= render 'shared/account_progress_bar', step_value: 2 %>
+
+      <h4>
+        Select our modules which you want to use for your <span class="primary-color"><%= current_department.company.name.upcase %>'s</span> account.
+        You will easily add or remove this anytime from module setting.(<span class="primary-color">Now all the selected modules are free for you</span>)
+      </h4>
+
+    </div>
+
+    <%#= form_for @company_feature, url: company_feature_settings_path, html: {method: :post}, remote: true do |f| %>
+    <%= render 'settings/feature' %>
+    <%# end %>
+
+
+  </div>
+
+</div>

@@ -1,0 +1,7 @@
+<% if @bonus_category.errors.any? %>
+    popupMessage("Bonus Category couldn't be updated", 'alert-danger');
+<% else %>
+    popupMessage("Bonus Category updated successfully", 'alert-success');
+    $('#payroll-bonus-category-<%= @bonus_category.id%>').replaceWith('<%= escape_javascript( render 'payroll/bonus_categories/bouns_categories_table_row', bonus_category: @bonus_category) %>')
+    $('#global-modal').modal('hide');
+<%end%>

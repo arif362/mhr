@@ -1,0 +1,12 @@
+<% if @bonus_payment.errors.any? %>
+    popupMessage('<%= escape_javascript( errors_to_message_string( @bonus_payment.errors ) ).html_safe %>','alert-danger');
+<% else %>
+    <% params[:employee_id] = @bonus_payment.employee_id %>
+//    $('#employee-bonus-detail-section').html('<%#= escape_javascript( render 'payroll/bonus_payments/bonus_view' ).html_safe %>');
+    <% if params[:checking_year].to_i == @bonus_payment.date.year %>
+        $('#bonus-list').prepend('<%= escape_javascript( render 'payroll/bonus_payments/bonus_row', bonus: @bonus_payment ) %>');
+        $('#no-data-found').remove();
+    <% end %>
+popupMessage('Bonus payment successfully created', 'alert-success');
+$('#employee-bonus-detail-section').html("<%= escape_javascript(render 'payroll/bonus_payments/bonus_payments').html_safe %>");
+<% end %>

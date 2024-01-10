@@ -1,0 +1,52 @@
+.excel-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  max-width: 100%;
+  thead {
+    background-color: #f3f3f3;
+    tr {
+      th {
+        border-right: solid 1px #cccccc;
+        padding: 7px;
+        text-align: center;
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+  }
+  thead > tr, tbody > tr {
+    text-align: center;
+    border: 1px solid #ccc;
+  }
+  th, td {
+    //padding: 4px 40px;
+    font-size: 12px;
+  }
+  td {
+    padding: 3px !important;
+    border: 1px solid #cccccc;
+    /*min-width: 46px;*/
+    label {
+      margin: 0;
+    }
+    input {
+      background: #ffffff;
+      border: none;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+      padding: 5px 5px 2px 5px;
+      width: 100%;
+    }
+  }
+
+  tr > td:first-child {
+    background-color: #f3f3f3;
+    min-width: 40px;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+  }
+}

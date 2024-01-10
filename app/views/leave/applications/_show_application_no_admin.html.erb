@@ -1,0 +1,76 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <i class="fa fa-newspaper-o"></i>
+  <h4 class="modal-title"> Leave Application </h4>
+</div>
+<div class="modal-body pl30 pr30">
+  <div class="row clearfix">
+    <div class="col-sm-6">
+      <p class="reset-margin">From,</p>
+      <b class="primary-color"><%= @leave_application.employee.full_name %></b><br>
+      <p><%= @leave_application.employee.designation.name if @leave_application.employee.designation.present? %></p>
+    </div>
+    <div class="col-sm-6">
+      <div class="leave-type-category">
+        <div class="leave-modal-right-side-wrap clearfix">
+          <div class="leave-modal-right-side-category">Category </div>
+          <div class="leave-modal-right-side-type primary-color">
+            <%= @leave_application.leave_category.name if @leave_application.leave_category.present? %>
+          </div>
+        </div>
+        <div class="leave-modal-right-side-wrap clearfix">
+          <div class="leave-modal-right-side-category">Type </div>
+          <div class="leave-modal-right-side-type primary-color">
+            <%= @leave_application.is_paid ? 'Paid' : 'Unpaid' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="leave-message mt10">
+    <%= simple_format(@leave_application.message) %>
+  </div>
+
+
+
+  <% if @leave_application.note.present? %>
+       <label class="m0">Remark </label>
+      <div class="leave-message">
+        <%= @leave_application.note %>
+      </div>
+  <% end %>
+
+  <div class="">
+    <label>Requested leave days</label>
+    <ul class="common-ul-style" style="list-style-type: none">
+      <% @leave_application.leave_days.each do |leave_day| %>
+          <li>
+            <div class="row">
+              <div class="col-sm-6">
+                <%=  format_date(leave_day.day) %>
+              </div>
+              <div class="col-sm-6">
+                <% if @leave_application.status == AppSettings::STATUS[:pending] %>
+                    <%= AppSettings::STATUS[:pending].capitalize %>
+                <% else %>
+                    <% if leave_day.is_approved %>
+                        <%= AppSettings::STATUS[:approved].capitalize %>
+                    <% else %>
+                        <%= AppSettings::STATUS[:rejected].capitalize %>
+                    <% end %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+
+</div>
+
+<div class="modal-footer pl30 pr30">
+  <div class="btn btn-default" data-dismiss='modal'>Close</div>
+</div>

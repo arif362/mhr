@@ -1,0 +1,94 @@
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <div class="employee-pf-statement-title">
+      <p>
+        <label class="m0"> Employee Leave Status </label><br>
+      </p>
+    </div>
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th> Category</th>
+        <th> Total Application</th>
+        <th> Approved</th>
+        <th> Others</th>
+        <th> Total Days</th>
+        <th> Taken</th>
+        <th> Paid</th>
+        <th> Unpaid</th>
+        <th> Remaining</th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @result.each do |category_id, value| %>
+          <tr>
+            <td>
+              <%= value[:category_name] %>
+            </td>
+            <td>
+              <%= value[:applied] %>
+            </td>
+            <td>
+              <%= value[:approved] %>
+            </td>
+            <td>
+              <%= value[:others] %>
+            </td>
+            <td>
+              <%= value[:days] %>
+            </td>
+            <td>
+              <%= value[:taken] %>
+            </td>
+            <td>
+              <%= value[:paid] %>
+            </td>
+            <td>
+              <%= value[:unpaid] %>
+            </td>
+            <td>
+              <%= value[:days] - value[:paid] %>
+            </td>
+          </tr>
+
+          <% if value[:applied] > 0 %>
+              <tr class="inner-table-placement">
+                <td colspan="10">
+                  <div class="pl20 pr20 text-left" id="leave-applications-of-<%= category_id %>">
+                    <h5 class="mb5">Applied Applications of Category "<%= value[:category_name] %>"</h5>
+
+                    <table class="table custom-pf-table">
+                      <thead class="custom-pf-table-thead">
+                      <tr>
+                        <th>Dates</th>
+                        <th>Days</th>
+                        <th>Applied Date</th>
+                        <th>Approved By</th>
+                        <th>Status</th>
+                      </tr>
+                      </thead>
+                      <tbody class="custom-pf-table-tbody">
+                      <% value[:applications].each do |leave_application| %>
+                          <tr>
+                            <td>
+                              <%= application_dates(leave_application) %>
+                            </td>
+                            <td><%= leave_application.total_days %></td>
+                            <td><%= format_date leave_application.created_at %></td>
+                            <td><%= 'jkdsg' %></td>
+                            <td><%= leave_application.status.capitalize %></td>
+                          </tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+          <% end %>
+
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

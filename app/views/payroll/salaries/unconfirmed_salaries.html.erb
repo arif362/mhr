@@ -1,0 +1,91 @@
+<div class="row reset-padding secondary-color">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>Payroll Unconfirmed Salaries</h4>
+    </div>
+    <div class="secondary-color">
+      <div class="content-body-wrapper">
+        <div class="row content-body">
+          <% if @salaries.present? %>
+          <%= form_tag confirm_payroll_salaries_path, method: 'get',id: 'unconfirm-salaries-confirm-form' do %>
+              <div class="table-warapper">
+                <div class="table-warapper-body">
+                  <table class="table action-table beaccount-table table-responsive salaries-list table-hover table-striped">
+                    <thead>
+                    <tr>
+                      <th><input type="checkbox" checked id="checkAll"/> <span style="vertical-align: super;">Check All</span></th>
+                      <th>Employee</th>
+                      <th>Month</th>
+                      <th>Year</th>
+                      <th>Amount</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <% @salaries.each do |salary| %>
+                        <tr id="unconfirm-salary-<%= salary.id %>">
+                          <td><%= check_box_tag 'salary_ids[]', salary.id, true %></td>
+                          <td>
+                            <%= link_to employee_profile_path(salary.employee), remote: true do %>
+                                <%= salary.employee.full_name %>
+                            <% end %>
+                          </td>
+                          <td>
+                            <%= Date::MONTHNAMES[salary.month] %>
+                          </td>
+                          <td>
+                            <%= salary.year %>
+                          </td>
+                          <td>
+                            <%= salary.total %>
+                          </td>
+                          <td>
+                            <%= link_to payroll_salary_payslip_path(salary), class: 'btn info-color' do %>
+                                Payslip
+                            <% end %>
+                            <%= link_to payroll_salary_path(salary), remote: true, class: 'btn info-color' do %>
+                                <i class="fa fa-eye"> </i>
+                            <% end %>
+                            <%= link_to edit_payroll_salary_path(salary), class: 'btn warning-color' do %>
+                                <i class="fa fa-pencil"></i>
+                            <% end %>
+                            <%= link_to confirm_settings_path(action_item_id: salary.id, state: Payroll::Salary::STATES[:list], action_on: 'payroll/salaries', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+                                <i class="fa fa-times"></i>
+                            <% end %>
+                          </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <%= submit_tag 'Confirm Salary', class: 'btn btn-info' %>
+              <%= submit_tag 'Confirm & Print', class: 'btn btn-info', id: 'submit-to-print' %>
+          <% end %>
+          <% else %>
+              <div class="col-md-12 reset-padding">
+                <%= render 'shared/no_data_found', message: 'No unconfirmed salaries found.' %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $(function(){
+            $("#checkAll").change(function () {
+                $("input:checkbox").prop('checked', $(this).prop("checked"));
+            });
+
+            $('#submit-to-print').click(function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                console.log($("#unconfirm-salaries-confirm-form").attr("action"));
+                $("#unconfirm-salaries-confirm-form").attr("action", "<%= confirm_payroll_salaries_path('pdf') %>").submit();
+                console.log($("#unconfirm-salaries-confirm-form").attr("action"));
+            });
+        });
+    });
+</script>

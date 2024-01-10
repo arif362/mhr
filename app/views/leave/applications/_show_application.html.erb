@@ -1,0 +1,125 @@
+<div class="modal-header leave_application_view_header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <i class="fa fa-newspaper-o"></i>
+  <h4 class="modal-title">Leave Application</h4>
+</div>
+<%= form_for @leave_application, remote: true do |f| %>
+    <div class="modal-body pl30 pr30">
+      <div class="row clearfix">
+
+        <div class="col-sm-6">
+
+          <p class="reset-margin">From,</p>
+          <b class="primary-color"><%= @leave_application.employee.full_name %></b><br>
+
+          <p><%= @leave_application.employee.designation.name if @leave_application.employee.designation.present? %></p>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="leave-type-category">
+
+            <div class="leave-modal-right-side-wrap clearfix">
+              <div class="leave-modal-right-side-category">Category </div>
+              <div class="leave-modal-right-side-type primary-color">
+                <%= @leave_application.leave_category.name + ' (' + @leave_application.leave_category.days(@leave_application.created_at.year).to_s + ')' if @leave_application.leave_category.present? %>
+              </div>
+            </div>
+
+            <div class="leave-modal-right-side-wrap clearfix">
+              <div class="leave-modal-right-side-category">Type </div>
+              <div class="leave-modal-right-side-type primary-color">
+                <%= @leave_application.is_paid ? 'Paid' : 'Unpaid' %>
+              </div>
+            </div>
+
+            <div class="leave-modal-right-side-wrap clearfix">
+              <div class="leave-modal-right-side-category">Remaining </div>
+              <div class="leave-modal-right-side-type primary-color">
+                <%= @remain.to_s + ' days' %>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="leave-message mt10">
+        <%= simple_format(@leave_application.message) %>
+      </div>
+
+      <div class="panelx leave-days ">
+        <div class="reset-padding panel-heading">
+          <label>Requested leave days</label>
+        </div>
+        <ul class="panel-body reset-padding">
+          <%= f.fields_for :leave_days do |builder| %>
+              <li>
+                <%= builder.check_box :is_approved, checked: true %>
+                <%= builder.label :is_approved, class: 'custom-label' do %>
+                    <%= format_date(builder.object.day) %>
+                <% end %>
+              </li>
+          <% end %>
+          <li>
+            <a href="javascript:void(0);" class="btn secondary-guest-color add-date">
+              <i class="fa fa-plus-circle"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :note, 'Remark' %>
+        <%= f.text_area :note, class: 'form-control reset-border-radius', rows: '3' %>
+      </div>
+
+      <div>
+        <%= f.radio_button :is_approved, true %>
+      </div>
+
+      <%= hidden_field_tag :q, params[:q] %>
+    </div>
+
+    <div class="modal-footer pl30 pr30 leave_application_view">
+      <% if @leave_application.status == AppSettings::STATUS[:pending] %>
+          <%= f.submit 'Submit', class: 'btn btn-success new_employee_submit' %>
+      <% end %>
+      <div class="btn btn-default" data-dismiss='modal'>Close</div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $("[name='leave_application[is_approved]']").bootstrapSwitch({
+            radioAllOff: true,
+            onColor: "success",
+            offColor: "danger",
+            onText: 'Accept',
+            offText: 'Reject',
+            onSwitchChange: function () {
+
+            }
+        });
+        $('.add-date').click(function () {
+            addNewdate(this);
+        });
+    });
+
+    function addNewdate(element) {
+        fieldIndex = $('.leave-days').find('ul').find('li').length;
+        var dateField = "<input type='text' class='datepicker form-control reset-border-radius date-input' name=leave_application[leave_days_attributes][" + fieldIndex + "][day] />";
+        var newField = "<li>" + dateField + "<a href='#' onclick='javascript:removeDate(this)'> <i class='btn danger-color remove-input fa fa-times'></i> </a>" + "</li>";
+        var parentElement = $(element).parents('li');
+        $(parentElement).before(newField);
+        $('.datepicker').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+    }
+
+    function removeDate(element) {
+        $(element).parents('li').remove();
+    }
+</script>

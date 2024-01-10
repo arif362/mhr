@@ -1,0 +1,10 @@
+<% if @sub_categories.present? %>
+    $("#expenses_expense_sub_category").find('option:gt(0)').remove();
+    $("#expenses_expense_sub_category").prop('disabled', false);
+    <% @sub_categories.each do |sub_category| %>
+        $("#expenses_expense_sub_category").append("<option value=<%= sub_category.id %>> <%= sub_category.name %></option>");
+    <% end %>
+<% else %>
+    $("#expenses_expense_sub_category").find('option:gt(0)').remove();
+    $("#expenses_expense_sub_category").prop('disabled', true);
+<% end %>

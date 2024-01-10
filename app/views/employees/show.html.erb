@@ -1,0 +1,32 @@
+<div class="employee-profile-wrap">
+  <div class="row toggleable-container reset-padding">
+    <%= render 'shared/toggleable_sidebar', sidebar_menu: @employee.sidebar_menu_generator %>
+    <div class="main-content content-body-wrapper">
+      <div class="content-bodyx content-body-border mt20 clearfix" id="employee-profile-content">
+        <% if @view.present? %>
+            <%= render @view %>
+        <% else %>
+            <%= render 'employees/show_info' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% if @edit_modal.present? %>
+      <script type="text/javascript">
+          $(function () {
+              $('#global-modal-large').modal({backdrop: 'static', keyboard: false});
+              $('#global-modal-large').modal('show').find('.modal-content').html("<%= escape_javascript(render 'form').html_safe %>");
+          });
+      </script>
+  <% end %>
+  <script type="text/javascript">
+      $(function () {
+          var options = {
+              locale: {
+                  format: 'DD-MM-YYYY',
+                  separator: '  To  '
+              }
+          };
+      });
+  </script>
+</div>

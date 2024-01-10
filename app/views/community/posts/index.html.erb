@@ -1,0 +1,36 @@
+<div class="row community-wrap">
+  <div class="community-container container">
+    <div class="col-md-12 pt15">
+
+      <div class="col-md-9 mb15">
+        <%= render 'community/shared/header' %>
+        <div class="community-body mt15">
+          <div class="latest-activity">
+            <div class="community-search">
+              <%= form_tag '#', method: :get do %>
+                  <% if params[:community_category].present? %>
+                      <%= hidden_field_tag :community_category, params[:community_category] %>
+                  <% end %>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <%= text_field_tag :community_search, '', class: 'form-control reset-border-radius', placeholder: 'Search', aria:{ describedby: "basic-addon2"} %>
+                      <span class="input-group-addon reset-border-radius" id="basic-addon2"><i class="fa fa-search"></i></span>
+                    </div>
+                  </div>
+              <% end %>
+            </div>
+            <div id="new-discussion">
+              <%= render 'community/shared/new_discussion' %>
+            </div>
+            <div id="posts">
+              <%= render 'community/shared/posts' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%= render 'community/shared/left_side' %>
+
+    </div>
+  </div>
+</div>

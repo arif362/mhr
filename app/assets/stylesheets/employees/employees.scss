@@ -1,0 +1,44 @@
+// Place all the styles related to the employees/employees controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+$light-grey: #D4D4D4;
+$salitute: #EAF0F2;
+
+.employees-dashboard {
+  position: relative;
+  .side-bar {
+    padding: 0;
+
+    ul {
+      li {
+      }
+    }
+
+  }
+  .content {
+    border: 1px solid $light-grey;
+    background: $salitute;
+    padding-top: 2%;
+  }
+}
+.deactivate_button{
+  border:#6A6A6A;
+}
+
+#export_to_chosen,
+#recent_export_to_chosen,
+#employee_id_chosen, #employee_chosen,
+#employees_advance_employee_id_chosen,
+#employees_advance_return_employee_id_chosen,
+#advance_history_employee_select_chosen {
+  .chosen-single {
+    border-radius: 0;
+  }
+}
+
+#date_year, #date_month, #recent_export_to, #status, #month, #year, #category_id,
+#department-country, #weekend, #date_month_1, #date_year_1, #date_month_2, #date_year_2 {
+  border-radius: 0;
+}
+
+

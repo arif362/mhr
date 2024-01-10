@@ -1,0 +1,155 @@
+<div class="pay-invoice invoice-payment">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-sm-6">
+        <div class="invoice-summary-table">
+          <div class="right-section">
+            <table>
+              <tbody>
+              <tr>
+                <td colspan="2">
+                  <label><%= @client.organization_name %></label>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <label><%= @client.contact_name %></label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label> <%= t('invoice') %># </label>
+                </td>
+                <td class="text-right">
+                  <%= h @invoice.invoice_number %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>
+                    <%= t('views.invoices.due_date') %>
+                  </label>
+                </td>
+                <td>
+                  <%= (@invoice.due_date || @invoice.invoice_date).to_date.strftime(get_date_format) rescue "" %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label><%= t(:amount) %></label>
+                </td>
+                <td class="text-right">
+                  <%= number_to_currency(@invoice.invoice_total, unit: @invoice.currency) %>
+                </td>
+              </tr>
+              <% if %w(partial draft-partial draft).include?(@invoice.status) && @invoice.paid_amount > 0 %>
+                  <tr>
+                    <td>
+                      <label>
+                        <%= t('views.common.received') %>
+                      </label>
+                    </td>
+                    <td class="text-right">
+                      <%= number_to_currency(@invoice.paid_amount, unit: @invoice.currency) %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>
+                        <%= t('views.payments.net_due') %>
+                      </label>
+                    </td>
+                    <td class="text-right">
+                      <%= number_to_currency(@invoice.due_amount, unit: @invoice.currency) %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="payment_serial <%= @invoice.status %>"></div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="fields-content-data">
+          <div class="payment_right client_<%= @invoice.unscoped_client.id %>">
+
+            <div class="form-group">
+              <%= f.hidden_field :invoice_id %>
+              <%= f.label :payment_amount, style: 'width: 100%' do %>
+                  <%= t('payment') %> (<%= @invoice.currency %>)
+                  <span class="pull-right">
+                    <%= check_box_tag :full_pay, @invoice.due_amount %> Full Pay
+                  </span>
+              <% end %>
+              <%= f.text_field :payment_amount, :required => true, :class => "form-control reset-border-radius" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :payment_method %>
+              <%= f.select :payment_method, Billing::Payment::PAYMENT_METHODS, {}, {:id => "payments_#{index}_payment_method", :class => "form-control"} %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :payment_date %>
+              <%= f.text_field :payment_date, :class => "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :notes %>
+              <%= f.text_area :notes, :class => "form-control" %>
+            </div>
+
+            <div class="field_row">
+              <%= f.check_box :send_payment_notification %>
+              <%= f.label :send_payment_notification %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="text-center">
+        <div class="content_bottom">
+          <%= f.submit nil, :class => "btn btn-default reset-border-radius pull-right mr15", :id => 'submit_payment_edit_form' %>
+        </div>
+        <!--content_bottom-->
+      </div>
+    </div>
+  </div>
+</div>
+<h4> Invoice Payment History </h4>
+<table cellpadding="0" cellspacing="0" class="table table_listing payment_listing <%= I18n.locale %>">
+  <colgroup>
+    <col class="one"/>
+    <col class="two"/>
+    <col class="three"/>
+    <col class="four"/>
+    <col class="five"/>
+    <col class="six"/>
+    <col class="seven"/>
+  </colgroup>
+  <thead id="payments_header">
+  <%= render 'payments_header' %>
+  </thead>
+  <tbody id="payment_body">
+  <%= render 'payment', :@payments => @invoice.payments %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+    $(function () {
+        $('#full_pay').click(function () {
+            if ($(this).is(':checked')) {
+                $('#billing_payment_payment_amount').attr('readonly', true).val($(this).val());
+            }
+            else {
+                $('#billing_payment_payment_amount').removeAttr('readonly').val('').focus();
+            }
+        });
+
+        $('#billing_payment_payment_date').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+
+    })
+</script>

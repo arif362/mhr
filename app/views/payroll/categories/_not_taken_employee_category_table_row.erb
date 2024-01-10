@@ -1,0 +1,19 @@
+<tr id="employee-category-not-taken-<%= employee_category.id %>">
+  <td>
+    <%= employee_category.name %>
+  </td>
+  <td>
+    <%= employee_category.is_add ? "Additive" : "Deductive" %>
+  </td>
+  <td>
+    <%= employee_category.is_percentage ? "Percentage of Basic" : "Fixed Amount" %>
+  </td>
+  <td id="amount-<%= employee_category.id %>">
+    ----
+  </td>
+  <td id="actions-<%= employee_category.id %>">
+    <%= link_to  new_payroll_employee_category_path(employee_id: @employee.id, category_id: employee_category.id), remote: true, class: 'warning-color' do %>
+        <i class="fa fa-plus-circle fz20"></i>
+    <% end %>
+  </td>
+</tr>

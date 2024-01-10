@@ -1,0 +1,27 @@
+// Place all the styles related to the provident_fund/accounts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.provident-fund-account-form {
+  max-width: 650px;
+  margin: auto;
+  .form-inputs-container {
+    margin-top: 20px;
+  }
+  .select-account-employee {
+    max-width: 400px;
+    margin: auto;
+  }
+  .profile-view {
+    padding: 10px;
+    h2 {
+      margin: 5px 0 15px 0;
+      font-size: 16px;
+    }
+    img {
+      width: 55px;
+      height: 50px;
+      margin: auto;
+    }
+  }
+}

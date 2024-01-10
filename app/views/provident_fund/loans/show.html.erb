@@ -1,0 +1,24 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Provident Fund Loans
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper" id="provident-fund-rule-content">
+      <% if @provident_fund_loan.present? %>
+          <div class="row content-body">
+            <div id="advances">
+              <%= render 'loan', loan: @provident_fund_loan %>
+            </div>
+          </div>
+      <% else %>
+          <div class="text-center table-cell">
+            <p>
+              Sorry record not found :(
+            </p>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

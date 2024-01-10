@@ -1,0 +1,5 @@
+<% if employee_signed_in? %>
+    <%= render 'home/app_dashboard' %>
+<% else %>
+    <%= render 'home/landing' %>
+<% end %>

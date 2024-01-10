@@ -1,0 +1,11 @@
+$('.active-white').removeClass('active-white');
+<% if params[:q].present? %>
+alert('here');
+$('.nav-item-<%= params[:q] %>').addClass('active-white');
+$('#leave_report_table').replaceWith("<%= escape_javascript( render 'application_report_table', leave_application_days: @leave_days_in_a_year ).html_safe %>");
+
+<% else %>
+$('.nav-item-Recent').removeClass('active-white');
+//$('#leave_report_table').replaceWith("<%#= escape_javascript( render 'leave/applications/all_leave_reports', leave_application_days: @recent_leave_days ).html_safe %>");
+$('#yearly_leave_report').html("<%= escape_javascript( render 'application_report_table', leave_application_days: @leave_days_in_a_year ).html_safe %>");
+<% end %>

@@ -1,0 +1,162 @@
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="recent">
+
+    <div class="header-wrapper">
+      <h4>
+        Recent Leaves of Employees
+      </h4>
+    </div>
+
+    <div class="table-content">
+      <div class="content-body row">
+        <!--<div class="site-header mt10x clearfix">
+          <div class="pull-right mb15">
+            <%# if employee_role == 'admin' %>
+                <%#= select_tag :recent_export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'custom-chosen form-control custom-export-to', prompt: 'Export To....'} %>
+            <%# end %>
+          </div>
+        </div>-->
+
+        <div class=" table-warapper ">
+          <div class="table-warapper-body">
+            <table id="recently_leave_report" class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped  ">
+              <thead>
+              <tr class="trew">
+                <th>Name</th>
+                <th>Leave Category</th>
+                <th>Type</th>
+                <th>Taken Days</th>
+                <th>Days</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @recent_leave_days.each do |leave_day| %>
+                  <% if leave_day.leave_application.present? %>
+                      <tr>
+                        <td>
+                          <% if leave_day.leave_application.employee.present? %>
+                              <%= link_to employee_profile_path(leave_day.leave_application.employee), remote: true do %>
+                                  <%= leave_day.leave_application.employee.full_name %>
+                              <% end %>
+                          <% end %>
+                        </td>
+                        <td><%= leave_day.leave_application.leave_category.name %></td>
+                        <td><%= leave_day.leave_application.is_paid ? 'Paid' : 'Unpaid' %></td>
+                        <td><%= leave_day.leave_application.total_days %></td>
+                        <% days = '' %>
+                        <% leave_day.leave_application.leave_days.each do |application_leave_day| %>
+                            <% if application_leave_day.is_approved %>
+                                <% days = days.present? ? days + ', ' + format_date_2(application_leave_day.day).to_s : format_date_2(application_leave_day.day).to_s %>
+                            <% end %>
+                        <% end %>
+                        <td><%= days %></td>
+                        <td>
+                          <%= link_to leave_application_path(leave_day.leave_application, no_admin: true), title: "View", remote: true do %>
+                              <i class="fa fa-eye"> </i>
+                          <% end %>
+                          <%= link_to download_leave_applications_path('pdf', application_id: leave_day.leave_application.id), class: 'btn info-color', title: 'Download' do %>
+                              <i class="fa fa-download"> </i>
+                          <% end %>
+                        </td>
+                      </tr>
+                  <% end %>
+              <% end %>
+              </tbody>
+            </table>
+            <div id="pager1">
+              <%= render 'shared/pagination' if @recent_leave_days.size > 10 %>
+            </div>
+
+            <% unless @recent_leave_days.present? %>
+                <%= render 'shared/no_data_found', message: 'No leave application found' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="yearly">
+    <div class="header-wrapper">
+      <h4>
+        Yearly Leaves of Employees
+      </h4>
+    </div>
+    <div class="content-body">
+      <div class="">
+        <div class="row mb15">
+          <div class="col-md-3">
+            <%= form_tag '', method: 'get', id: 'yearly-leave-report-form', remote: true do %>
+                <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => current_department.year, :end_year => Date.today.year}, {class: "form-control"} %>
+            <% end %>
+          </div>
+
+          <!--<div class="col-sm-6">-->
+            <!--&lt;!&ndash;<div class="pull-right">-->
+                  <!--<%# if employee_role == 'admin' %>-->
+                      <!--<%#= select_tag :recent_export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to', prompt: 'Export To....'} %>-->
+                  <!--<%# end %>-->
+                <!--</div>&ndash;&gt;-->
+          <!--</div>-->
+        </div>
+        <div id="yearly_leave_report">
+          <%= render 'application_report_table', leave_application_days: @leave_days_in_a_year %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#date_year").on('change', function () {
+            $('#yearly-leave-report-form').submit();
+        });
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == 'pdf') {
+                window.location.href = '<%= report_leave_applications_path('pdf', params) %>'
+            }
+            else if (export_to == 'word') {
+                window.location.href = '<%= report_leave_applications_path('docx', params) %>'
+            }
+            else if (export_to == 'csv') {
+                window.location.href = '<%= report_leave_applications_path('xls',  params) %>'
+            }
+        });
+
+        $('#leave-report-tab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show')
+        })
+
+        $('#recent_export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == 'pdf') {
+                window.location.href = '<%= report_leave_applications_path('pdf', params, is_recent: true) %>'
+            }
+            else if (export_to == 'word') {
+                window.location.href = '<%= report_leave_applications_path('docx', params, is_recent: true) %>'
+            }
+            else if (export_to == 'csv') {
+                window.location.href = '<%= report_leave_applications_path('xls',  params, is_recent: true) %>'
+            }
+        });
+
+        if ($("#recently_leave_report").find("tbody").find("tr").size() > 0) {
+            $("#recently_leave_report").tablesorter({
+                widthFixed: true,
+                widgets: ['zebra'],
+                headers: {
+                    5: {
+                        sorter: false
+                    }
+                }
+            }).tablesorterPager({container: $("#pager1")});
+        }
+    });
+
+</script>

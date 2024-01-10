@@ -1,0 +1,21 @@
+<tr id="leave-category-year-<%= leave_category_hash[:leave_category].id %>">
+  <td><%= leave_category_hash[:leave_category].name %></td>
+  <td id="leave-category-days-<%= leave_category_hash[:leave_category].id %>">
+    <%= leave_category_hash[:days].present? ? leave_category_hash[:days] : '----' %>
+  </td>
+  <td id="leave-category-days-actions-<%= leave_category_hash[:leave_category].id %>">
+    <% if leave_category_hash[:category_year].present? %>
+        <%= link_to edit_leave_category_year_path(id: leave_category_hash[:category_year].id, department_id: leave_category_hash[:category_year].department_id, year: params[:date].present? ? params[:date][:year] : Date.today.year), remote: true, class:"btn warning-color" do %>
+            <i class="fa fa-pencil-square-o"></i>
+        <% end %>
+
+        <a href="/leave/category_years/<%= leave_category_hash[:category_year].id %>?department_id= <%= leave_category_hash[:category_year].department_id %>" data-remote="true" data-method="delete" class="btn danger-color" >
+          <i class="fa fa-times"></i>
+        </a>
+    <% else %>
+        <%= link_to new_leave_category_year_path(leave_category_id: leave_category_hash[:leave_category].id, department_id: @department.id, year: params[:date].present? ? params[:date][:year] : Date.today.year), remote: true, class: 'btn warning-color' do %>
+            <i class="fa fa-plus-circle fz19 secondary-guest-color"></i>
+        <% end %>
+    <% end %>
+  </td>
+</tr>

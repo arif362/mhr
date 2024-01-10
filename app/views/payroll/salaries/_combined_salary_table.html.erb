@@ -1,0 +1,70 @@
+<div class="table-warapper">
+  <div class="table-warapper-body">
+    <table class="table beaccount-table tablesorter table-responsive salaries-list table-hover table-striped">
+      <thead>
+      <tr>
+        <th>Serial No.</th>
+        <th>Department Name</th>
+        <th>Confirmed Amount</th>
+        <th>Unconfirmed Amount</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <% total_department_confirmed_salaries = 0 %>
+      <% total_department_unconfirmed_salaries = 0 %>
+
+      <% payroll_salaries.each.with_index(1) do |salary, index|%>
+          <tr>
+            <td><%= index %></td>
+            <td><%= salary.department.name %></td>
+
+            <% if salary.is_confirmed %>
+                <td>
+                  <%= (salary.total_salary).round(2) %>
+                  <% total_department_confirmed_salaries += salary.total_salary %>
+                </td>
+            <% else %>
+                <td> -- </td>
+            <% end %>
+
+            <% if !salary.is_confirmed %>
+                <td>
+                  <%= link_to (salary.total_salary).round(2), department_unconfirmed_salaries_payroll_salaries_path %>
+                  <% total_department_unconfirmed_salaries += salary.total_salary %>
+                </td>
+            <% else %>
+                <td> -- </td>
+            <% end %>
+          </tr>
+      <% end %>
+
+      <% if payroll_salaries.present? %>
+          <tr>
+            <td></td>
+            <td><b> Total </b></td>
+            <td><b> <%= (total_department_confirmed_salaries).round(2) %> </b></td>
+            <% if unconfirmed_salaries.present? && unconfirmed_salaries > 0.0 %>
+                <td>
+                  <b> <%= link_to (unconfirmed_salaries).round(2), department_unconfirmed_salaries_payroll_salaries_path %> </b>
+                </td>
+            <% else %>
+                <td><b> 0.0 </b></td>
+            <% end %>
+          </tr>
+      <% end %>
+      </tbody>
+
+    </table>
+    <% unless payroll_salaries.present? %>
+        <div class="no-data-found">
+          <%= render'shared/no_data_found', message: 'No salary found' %>
+
+        </div>
+
+    <% end %>
+
+  </div>
+</div>
+
+

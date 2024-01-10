@@ -1,0 +1,52 @@
+<div class="row reset-padding secondary-color">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>Payroll Bonus Payments</h4>
+    </div>
+    <div class="secondary-color">
+      <div class="content-body-wrapper">
+        <div class="row content-body">
+          <div class="reset-padding clearfix mb5">
+            <%= form_tag '', method: 'get', remote: true, id: 'payroll-bonus-payment-form' do %>
+                <div class="col-sm-8 reset-padding report-search-form">
+                  <%= label_tag 'Provide bonus : ' %>
+                  <%= select_tag :employee_id, options_for_select(current_department.employees.collect { |emp| [emp.full_name, emp.id]}, params[:employee]), {class: 'custom-chosen form-control custom-label-select employee-change-select-submit', prompt: 'All Employee'} %>
+                  <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control"} %>
+                </div>
+
+                <div class="col-sm-4 reset-padding">
+                  <div class="pull-right">
+                    <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To...'} %>
+                  </div>
+                </div>
+            <% end %>
+          </div>
+          <div id="bonuses">
+            <%= render 'payroll/bonus_payments/bonus_payments_table', bonuses: @bonuses %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.employee-change-select-submit, #date_year').change(function(){
+            $('#payroll-bonus-payment-form').submit();
+        });
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>' ) {
+                window.location.href = '<%= payroll_bonus_payments_path('pdf', params) %>';
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= payroll_bonus_payments_path('xls', params) %>';
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= payroll_bonus_payments_path('docx', params) %>';
+            }
+        });
+    });
+</script>

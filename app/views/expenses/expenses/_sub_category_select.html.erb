@@ -1,0 +1,2 @@
+<%= label_tag 'Sub Category' %>
+<%= select_tag "expenses_expense['expense_sub_category_id']", options_for_select(@sub_categories.collect{ |sub_category| [sub_category.name, sub_category.id]}), class:'form-control'  %>

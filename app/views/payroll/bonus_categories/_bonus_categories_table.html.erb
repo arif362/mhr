@@ -1,0 +1,27 @@
+<div class="panel table-warapper ">
+  <div class="table-warapper-body">
+    <table class="table tablesorter action-table beaccount-table table-responsive table-hover table-striped bonus-category-table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Message</th>
+        <th>Payment Type</th>
+        <th>Amount</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody id="payroll-bonus-categories">
+      <% @bonus_categories.each do |bonus_category| %>
+          <%= render 'bouns_categories_table_row', bonus_category: bonus_category %>
+      <% end %>
+      </tbody>
+    </table>
+    <div id="pager">
+    </div>
+    <div class="no-data-found">
+      <% unless @bonus_categories.present? %>
+          <%= render 'shared/no_data_found', message: 'No bonus category' %>
+      <% end %>
+    </div>
+  </div>
+</div>

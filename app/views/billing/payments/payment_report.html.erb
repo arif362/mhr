@@ -1,0 +1,219 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Billing Payment Report
+      </h4>
+    </div>
+
+    <div class="secondary-color">
+      <div class="content-body-wrapper">
+        <div class="row content-body">
+          <div class="show-invoice">
+
+            <div class="content-top clearfix">
+              <div class="primary-heading">
+                <h3 class="reset-margin">
+                  Payment
+                </h3>
+              </div>
+
+              <div class="primary-links">
+                <div id="active_links" class="grid_control_right">
+                  <div class="grid_control_right">
+                    <ul>
+                      <li class="grid_control_sep sep_right">
+                        <%= link_to t('helpers.links.edit'), edit_billing_payment_path(@payment_report) %>
+                      </li>
+
+                      <li class="grid_control_sep sep_right">
+                      <%= link_to 'Send', '#' %>
+                      </li>
+
+                      <li class="grid_control_sep sep_right">
+                        <%= link_to 'Download', download_payment_report_billing_payment_path(@payment_report, format: 'pdf'), target: '_blank' %>
+                      </li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!--primary_links-->
+
+            </div>
+
+            <div class="content_middle">
+
+              <div class="show-invoice">
+                <div class="invoice-preview">
+                  <div class="invoice-preview-container clearfix">
+                    <!--<div class="invoice-tag <%#= @invoice.status %>"></div>-->
+
+                    <div class="invoice-preview-content">
+
+                      <div class="preview-content-top">
+                        <div class="preview-top clearfix">
+                          <div class="preview-top-left pull-left">
+                            <div class="invoice-name"><%= @payment_report.company.name || '' %></div>
+
+                            <div class="invoice-organization">
+                              <%= @payment_report.company.address %> <br/>
+                              <%= "#{@payment_report.company.city}, #{@payment_report.company.state } #{@payment_report.company.zip_code}" if @payment_report.company.city %>
+                              <br/>
+                              <%= @payment_report.company.country %>
+                            </div>
+                          </div>
+
+                          <div class="preview-top-right pull-right">
+                            <%# unless @payment_report.department.image_url.blank? %>
+                            <div class="company_logo"><%#= request.format.pdf? ? (wicked_pdf_image_tag @payment_report.department.image_url(:thumb)) : (image_tag @payment_report.department.image_url(:thumb)) %></div>
+                            <%# end %>
+                          </div>
+                        </div>
+                      </div>
+
+                      <table class="invoice-summary-table">
+                        <tbody>
+                        <tr>
+                          <td>
+                            <div class="preview-client-info">
+                              <% if @client.present? %>
+                                  <div class="preview_top_left">
+                                    <div class="invoice_name"><%= @client.organization_name rescue '' %></div>
+
+                                    <div class="invoice_organization">
+                                      <%= @client.first_name.to_s + " " +@client.last_name.to_s %> <br/>
+
+                                      <%= @client.address_street1 %> <br/>
+
+                                      <%= "#{@client.city}, #{@client.province_state } #{@client.postal_zip_code}" if @client.city %>
+                                      <br/>
+                                      <%= @client.country %>
+                                    </div>
+                                  </div>
+                              <% end %>
+                            </div>
+                          </td>
+
+                          <td class="right-section">
+
+                            <table>
+
+                              <tbody>
+                              <tr>
+                                <td><label> Invoice # </label></td>
+                                <td class="text-right"><%= link_to @invoice.invoice_number, billing_invoice_path(@invoice) %></td>
+                              </tr>
+
+                              <tr>
+                                <td><label> Invoice Amount </label></td>
+                                <td class="text-right"><%= @invoice.invoice_total %></td>
+                              </tr>
+
+                              <tr>
+                                <td><label> Due Amount </label></td>
+                                <td class="text-right"><%= @invoice.due_amount %></td>
+                              </tr>
+
+                              <tr>
+                                <td><label> Due date </label></td>
+                                <td class="text-right"><%= @invoice.due_date rescue "" %></td>
+                              </tr>
+                              </tbody>
+
+                            </table>
+
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+
+                      <!--preview_content_top-->
+                      <div class="preview-content-middle">
+                        <div class="table-warapper">
+                          <table cellpadding="0" cellspacing="0" class='table action-table beaccount-table tablesorter table-responsive table-hover table-striped'>
+                            <thead>
+                            <tr>
+                              <th> Payment ID </th>
+                              <th> Payment type</th>
+                              <th> Date </th>
+                              <th> Amount </th>
+                              <th> Status </th>
+                              <th> Comment </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                              <td ><%= @payment_report.id %></td>
+                              <td ><%= @payment_report.payment_method %></td>
+                              <td ><%= @payment_report.payment_date %></td>
+                              <td ><%= @payment_report.payment_amount %></td>
+                              <td ><%= @payment_report.paid_full.present?? 'Full Paid' : 'Partial paid' %></td>
+                              <td ><%= @payment_report.notes %></td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!--grid_table-->
+                      </div>
+
+                      <table class="invoice-summary-table mt100 mb30">
+                        <tbody>
+                        <tr class="mt10">
+                          <td><span class="pull-left">HR Signature</span></td>
+                          <td><span class="pull-right">Employee's Signature</span></td>
+                        </tr>
+                        </tbody>
+                      </table>
+
+                      <!--Transaction history-->
+                      <%# if @invoice.invoice_line_items.present? %>
+                      <div class="preview-content-middle">
+                        <h4>Payment History of This Invoice</h4>
+                        <div class="table-warapper">
+                          <table cellpadding="0" cellspacing="0" class='table action-table beaccount-table tablesorter table-responsive table-hover table-striped'>
+                            <thead>
+                            <tr>
+                              <th> Payment ID </th>
+                              <th> Payment type</th>
+                              <th> Date </th>
+                              <th> Amount </th>
+                              <th> Status </th>
+                              <th> Comment </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <% unless @payment_transactions.blank? %>
+                                <% @payment_transactions.each do |payment_transaction| %>
+                                    <tr>
+                                      <td ><%= payment_transaction.id %></td>
+                                      <td ><%= payment_transaction.payment_method %></td>
+                                      <td ><%= payment_transaction.payment_date %></td>
+                                      <td ><%= payment_transaction.payment_amount %></td>
+                                      <td ><%= payment_transaction.paid_full.present?? 'Full Paid' : 'Partial paid' %></td>
+                                      <td ><%= payment_transaction.notes %></td>
+                                    </tr>
+                                <% end %>
+                            <% end %>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!--grid_table-->
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

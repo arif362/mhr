@@ -1,0 +1,5 @@
+<% if @employee.basic_salary.present? %>
+    $('#bonus-payments-form').html('<%= escape_javascript( render 'payroll/bonus_payments/bonus_form' ).html_safe %>');
+<% else %>
+    $('#bonus-payments-form').html('<%= escape_javascript( render 'payroll/bonus_payments/employee_basic_unavailable' ).html_safe %>');
+<% end %>

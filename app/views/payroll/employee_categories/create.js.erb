@@ -1,0 +1,7 @@
+<% if @employee_category.errors.any? %>
+    popupMessage("Category Couldn't be initialised to the employee", 'alert-danger')
+<% else %>
+    $('#employee-category-not-taken-<%= @employee_category.category_id %>').remove();
+    $('#payroll-employee-categories').prepend('<%= escape_javascript( render 'payroll/categories/taken_employee_category_table_row', employee_category: @employee_category).html_safe%>');
+    popupMessage("Category initialized to the employee successfully", 'alert-success')
+<% end %>

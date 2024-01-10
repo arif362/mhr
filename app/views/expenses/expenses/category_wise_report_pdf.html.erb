@@ -1,0 +1,57 @@
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <div class="employee-pf-statement-title">
+      <p>
+        <label class="m0"> Category Wise Expense Report </label><br>
+      </p>
+    </div>
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th>Sub Category</th>
+        <% AppSettings::MONTHS_SHORT_NAME.each do |month| %>
+            <th><%= month %></th>
+        <% end %>
+        <th><b>Total</b></th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @expense_sub_categories.each do |sub_category| %>
+          <tr>
+            <td>
+              <%= sub_category.name %>
+            </td>
+            <% (1..12).each do |month| %>
+                <td>
+                      <%= @expense_report[sub_category.id][month][:amount] %>
+                </td>
+            <% end %>
+            <td>
+              <b>
+                <%= @expense_report[sub_category.id][:total_amount] %>
+              </b>
+            </td>
+          </tr>
+      <% end %>
+      <% if @expense_sub_categories.present? %>
+          <tr>
+            <td><b>Total</b></td>
+            <% (1..12).each do |month| %>
+                <td>
+                  <b>
+                    <%=  @expense_report[:month_total][month] %>
+                  </b>
+                </td>
+            <% end %>
+            <td>
+              <b>
+                <%=  @expense_report[:month_total][:amount] %>
+              </b>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

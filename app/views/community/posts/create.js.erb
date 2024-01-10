@@ -1,0 +1,8 @@
+<% if @post.errors.any? %>
+popupMessage('<%= escape_javascript( errors_to_message_string( @post.errors ) ).html_safe %>', 'alert-danger');
+<% else %>
+$('#new-discussion').html('<%= escape_javascript( render 'community/shared/new_discussion' ).html_safe %>');
+$("#posts-wrapper").prepend('<%= escape_javascript( render 'community/shared/post', post: @post ).html_safe %>');
+$('#no-data-found').remove();
+popupMessage('Your Post has been created successfully.', 'alert-success');
+<% end %>

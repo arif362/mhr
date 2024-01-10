@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Attendance Dashboard
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper">
+      <div class="content-body mt10">
+        <div class="attendance-in-out mb15 dashboard-in-out-btn">
+          <%= in_out_button_select(current_employee, true) %>
+        </div>
+        <div id="dashboard-attendances-table">
+          <%= render 'attendance/shared/dashboard_table' %>
+        </div>
+      </div>
+      <div class="content-body">
+        <div class="">
+          <h2 class="mt0 mb10"> Time Spent Graph </h2>
+
+          <div class="text-right">
+            <%= form_tag attendance_dashboard_path, remote: true, method: :get, id: 'dashboard-daterange-chart', class: 'form-wrapper' do %>
+                <%= select_tag :month, options_for_select((1..12).collect { |m| [Date::MONTHNAMES[m], m] }, Date.today.month), class: 'form-control mb10 mx-w200 mr10' %>
+                <%= select_tag :year, options_for_select((current_department.year..Time.now.year), Date.today.year), class: 'form-control mb10 mr10 mx-w200' %>
+                <%= submit_tag 'Search', class: 'primary-color-bg-with-hover reset-border-radius' %>
+            <% end %>
+          </div>
+        </div>
+        <div id="bar-chart">
+          <%= render 'attendance/shared/bar_chart_canvas' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

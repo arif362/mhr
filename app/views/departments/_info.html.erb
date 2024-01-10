@@ -1,0 +1,76 @@
+<div class="clearfix">
+  <div class="pull-right">
+    <%= link_to edit_department_path(@department), remote: true, class: 'btn btn-info reset-border-radius' do %>
+        <i class="fa fa-pencil"></i>
+    <% end %>
+  </div>
+</div>
+
+<div class="company-profile-form-wrap">
+  <div class="company-profile-form-container">
+    <div class="cp-header">
+      <div class="row">
+        <div class="col-md-offset-4 col-md-8 clearfix">
+          <div class="cp-img-wrap">
+            <div class="cp-img">
+              <%= image_tag @department.image.present? ? @department.image.large.url : 'department_default.png', class: "img-responsive company-logo" %>
+            </div>
+            <div class="cp-img-info">
+              <h4 class="text-field"><%= @department.name %></h4>
+              <label for="">
+                <%= country_name (@department) %>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="cp-info-body">
+      <div class="cp-info-body-wrap m10">
+        <div class="cp-info-body-container p10">
+          <div class="clearfix">
+            <div class="col-md-offset-4 col-md-8 reset-padding">
+              <ul class="common-ul-style profile-info-ul-wrap">
+                <li>
+                  <%= label_tag 'Mobile' %>
+                  <p> <%= @department.mobile %> </p>
+                </li>
+                <li>
+                  <%= label_tag 'Email' %>
+                  <p> <%= @department.email %> </p>
+                </li>
+                <li>
+                  <%= label_tag 'Address' %>
+                  <p> <%= @department.address %> </p>
+                </li>
+                <li>
+                  <%= label_tag 'City' %>
+                  <p> <%= @department.city %> </p>
+                </li>
+                <li>
+                  <%= label_tag 'State' %>
+                  <p> <%= @department.state %> </p>
+                </li>
+                <li>
+                  <%= label_tag 'Zip Code' %>
+                  <p> <%= @department.zip_code %> </p>
+                </li>
+                <li>
+                  <%= label_tag 'About' %>
+                  <p> <%= @department.description %> </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+$(function(){
+    $('.profile-info-ul-wrap').find('li').addClass('clearfix');
+})
+</script>

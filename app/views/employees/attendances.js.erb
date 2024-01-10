@@ -1,0 +1,7 @@
+$('.sidebar-menu-active').removeClass('sidebar-menu-active');
+<% if params[:no_modal].present?  %>
+    $('.attendance').addClass('sidebar-menu-active');
+    $('#employee-profile-content').html('<%= escape_javascript(render 'attendances_info').html_safe %>');
+<% else %>
+    $('#global-modal').modal('show').find('.modal-content').html("<%= escape_javascript(render 'employees/attendances_modal').html_safe %>");
+<% end %>

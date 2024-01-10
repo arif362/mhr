@@ -1,0 +1,10 @@
+<%= form_for @leave_category_year, remote: true, class: 'form-inline inline-single-form'  do |f|%>
+    <%= f.hidden_field :department_id %>
+    <%= f.hidden_field :leave_category_id %>
+    <%= f.hidden_field :year, value: params[:year] %>
+    <div class="input-group inline-input-fields">
+      <span class="input-group-addon">Days</span>
+      <%= f.number_field :days , class: 'inline-single-input form-control'%>
+      <span class="input-group-addon"><%= f.submit 'Go', class: 'btn btn-sm reset-padding reset-margin' %></span>
+    </div>
+<% end %>

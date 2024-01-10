@@ -1,0 +1,17 @@
+<tr id="payroll-bonus-category-<%= bonus_category.id %>" >
+  <td> <%= bonus_category.name %></td>
+  <td> <%= truncate(bonus_category.message, length: 50) %></td>
+  <td> <%= bonus_category.is_amount ? 'Amount' : 'Percentage' %></td>
+  <td> <%= bonus_category.amount %></td>
+  <td class="actions">
+    <%= link_to payroll_bonus_category_path(bonus_category), class:'btn info-color', remote: true do %>
+        <i class="fa fa-eye"></i>
+    <% end %>
+    <%= link_to edit_payroll_bonus_category_path(bonus_category), class:'btn warning-color', remote: true do %>
+        <i class="fa fa-pencil"></i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: bonus_category.id, action_on: 'payroll/bonus_categories', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"></i>
+    <% end %>
+  </td>
+</tr>

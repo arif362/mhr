@@ -1,0 +1,79 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Provident Fund Account Statement Of <%= @pf_account.employee.full_name %>
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper">
+      <div class="clearfix mt10 content-body">
+        <div class="clearfix">
+          <div class="col-sm-6">
+            <div class="row mb5">
+              <%= select_tag :pf_account_id, options_for_select(current_department.provident_fund_accounts.all.collect { |account| [account.employee.full_name, account.id] }, @pf_account.id), {class: 'custom-chosen form-control'} %>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="btn-group pull-right row">
+              <% if employee_role == 'admin' %>
+                  <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to', prompt: 'Export To....'} %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <table class="table beaccount-table tablesorter table-responsive table-hover" style="background: #fdfdfd;">
+          <thead>
+          <tr>
+            <th> Date</th>
+            <th class="text-center"> Type</th>
+            <th class="text-center"> Debit</th>
+            <th class="text-center"> Credit(Return)</th>
+            <th class="text-center"> Balance</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% balance = 0 %>
+          <% @statements.each do |statement| %>
+              <tr>
+                <td style="border: none; border-right: solid 1px #333333"> <%= statement.created_at.strftime('%d %b, %Y') %> </td>
+                <td style="border: none; border-right: solid 1px #333333" class="text-center"> <%= statement.transable_type.split('::').last %> </td>
+                <td style="border: none; border-right: solid 1px #333333" class="text-center"> <%= statement.debit || '-' %> </td>
+                <td style="border: none; border-right: solid 1px #333333" class="text-center"> <%= statement.credit || '-' %> </td>
+                <td style="border: none;" class="text-center"> <%= balance += (statement.debit.present? ? -statement.debit : statement.credit) %> </td>
+              </tr>
+          <% end %>
+          <tr style="background: #449D44; color: #ffffff;">
+            <td colspan="3"></td>
+            <td style="text-align: right;"> Net Balance</td>
+            <td class="pt5 pb5 text-center"><strong> <%= balance %> </strong></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#pf_account_id').change(function () {
+            var pf_account_id = $(this).val();
+            if (pf_account_id != '') {
+                window.location.href = "/provident_fund/accounts/" + pf_account_id + "/statement";
+            }
+        });
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == 'pdf') {
+                window.location.href = "/provident_fund/accounts/" + <%= params[:account_id] %> +"/statement.pdf"
+            }
+            else if (export_to == 'word') {
+                window.location.href = "/provident_fund/accounts/" + <%= params[:account_id] %> +"/statement.docx"
+            }
+            else if (export_to == 'csv') {
+                window.location.href = "/provident_fund/accounts/" + <%= params[:account_id] %> +"/statement.xls"
+            }
+        });
+    });
+</script>

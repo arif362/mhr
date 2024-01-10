@@ -1,0 +1,17 @@
+<div id="provident-fund-contribution-form">
+  <h3 class="text-center"> <%= @account.employee.full_name %> </h3>
+  <%= form_for @contribution, url: @contribution.new_record? ? provident_fund_account_contributions_path(@account) : provident_fund_account_contribution_path(@account, @contribution) do |f| %>
+      <div class="form-group">
+        <%= f.label :company_contribution %>
+        <%= f.text_field :company_contribution, class: 'form-control', required: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label :employee_contribution %>
+        <%= f.text_field :employee_contribution, class: 'form-control', required: true %>
+      </div>
+      <div class="clearfix">
+        <%= link_to 'Cancel', employee_contributions_provident_fund_contributions_path, class: 'btn btn-default pull-left' %>
+        <%= f.submit class: 'btn btn-default pull-right' %>
+      </div>
+  <% end %>
+</div>

@@ -1,0 +1,8 @@
+<% if @department == current_employee.department %>
+    $('#global-modal').modal('hide');
+    popupMessage('You are in the department So you have to switch yourself to another department','alert-warning');
+<% else %>
+    $('.departments_<%= params[:id]%>').remove();
+    $('#global-modal').modal('hide');
+    popupMessage('Department deleted successfully','alert-success');
+<% end %>

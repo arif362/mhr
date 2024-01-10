@@ -1,0 +1,139 @@
+<div class="reg-wrap site-container">
+
+  <div class="reg-container container mt10">
+
+    <div class="reg-wrap-header">
+      <%= render 'shared/account_progress_bar', step_value: 0 %>
+
+      <h4 class="">
+        To create your Company account provide your personal and company's profile information. This information
+        can be changed at anytime once your Company account is activated.
+      </h4>
+
+    </div>
+
+    <div class="reg-form-wrap">
+      <%= form_for(resource, as: resource_name,html: { id: 'company-registration' }) do |f| %>
+          <div class="reg-form-column col-md-12">
+            <div class="your-profile-container">
+              <h3 class="text-center mt0">Your Profile</h3>
+
+              <div class="row your-profile-row">
+                <div class="col-md-6 pl0 your-profile-media-col">
+                  <div class="form-group">
+                    <%= f.label :first_name, '*First Name' %>
+                    <%= f.text_field :first_name, autofocus: true, class: "form-control input-field-height reset-border-radius", placeholder: 'First Name', data:{ required: true } %>
+                    <%= inline_validation(resource, 'first_name') %>
+                  </div>
+                </div>
+                <div class="col-md-6 pr0 your-profile-media-col">
+                  <div class="form-group">
+                    <%= f.label :last_name, '*Last Name' %>
+                    <%= f.text_field :last_name, autofocus: true, class: "form-control input-field-height reset-border-radius", placeholder: 'Last Name', data:{ required: true } %>
+                    <%= inline_validation(resource, 'last_name') %>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <%= f.label :email, '*Email' %>
+                  <%= f.email_field :email, autofocus: true, class: "form-control focusOnLoad input-field-height reset-border-radius", placeholder: 'Email', data:{ required: true } %>
+                  <%= inline_validation(resource, 'email') %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :password, '*Password' %> <em>(<%= @minimum_password_length %> characters minimum)</em>
+                  <%= f.password_field :password, autocomplete: "off", class: "form-control input-field-height reset-border-radius", placeholder:'Password', data:{ required: true } %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :password_confirmation, '*Confirm Password' %>  <span id="message" ></span>
+                  <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control input-field-height reset-border-radius", placeholder:'Confirm Password', data:{ required: true } %>
+                </div>
+
+                <div class="form-group" id="checkbox1">
+                  <div class="checkbox">
+                    <%= f.label :accept_tac do %>
+                        <%= f.check_box :accept_tac %>
+                        <span class="cr">
+                    <i class="cr-icon fa fa-check"></i>
+                  </span>
+                        Check here to indicate that you have read and agree to the terms of the
+                    <% end %>
+                  </div>
+                  <%= link_to  'Terms of Agreement', terms_and_conditions_path %>
+                </div>
+
+                <div class="text-center form-group">
+                  <%= f.submit 'Submit To Continue', class: 'submit-btn' %>
+                </div>
+
+              </div>
+
+              <!--<div class="row">-->
+                <!--<div class="col-md-12">-->
+                  <!--<div class="col-md-6 pl0">-->
+                    <!--<div class="form-group">-->
+                      <!--<%#= f.label :first_name, '*First Name' %>-->
+                      <!--<%#= f.text_field :first_name, autofocus: true, class: "form-control input-field-height reset-border-radius", placeholder: 'First Name', data:{ required: true } %>-->
+                      <!--<%#= inline_validation(resource, 'first_name') %>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="col-md-6 pr0">-->
+                    <!--<div class="form-group">-->
+                      <!--<%#= f.label :last_name, '*Last Name' %>-->
+                      <!--<%#= f.text_field :last_name, autofocus: true, class: "form-control input-field-height reset-border-radius", placeholder: 'Last Name', data:{ required: true } %>-->
+                      <!--<%#= inline_validation(resource, 'last_name') %>-->
+                    <!--</div>-->
+                  <!--</div>-->
+
+
+                <!--</div>-->
+              <!--</div>-->
+
+
+
+            </div>
+
+          </div>
+
+      <% end %>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        $('#company-registration').syftValidator();
+
+        $('#company-registration').on('submit', function (e) {
+            if ($("input[type=checkbox]:checked").length === 0) {
+                e.preventDefault();
+                popupMessage('Please agree to our terms and conditions. ','alert-danger' );
+                return false;
+            }
+        });
+
+    });
+    $('#employee_password, #employee_password_confirmation').on('keyup', function () {
+      var passwordVal  = $('#employee_password').val();
+      var comfirmVal = $('#employee_password_confirmation').val();
+      if( passwordVal &&  comfirmVal){
+        if (passwordVal.length >= 6 ){
+          if ($('#employee_password').val() == $('#employee_password_confirmation').val()) {
+            $('#message').html('Password matched.').css('color', 'green');
+          } else
+            $('#message').html('Password not matched.').css('color', 'red');
+        }
+        else{
+          $('#message').html('Password should not less than 6 characters.').css('color', 'red');
+        }
+
+      }
+    });
+</script>

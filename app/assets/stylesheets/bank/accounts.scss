@@ -1,0 +1,50 @@
+// Place all the styles related to the bank/accounts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#bank-account-content {
+  .add-more-account {
+    a {
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+    }
+  }
+  .content-body {
+    margin-top: 10px;
+    table {
+      tbody {
+        td {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+.bank-account-form-wrapper {
+  max-width: 650px;
+  margin: auto;
+  .form-inputs-container {
+    margin-top: 20px;
+  }
+  input {
+    border-radius: 0 !important;
+  }
+  .select-account-employee {
+    max-width: 400px;
+    margin: auto;
+  }
+  .profile-view {
+    padding: 10px;
+    h2 {
+      margin: 5px 0 15px 0;
+      font-size: 16px;
+    }
+    img {
+      width: 55px;
+      height: 50px;
+      margin: auto;
+    }
+  }
+}

@@ -1,0 +1,135 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span></button>
+  <i class="fa fa-newspaper-o"></i>
+  <h4 class="modal-title"> <%= @expense.new_record? ? 'Add new expense' : 'Edit expense' %> </h4>
+</div>
+
+<%= form_for @expense, html: {id: 'expense_form'} do |f| %>
+    <div class="modal-body">
+      <div class="">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :expense_category_id, 'Category' %>
+              <%= f.select :expense_category_id, options_for_select(@categories.collect { |category| [category.name, category.id] }, f.object.expense_category_id), {prompt: "Select Category..."}, {class: 'form-control category-change', data: {required: true}} %>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :expense_sub_category_id, 'SubCategory' %>
+              <% if @expense.new_record? %>
+                  <%= f.select :expense_sub_category_id, '', {prompt: "Select SubCategory..."}, {class: 'form-control', id: 'expenses_expense_sub_category', disabled: true} %>
+              <% elsif @expense.expense_category.present? %>
+                  <%= f.select :expense_sub_category_id, options_for_select(@sub_categories.collect { |category| [category.name, category.id] }, f.object.expense_sub_category_id), {:include_blank => "Select Subcategory..."}, {class: 'form-control', id: 'expenses_expense_sub_category', disabled: true} %>
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :amount %>
+              <%= f.text_field :amount, class: 'form-control', data: {required: true} %>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :date %>
+              <%= f.text_field :date, class: 'form-control', data: {required: true} %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :received_by %>
+              <%= f.text_field :received_by, class: 'form-control' %>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= f.label :voucher_number %>
+              <%= f.text_field :voucher_number, class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 reset-padding">
+          <div class="form-group">
+            <%= f.label :description %>
+            <%= f.text_area :description, rows: 5, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="col-md-12 reset-padding">
+          <div class=" form-group">
+            <%= f.label :attachment, 'Upload' %>
+            <div class="new-expense-custom-upload-file-wrap btn btn-default reset-border-radius">
+              <span id="uploaded_file"><i class="fa fa-paperclip"></i>Receipt</span>
+              <%= f.file_field :attachment, class: 'new-expense-custom-upload-file-item' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+    <div class="modal-footer">
+      <div class="pull-right">
+        <%= f.submit class: 'btn btn-primary invite-submit' %>
+        <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $('#expense_form').syftValidator();
+        $('#expenses_expense_attachment').change(function () {
+            var reader = new FileReader();
+            var file = this.files[0];
+            reader.onload = function (e) {
+                $('#uploaded_file').html(file.name);
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        $('.category-change').change(function () {
+            if ($(this).val().length > 0) {
+                $.ajax({
+                    url: "/expenses/categories/" + $(this).val() + "/sub_categories",
+                    type: 'get',
+                    dataType: 'script'
+                });
+            }
+            else {
+                $("#expenses_expense_sub_category").find('option:gt(0)').remove();
+                $("#expenses_expense_sub_category").prop('disabled', true);
+            }
+        });
+
+        <% unless @expense.new_record? %>
+        <% if @sub_categories.present? %>
+        $("#expenses_expense_sub_category").prop('disabled', false);
+        <% end %>
+        <% end %>
+
+        $('#expenses_expense_date').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+
+        $("[name='expenses_expense[is_approved]']").bootstrapSwitch({
+            radioAllOff: true,
+            onColor: "success",
+            offColor: "danger",
+            onText: 'Accept',
+            offText: 'Reject',
+            onSwitchChange: function () {
+
+            }
+        });
+    });
+</script>

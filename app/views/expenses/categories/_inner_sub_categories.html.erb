@@ -1,0 +1,33 @@
+<tr class="inner-table-placement" id="sub-categories-of-<%= expense_category.id %>">
+  <td colspan="3" class="hidden-row">
+    <div class="accordian-body collapse pl20 pr20 text-left" id="expense-subcategories-of-<%= expense_category.id %>">
+      <div class="col-md-6 mt5 reset-padding">
+        <h4 style="font-weight: bold">Sub Categories of "<%= expense_category.name %>"</h4>
+      </div>
+      <div class="col-md-6 mt5 reset-padding">
+        <%= link_to new_expenses_category_path(expense_category_id: expense_category.id), remote: true, class: 'btn btn-default reset-border-radius pull-right inner-table-link' do %>
+            <i class="fa fa-plus"> </i> New Sub Category
+        <% end %>
+      </div>
+      <table class="table action-table sub-category-table inner-table table-responsive table-hover table-striped expense-sub-categories-<%= expense_category.id %>">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody id="expense-sub-category-table-body">
+        <% expense_category.expense_sub_categories.each do |expense_sub_category| %>
+            <%= render 'expenses/categories/sub_category_item', expense_sub_category: expense_sub_category %>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="no-data-found-<%= expense_category.id %>">
+        <% unless expense_category.expense_sub_categories.present? %>
+            <%= render 'subcategory_no_data_found', category: expense_category.id %>
+        <% end %>
+      </div>
+    </div>
+  </td>
+</tr>

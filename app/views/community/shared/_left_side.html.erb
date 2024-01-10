@@ -1,0 +1,37 @@
+<div class="col-md-3">
+
+  <div id="community-login-form">
+    <% unless employee_signed_in? %>
+        <%= render 'community/shared/left_side_login' %>
+    <% end %>
+  </div>
+
+  <div class="community-status mb15">
+
+    <div class="community-status-header">
+      <p>Category</p>
+    </div>
+    <div class="community-status-body">
+      <div class="community-status-item">
+        <ul class="post-category-row">
+          <%= link_to community_root_path do %>
+              <li>
+                All
+                <span><%= Community::Post.all.count %></span>
+              </li>
+          <% end %>
+
+          <% Community::Category.all.each do |category| %>
+              <%= link_to community_root_path(community_category: category.title) do %>
+                  <li>
+                    <%= truncate(category.title, length: 20) %>
+                    <span><%= category.community_posts.count %></span>
+                  </li>
+              <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="total-post"></div>
+</div>

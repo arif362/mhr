@@ -1,0 +1,55 @@
+<%= form_for @changed_setting, html: {id: 'changed-setting-form'}, remote: true do |f| %>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+      <i class="fa fa-newspaper-o"></i>
+      <h4 class="modal-title"> New Additional Settings </h4>
+    </div>
+    <div class="modal-body">
+      <%= f.hidden_field :department_id %>
+
+      <div class="form-group">
+        <%= f.label :from_date, '*From Date' %>
+        <%= f.text_field :from_date, class: 'form-control reset-border-radius', value: f.object.from_date.present? ? f.object.from_date : '' , data: {required: true} %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :to_date, '*To Date' %>
+        <%= f.text_field :to_date, class: 'form-control reset-border-radius', value: f.object.to_date.present? ? f.object.to_date : '' , data: {required: true} %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :open_time, '*Open Time' %>
+        <%= f.text_field :open_time, class: 'form-control reset-border-radius', value: f.object.open_time.present? ? f.object.open_time.strftime("%I:%M %p") : '' , data: {required: true} %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :close_time %>
+        <%= f.text_field :close_time, class: 'form-control reset-border-radius', value: f.object.close_time.present? ? f.object.close_time.strftime("%I:%M %p") : '' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :working_hours, '*Working Hours' %>
+        <%= f.text_field :working_hours, class: 'form-control reset-border-radius', data: {required: true} %>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <%= f.submit class: 'btn btn-primary' %>
+      <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $('#changed-setting-form').syftValidator();
+
+        $('#changed_setting_open_time, #changed_setting_close_time').datetimepicker({
+            format: 'LT'
+        });
+
+        $('#changed_setting_from_date, #changed_setting_to_date').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+    });
+</script>

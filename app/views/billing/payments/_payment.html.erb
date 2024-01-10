@@ -1,0 +1,33 @@
+<% if @payments.length > 0 %>
+    <% @payments.each do |payment| %>
+        <% if payment.id %>
+            <tr>
+              <% if payment.payment_type == "credit" %>
+                  <td class="align_center"><%= payment.payment_reference %></td>
+              <% else %>
+                  <td class="align_center">
+                    <%= link_to payment.invoice.invoice_number, billing_invoice_path(payment.invoice), :class => "invoices_link" rescue "" %>
+                  </td>
+              <% end %>
+              <td class="align_left text-overflow-class" data-overflow-rows="2">
+                <%= payment.invoice.client.try(:organization_name) %>
+              </td>
+              <td class="align_center"><%= (payment.payment_method || payment.payment_type || "").capitalize %></td>
+              <td class="align_center"><%= payment.payment_date rescue "" %></td>
+              <td class="align_right payment_amount"><%= content_tag(:span, '* ') if payment.payment_method == "Credit" %><%= "#{payment.invoice.present? ? number_to_currency(payment.payment_amount, unit: payment.invoice.currency) : number_to_currency(payment.payment_amount) }" %></td>
+              <td class="align_center <%= payment.invoice.status %>" title="<%= payment.invoice.tooltip %>"><span><%= payment.invoice.status %></span></td>
+              <td class="align_center">
+                <% disabled = (payment.payment_method and payment.payment_method == 'paypal') ? 'disabled' : '' %>
+                <%#= link_to t('edit'), edit_billing_payment_path(payment), :class => "edit_action #{disabled}", :value => payment.payment_type %>
+                <%= link_to  edit_billing_payment_path(payment), class:'mr10', title:'Edit' do %>
+                    <i class="glyphicon glyphicon-edit"></i>
+                    <% end %>
+                <%= link_to payment_report_billing_payment_path(payment.id) do %>
+                    Payslip
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+    <% end %>
+
+<% end %>

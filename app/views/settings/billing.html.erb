@@ -1,0 +1,129 @@
+<div class="credit-card-billing-wrap reg-wrap site-container">
+  <div class="container reg-container credit-card-billing-container">
+    <div class="reg-wrap-header">
+      <%= render 'shared/account_progress_bar', step_value: 4 %>
+
+      <h4>
+        Enter your payment information.You will be charged after finished one month trial.
+        If you skip the payment information then system will ask you for payment information after one month of free
+        trial.
+        You can cancel your <span class="primary-color">"<%= current_department.company.name.upcase %>"</span> account
+        at anytime.
+      </h4>
+    </div>
+
+    <div class="ccb-form-wrap">
+      <div class="ccb-form-container">
+        <%= form_for '', url: payment_method_settings_path, html: {method: :post} do %>
+            <div class="col-md-12">
+              <div class="col-md-6">
+                <div class="card-info">
+                  <h3>Credit Card Information</h3>
+
+                  <div class="form-group">
+                    <%= label_tag :card_provider, '*Name On Credit Card' %>
+                    <%= text_field_tag :card_provider, '', class: 'form-control input-field-height reset-border-radius', placeholder: 'Enter your card provider name' %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= label_tag :card_number do %>
+                        *Credit Card Number
+                        <%= image_tag 'registrations/creditCards.png' %>
+                    <% end %>
+                    <%= text_field_tag :card_provider, '', class: 'form-control input-field-height reset-border-radius', placeholder: 'Enter your credit card number' %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= label_tag :security_code, '* Security Code' %>
+                    <%= text_field_tag :security_code, '', class: 'form-control input-field-height reset-border-radius', placeholder: 'Security Code' %>
+                  </div>
+
+                  <div class="form-group" id="creditCardInputGroup">
+                    <label for="creditCardInput">*Expiration Date</label>
+
+                    <div class="row">
+                      <div class="col-sm-3 form-group">
+                        <%= select_tag :month, options_for_select(1..12), class: 'form-control input-field-height reset-border-radius' %>
+                      </div>
+
+                      <div class="col-sm-3 form-group">
+                        <%= select_tag :year, options_for_select(Date.today.year.. 8.years.from_now.year), class: 'form-control input-field-height reset-border-radius' %>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-md-6 billing-address">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h3>Billing Address</h3>
+                  </div>
+                  <div style="padding-top: 15px; text-align: right;" class="col-md-6">
+                    <%= link_to '#', class: 'user-company-address primary-color', data: {address: current_department.company.address, city: current_department.company.city, state: current_department.company.state, zip: current_department.company.zip_code, country: current_department.company.country} do %>
+                        Use Company Address
+                    <% end %>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="cityInput">*Country</label>
+                  <%= country_select(:company, :country, {selected: @country_code, include_blank: 'Select a country'}, {class: 'form-control custom-chosen', id: 'company-country', data: {required: true}}) %>
+                </div>
+
+                <div class="form-group">
+                  <%= label_tag :address, '*Address' %>
+                  <%= text_field_tag :address, '', class: 'form-control input-field-height reset-border-radius', placeholder: 'Enter your billing address' %>
+                </div>
+
+                <div class="form-group">
+                  <%= label_tag :city, '*City' %>
+                  <%= text_field_tag :city, '', class: 'form-control input-field-height reset-border-radius', placeholder: 'Enter your city name' %>
+                </div>
+                <div class="form-group">
+                  <%= label_tag :state, '*State' %>
+                  <%= text_field_tag :state, '', class: 'form-control input-field-height reset-border-radius', placeholder: 'Enter your state address' %>
+                </div>
+                <div class="form-group">
+                  <%= label_tag :zip, '*Zip' %>
+                  <%= text_field_tag :zip, '', class: 'form-control input-field-height reset-border-radius', placeholder: 'Enter your zip code' %>
+                </div>
+
+              </div>
+            </div>
+            <div class="text-center mb10">
+              <button class="submit-btn mb10" type="submit">Submit Payment Method</button>
+              <button class="submit-btn" type="submit">Skip For One Month Free Trial</button>
+            </div>
+        <% end %>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#free_trial').click(function () {
+            if ($(this).is(':checked')) {
+                $('.billing-address, .card-info').css('opacity', '0.8').find('input, select').prop('disabled', true);
+            }
+            else {
+                $('.billing-address, .card-info').css('opacity', '1').find('input, select').prop('disabled', false);
+            }
+        });
+/* Use company address */
+        $('.user-company-address').click(function () {
+            $('#address').val($(this).attr('data-address'));
+            $('#city').val($(this).attr('data-city'));
+            $('#state').val($(this).attr('data-state'));
+            $('#zip').val($(this).attr('data-zip'));
+            $('#company-country').val($(this).attr('data-country')).trigger("chosen:updated");
+        });
+    });
+</script>

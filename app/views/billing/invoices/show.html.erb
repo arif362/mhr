@@ -1,0 +1,60 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Billing Invoice Preview
+      </h4>
+    </div>
+    <div class="secondary-color">
+      <div class="content-body-wrapper">
+        <div class="row content-body">
+          <div class="show-invoice">
+
+            <div class="content-top clearfix">
+              <div class="primary-heading">
+                <h3 class="reset-margin">
+                  Invoice: <%= @invoice.invoice_number %>(<%= @invoice.status %>)
+                </h3>
+              </div>
+
+              <div class="primary-links">
+                <div id="active_links" class="grid_control_right">
+                  <div class="grid_control_right">
+                    <ul>
+                      <% unless @invoice.invoice_type.eql?("ProjectInvoice") %>
+                          <li class="grid_control_sep sep_right">
+                            <%= link_to t('helpers.links.edit'), edit_billing_invoice_path(@invoice) %>
+                          </li>
+                      <% end %>
+                      <% unless @invoice.status == "paid" %>
+                          <li>
+                            <%= link_to t(:make_payment), new_billing_invoice_payment_path(@invoice) %>
+                          </li>
+                      <% end %>
+                      <li class="grid_control_sep sep_right">
+                        <%= link_to t('views.common.send'), "send_invoice?id=#{@invoice.id}" %>
+                      </li>
+                      <li class="grid_control_sep sep_right">
+                        <%= link_to 'Download', billing_invoice_invoice_pdf_path(@invoice, format: 'pdf'), target: '_blank' %>
+                        <%#= link_to t('views.common.print'), {:controller => 'invoices', :action => 'invoice_pdf', :id => @invoice.encrypted_id, :format => "pdf"}, :target => '_blank' %>
+                      </li>
+                      <li>
+                        <%#= link_to t('views.invoices.payment_history'), {:controller => 'payments', :action => 'invoice_payments_history', :id => @invoice.id}, :class => "no_padding" %>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!--primary_links-->
+
+            </div>
+            <div class="content_middle">
+              <%= render :partial => "show_invoice" %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

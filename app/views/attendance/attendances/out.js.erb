@@ -1,0 +1,20 @@
+<% if @attendance.present? %>
+    <% if @already_out %>
+        location.reload();
+        popupMessage("You are already out.", "alert-danger");
+    <% else %>
+        <% if params[:dashboard].present?  %>
+            $('.attendance-in-out').html("<%= escape_javascript(in_out_button_select(current_employee, true)).html_safe %>");
+            $('#attendance-<%= @attendance.id %>').replaceWith('<%= escape_javascript( render 'attendance/shared/dashboard_table_present_employee_row', attendance: @attendance ).html_safe %>');
+        <% else %>
+            $('.attendance-in-out').html("<%= escape_javascript(in_out_button_select(current_employee)).html_safe %>");
+            $("#daterange").val("<%= Date.today.beginning_of_month.to_s %>  To  <%= Date.today.to_s %>");
+            $('#attendance-item-<%= @attendance.id %>').replaceWith("<%= escape_javascript(render 'attendance/attendances/attendance_item_row', attendance: @attendance).html_safe %>");
+            $('#attendance-<%= @attendance.id %>').replaceWith('<%= escape_javascript( render 'attendance/shared/dashboard_table_present_employee_row', attendance: @attendance ).html_safe %>');
+            $('#staff-attendance').find('#attendance-<%= @attendance.id %>').html('<%= escape_javascript(render 'employees/attendance_out_item', attendance: @attendance).html_safe %>')
+        <% end %>
+    <% end %>
+<% else %>
+    location.reload();
+    popupMessage("Unable to out because your attendance for today is not present.", "alert-danger");
+<% end %>

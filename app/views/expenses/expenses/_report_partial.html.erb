@@ -1,0 +1,86 @@
+<div class="table-warapper">
+  <div class="table-warapper-body">
+    <table class="table beaccount-table tablesorter table-responsive table-hover table-striped">
+      <thead>
+      <tr>
+        <th>Category</th>
+        <% AppSettings::MONTHS_SHORT_NAME.each do |month| %>
+            <th><%= month %></th>
+        <% end %>
+        <th><b>Total</b></th>
+        <th><b>Budget</b></th>
+        <th><b>Difference</b></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @expense_categories.each do |category| %>
+          <tr>
+            <td>
+              <%= category.name %>
+            </td>
+            <% (1..12).each do |month| %>
+                <td>
+                  <% if @expense_report[category.id][month][:amount] > 0 %>
+                      <%= link_to report_breakdown_expenses_expenses_path(category_id: category.id, month: month, year: params[:date].present? ? params[:date][:year] : Date.today.year), target: "_blank" do%>
+                          <%= @expense_report[category.id][month][:amount] %>
+                      <% end %>
+                  <% else %>
+                      <%= @expense_report[category.id][month][:amount] %>
+                  <% end %>
+                </td>
+            <% end %>
+            <td>
+              <b>
+                <% if @expense_report[category.id][:total_amount] > 0 %>
+                    <%= link_to report_breakdown_expenses_expenses_path(category_id: category.id, year: params[:date].present? ? params[:date][:year] : Date.today.year), target: "_blank" do%>
+                        <%= @expense_report[category.id][:total_amount] %>
+                    <% end %>
+                <% else %>
+                    <%= @expense_report[category.id][:total_amount] %>
+                <% end %>
+              </b>
+            </td>
+            <td><b><%= get_budget_amount(category, params[:date].present? ? params[:date][:year] : Date.today.year)  %></b></td>
+            <td><b><%= get_budget_amount(category, params[:date].present? ? params[:date][:year] : Date.today.year) -   @expense_report[category.id][:total_amount] %></b></td>
+          </tr>
+      <% end %>
+      <% if @expense_categories.present? %>
+          <tr>
+            <td><b>Total</b></td>
+            <% (1..12).each do |month| %>
+                <td>
+                  <b>
+                    <% if @expense_report[:month_total][month] > 0 %>
+                        <%= link_to report_breakdown_expenses_expenses_path(month: month, year: params[:date].present? ? params[:date][:year] : Date.today.year), target: "_blank" do%>
+                            <%= @expense_report[:month_total][month] %>
+                        <% end %>
+                    <% else %>
+                        <%= @expense_report[:month_total][month] %>
+                    <% end %>
+                  </b>
+                </td>
+            <% end %>
+            <td>
+              <b>
+                <% if @expense_report[:month_total][:amount] > 0 %>
+                    <%= link_to report_breakdown_expenses_expenses_path(year: params[:date].present? ? params[:date][:year] : Date.today.year), target: "_blank" do%>
+                        <%= @expense_report[:month_total][:amount] %>
+                    <% end %>
+                <% else %>
+                    <%= @expense_report[:month_total][:amount] %>
+                <% end %>
+              </b>
+            </td>
+            <td><b><%= get_total_budget(params[:date].present? ? params[:date][:year] : Date.today.year) %></b></td>
+            <td><b><%= get_total_budget(params[:date].present? ? params[:date][:year] : Date.today.year) - @expense_report[:month_total][:amount] %></b></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="no-data-found">
+      <% unless @expense_categories.present? %>
+          <%= render 'shared/no_data_found', message: 'No expense category' %>
+      <% end %>
+    </div>
+  </div>
+</div>

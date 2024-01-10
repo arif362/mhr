@@ -1,0 +1,20 @@
+<tr id="attendance-<%= attendance.id %>">
+  <td>
+    <% if attendance.employee.present? %>
+        <%= link_to employee_profile_path(attendance.employee), remote: true do %>
+            <%= attendance.employee.full_name %>
+        <% end %>
+    <% end %>
+  </td>
+  <td> <%= raw attendance.on_time_or_late_checker(attendance.employee.id, attendance.in_date, current_department) %> </td>
+  <td> <%= get_time_from_datetime(attendance.in_time) %> </td>
+  <td> <%= get_time_from_datetime(attendance.out_time) %> </td>
+  <td> <%= format_duration(attendance.duration.to_f) %> </td>
+  <td>
+    <% if attendance.employee.present? %>
+        <%= link_to stats_attendance_attendances_path(employee_id: attendance.employee.id), class: 'attendance-report-link', title: 'Attendance Stats' do %>
+            <i class="fa fa-line-chart"> </i>
+        <% end %>
+    <% end %>
+  </td>
+</tr>

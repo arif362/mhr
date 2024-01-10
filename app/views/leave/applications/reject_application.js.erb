@@ -1,0 +1,5 @@
+<% if params[:q].present? && params[:q] == AppSettings::STATUS[:approved] %>
+$("#leave-application-<%= @leave_application.id %>").remove();
+<% else %>
+$('#leave-application-<%= @leave_application.id %>').replaceWith("<%= escape_javascript(render 'leave/applications/list_item', leave_application: @leave_application).html_safe %>");
+<% end %>

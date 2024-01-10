@@ -1,0 +1,62 @@
+<table class="table beaccount-table tablesorter table-responsive advance-report-list table-hover table-striped" id="advance-history-table">
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Employee</th>
+    <th>Given</th>
+    <th>Return</th>
+    <th>Balance</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @advance_report.each do |report| %>
+      <tr>
+        <td><%= format_date(report[:date]) %></td>
+        <td>
+          <%= link_to employee_profile_path(report[:employee]), remote:true do %>
+              <%= report[:employee].full_name %>
+          <% end %>
+        </td>
+        <td><%= report[:given] %></td>
+        <td><%= report[:return] %></td>
+        <td><%= (@balance = calculate_balance(@balance, report[:given], report[:return])).abs %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<div id="pager1">
+  <%= render 'shared/pagination' if @advance_report.size > 10 %>
+</div>
+<div class="no-data-found">
+  <% if @advance_report.length == 0 %>
+      <%= render 'shared/no_data_found', message: 'No history found' %>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        if ($("#advance-history-table").find("tbody").find("tr").size() > 0) {
+            $("#advance-history-table").tablesorter({
+                widthFixed: true,
+                widgets: ['zebra'],
+                headers: {
+                    0: {
+                        sorter: false
+                    },
+                    1: {
+                        sorter: false
+                    },
+                    2: {
+                        sorter: false
+                    },
+                    3: {
+                        sorter: false
+                    },
+                    4: {
+                        sorter: false
+                    }
+                }
+            }).tablesorterPager({container: $("#pager1")});
+        }
+    });
+</script>

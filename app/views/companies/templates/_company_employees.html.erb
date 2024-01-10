@@ -1,0 +1,82 @@
+<div class="actions-button">
+  <div class="clearfix">
+    <div class="pull-right p10">
+      <%= select_tag :export_to_employees, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To....'} %>
+    </div>
+  </div>
+</div>
+<div class="table-warapperx">
+  <div class="table-warapper-bodyx pl10 pr10">
+    <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped company-employees">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody id="employee-list">
+      <% total_employee = 0 %>
+      <% @departments.each do |department| %>
+      <% department.employees.count%>
+      <% total_employee += department.employees.count%>
+          <% department.employees.each do |employee| %>
+              <% if employee.invitation_token.blank? && employee.is_active == true %>
+                  <tr class="employees_<%= employee.id %>">
+                    <td>
+                      <%=link_to employee_profile_path(employee),remote:true do %>
+                          <%= employee.full_name %>
+                      <% end %>
+                    </td>
+                    <td><%= department.name %></td>
+                    <td><%= employee.designation.name if employee.designation.present? %></td>
+                    <td><%= employee.email %></td>
+                    <td><%= employee.mobile %></td>
+                    <td class="actions">
+                      <%= link_to edit_employee_path(employee), remote: true, title: 'Edit', class: 'btn warning-color' do %>
+                          <i class="fa fa-pencil"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+              <% end %>
+          <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <div id="pager">
+      <%= render 'shared/pagination' if total_employee > 10 %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+      $('#export_to_employees').on('change', function () {
+          var export_to = $(this).val();
+          if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+              window.location.href = '<%= employee_companies_path('pdf') %>'
+          }
+          else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+              window.location.href = '<%= employee_companies_path('docx') %>'
+          }
+          else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+              window.location.href = '<%= employee_companies_path('xls') %>'
+          }
+      });
+
+      if ($(".beaccount-table").find("tbody").find("tr").size() > 0) {
+          $(".beaccount-table").tablesorter({
+              headers: {
+                  5: {
+                      sorter: false
+                  },
+                  4: {
+                      sorter: false
+                  }
+              }
+          }).tablesorterPager({container: '#pager'});
+      }
+  });
+</script>

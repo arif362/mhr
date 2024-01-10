@@ -1,0 +1,61 @@
+<% if employee_signed_in? && current_department.present? && current_department.company.next_path.blank? %>
+    <div id="attendance-button-wrapper">
+      <div class="attendance-button-container">
+        <div class="toggler">
+          <i class="fa fa-chevron-right"></i>
+        </div>
+        <div class="attendance-in-out">
+          <%= in_out_button_select(current_employee) %>
+        </div>
+      </div>
+    </div>
+<% end %>
+<script type="text/javascript">
+    $(function () {
+        initialToggle();
+        $('.toggler').click(function () {
+            toggleInOut();
+            persistToggle();
+        });
+    });
+
+    function toggleInOut() {
+        var wrapperEl = $('#attendance-button-wrapper');
+        var wrapperElShifter = 'fab-right-shift';
+        var togglerIcon = $('.toggler').find('i');
+        var togglerRightIcon = 'fa-chevron-right';
+        var togglerLeftIcon = 'fa-chevron-left';
+        if (wrapperEl.hasClass(wrapperElShifter)) {
+            wrapperEl.css("right", "-65").animate({
+                right: "+=65"
+            });
+
+            wrapperEl.removeClass(wrapperElShifter);
+            togglerIcon.removeClass(togglerLeftIcon).addClass(togglerRightIcon);
+        }
+        else {
+            wrapperEl.addClass(wrapperElShifter);
+            wrapperEl.css("right", "0").animate({
+                right: "-=65"
+            });
+            togglerIcon.addClass(togglerLeftIcon).removeClass(togglerRightIcon);
+        }
+    }
+
+    function persistToggle() {
+        var toggleState = $.cookie('inout');
+        if (toggleState == undefined || toggleState == 1) {
+            $.cookie('inout', 0, {path: '/'});
+        }
+        else {
+            $.cookie('inout', 1, {path: '/'});
+        }
+    }
+
+    function initialToggle() {
+        var toggleState = $.cookie('inout');
+        if (toggleState == 0) {
+            toggleInOut()
+        }
+    }
+</script>

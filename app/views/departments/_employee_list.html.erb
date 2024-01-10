@@ -1,0 +1,72 @@
+<div class="p10">
+  <div class="clearfix">
+    <div class="pull-right">
+      <div class="btn-group mr10">
+        <%= link_to new_employee_path(department: @department.id), class: 'btn btn-default reset-border-radius', remote: true do %>
+            <i class="fa fa-plus"></i> New Employee
+        <% end %>
+      </div>
+      <div class="btn-group">
+        <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To....'} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="panelx table-warapper mt10">
+    <div class="table-warapper-body">
+      <table id="employee-list" class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped employee-list-table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Mobile</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody id="employee-list">
+        <% @employees.each do |employee| %>
+            <%= render 'employees/employee_row', employee: employee %>
+        <% end %>
+        </tbody>
+      </table>
+      <div id="pager2">
+        <%= render 'shared/pagination' if @employees.size > 10 %>
+      </div>
+      <div class="no-data-found">
+        <% unless @employees.present? %>
+            <%= render 'shared/no_data_found', message: 'No employee found' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        if ($(".employee-list-table").find("tbody").find("tr").size() > 0) {
+            $(".employee-list-table").tablesorter({
+                headers: {
+                    4: {
+                        sorter: false
+                    }
+                },
+                widthFixed: true,
+                widgets: ['zebra']
+            }).tablesorterPager({container: $("#pager2")});
+        }
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= employee_department_path(@department,  'pdf') %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= employee_department_path(@department, 'docx') %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= employee_department_path(@department, 'xls') %>'
+            }
+        });
+    });
+</script>

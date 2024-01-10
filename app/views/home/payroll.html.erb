@@ -1,0 +1,87 @@
+<div class="mt75">
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="col-sm-9">
+        <div class="module-detail">
+          <h2 class="page-header"> Payroll Management </h2>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/payroll/dashboard.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/payroll/dashboard.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6">
+
+              All types of salary related inquiries have being merged in this payroll module. This management system
+              contains standard reports like department wise gross salary, total deduction, net salary, monthly employee salary,
+              company wise salary etc. Bonus payments are also automated by mhr payroll system. Other reports like last month salaries,
+              monthly department salary, bonus payment, salary increments. mhr web payroll system makes your payroll process
+              very simple & you can import the processed data into your accounting software.
+            </div>
+          </div>
+
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              Salary processing can be done in a few easy steps. You can process full company salary with a simple click of a button. Also you can
+              process salary department wise and also employee wise. This also allows you to add multiple categories for an employee like Home Allowance,
+              TADA etc. And all of the categories are automatically added or deducted from salary. You can modify the automatically
+              calculated data and it will automatically recalculate the net salary.
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/payroll/salary_create.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/payroll/salary_create.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/payroll/salary_view.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/payroll/salary_view.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6">
+              You can download your salary payslip if you want. Also it will send a copy of the payslip through email to the employee when you process the salary of that employee.
+            </div>
+          </div>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              Bonus payments are also automated by mhr payroll system. It allows the system by creating a category in which contains the format and
+              amount of the bonus payment. By selecting an employee and create and create a bonus for that employee with a click.
+
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/payroll/bonus.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/payroll/bonus.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/payroll/increment.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/payroll/increment.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6">
+              You can provide increment from the payroll system without editing the basic salary of an employee.
+              This helps you to find salary increment history of an employee. You need to provide an amount and an effective date;
+              and the system will automatically add the incremented amount with basic salary on that effective date.
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <%= render 'home/feature_modules', modules:@modules %>
+
+    </div>
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.preview-attachment').attachmentPreview();
+    });
+</script>

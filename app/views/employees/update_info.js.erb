@@ -1,0 +1,8 @@
+<% if @employee.errors.present?%>
+    popupMessage('<%= escape_javascript( errors_to_message_string(@employee.errors)).html_safe %>', 'alert-danger');
+<% else %>
+    $('#employee-profile').html('<%= escape_javascript( render 'show_info', employee: @employee).html_safe%>');
+    $('#employee-<%= @employee.id %>').replaceWith('<%= escape_javascript(render 'employee_row', employee: @employee).html_safe %>');
+    $('#global-modal-large').modal('hide');
+    popupMessage('Employee Updated successfully', 'alert-success');
+<% end %>

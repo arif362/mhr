@@ -1,0 +1,91 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Payroll Dashboard
+      </h4>
+    </div>
+
+    <div class="secondary-color full-content-wrapper">
+      <div class="row actions-button">
+        <div class="bs-callout bs-callout-info mb5 pr15 clearfix">
+          <h4 class="pull-left"> <%= @prev_month_date.strftime('%B') + ', ' + @prev_month_date.year.to_s %> </h4>
+          <%= link_to process_salary_payroll_salaries_path, class: 'btn btn-default pull-right reset-border-radius' do %>
+              <i class="fa fa-cogs pr3"> </i>Process Salary
+          <% end %>
+        </div>
+      </div>
+      <div style="background-color: #fff" class="content-body row mt15 mb10">
+        <div class="summary-wrap">
+          <!--<h2> Payroll Summary </h2>-->
+          <div class="right-search-form pt10 pb15">
+            <%= form_tag payroll_summary_path, method: 'get', remote: true do %>
+                <%= select_year Date.today, {:start_year => Date.today.year, :end_year => current_department.year-1}, {class: "form-control"} %>
+                <%= submit_tag 'Search', class: 'btn primary-color-bg-with-hover reset-border-radius' %>
+            <% end %>
+          </div>
+          <h3 id="total-net-salary" class="mt0">
+            Total <span class="warning-color"><%=  amount_with_currency('%.02f' % @summary[:net_total]) %></span> paid out till date <span class="warning-color">'<%= format_date(params[:date].present? ? Date.new(params[:date][:year].to_i) : Date.today.beginning_of_year) %>'</span> to <span class="warning-color">'<%= format_date(params[:date].present? ? Date.new(params[:date][:year].to_i).end_of_year : Date.today) %>'</span>.
+          </h3>
+        </div>
+        <div id="gross_salary_graph" class="monthly-summary-wrap pt20">
+          <%= render 'gross_salary_graph' %>
+        </div>
+        <div id="salary_deduct_graph" class="monthly-summary-wrap pt20">
+          <%= render 'deduction_graph' %>
+        </div>
+        <div id="net_salary_graph" class="monthly-summary-wrap pt20">
+          <%= render 'net_salary_graph' %>
+        </div>
+      </div>
+      <div class="content-body row mt15 mb30">
+        <%= render 'employees_salary_paid' %>
+
+        <div class="different-report-wrap">
+          <h2> Different Types of Report </h2>
+          <div class="row different-report-row mt20">
+            <div class="col-md-3 different-report-col">
+              <%= link_to monthly_sheet_payroll_salaries_path do %>
+                  <div class="dashboard-name-image syftet-primary-color-bg">
+                    <%= image_tag 'payroll/employee-monthly-salary.png', class: 'img-responsive' %>
+                  </div>
+                  Monthly Employee Salary
+              <% end %>
+            </div>
+            <div class="col-md-3 different-report-col">
+              <%= link_to combined_salary_report_payroll_salaries_path do %>
+                  <div class="dashboard-name-image syftet-text-color-bg">
+                    <%= image_tag 'payroll/department-monthly-salary.png', class: 'img-responsive' %>
+                  </div>
+                  Monthly Department Salary
+              <% end %>
+            </div>
+            <div class="col-md-3 different-report-col">
+              <%= link_to payroll_bonus_payments_path do %>
+                  <div class="dashboard-name-image syftet-ruby-color-bg">
+                    <%= image_tag 'payroll/bonus-payment.png', class: 'img-responsive' %>
+                  </div>
+                  Bonus Payment
+              <% end %>
+            </div>
+            <div class="col-md-3 different-report-col">
+              <%= link_to payroll_increments_path do %>
+                  <div class="dashboard-name-image secondary-guest-color-bg">
+                    <%= image_tag 'payroll/salary-increment.png', class: 'img-responsive' %>
+                  </div>
+                  Salary Increment
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+
+
+

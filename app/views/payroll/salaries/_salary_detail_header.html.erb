@@ -1,0 +1,38 @@
+<div class="col-md-12 reset-padding" id="salary-detail-header">
+  <div class="col-md-6 reset-padding">
+    <h4>
+      <%= 'Salary of ' + AppSettings::MONTHS_SHORT_NAME[salary_month.to_i - 1] + ', ' + salary_year.to_s %>
+      <% unless salary.new_record? %>
+          <% if salary.is_confirmed %>
+              (Confirmed)
+              <%= link_to 'Click to Unconfirm', update_salary_status_payroll_salary_path(salary), remote: true, class: 'btn btn-info' %>
+          <% else %>
+              (Unconfirmed)
+              <%= link_to 'Click to Confirm', update_salary_status_payroll_salary_path(salary), remote: true, class: 'btn btn-info' %>
+          <% end %>
+      <% end %>
+    </h4>
+  </div>
+  <div class="col-md-6 reset-padding">
+    <% unless salary.new_record? %>
+        <%= link_to edit_payroll_salary_path(salary, no_modal: true, state: Payroll::Salary::STATES[:detail]), remote: true , class: 'btn btn-default warning-color pull-right', id: 'edit-from-detail' do %>
+            <i class="fa fa-pencil-square"></i>
+        <% end %>
+        <%= link_to '#' , class: 'btn btn-default danger-color pull-right edit-cancel', id: "edit-cancel-from-detail" do %>
+            <i class="fa fa-times"></i>
+        <% end %>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        <% unless salary.new_record? %>
+        $('#edit-cancel-from-detail').click(function(){
+            $('#edit-from-detail').show();
+            $('#edit-cancel-from-detail').hide();
+            $('#employee-salary-detail-section').html("<%= escape_javascript(render 'salary_detail').html_safe %>");
+        });
+        <% end %>
+    });
+</script>

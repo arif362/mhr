@@ -1,0 +1,78 @@
+<div class="mt75">
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="col-sm-9">
+        <div class="module-detail">
+          <h2 class="page-header"> Provident Fund Management </h2>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/provident_fund/pf_dash_board.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/provident_fund/pf_dash_board.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6", style="text-align: justify">
+              Provident Fund Management (PFM) is an integrated software to keep track on the Provident
+              Fund Investment/Details of a company (if provided). It covers practically all the modules that a company looks for in a Provident
+              Fund Management Software. It is designed to process and provide all information starting form recruitment till final settlement at one click.
+              This product has been developed with extensive HR and Finance domain knowledge under consultation of experienced HR and Finance managers.
+            </div>
+          </div>
+
+          <div class="row mt20 mb80", style="text-align: justify">
+            <div class="col-sm-6">
+              When you are opening a Provident Fund account for your employee, it is a one-time job, making contributions for them is not.
+              You will need to remit contributions for your employees once every contribution period (generally the wage period).
+              Selecting the month and year will process contribution automatically for all the employees of that month and you will be notified after the
+              process is complete.
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/provident_fund/pf_account_create.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/provident_fund/pf_account_create.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/provident_fund/pf_employee_contribution_process.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/provident_fund/pf_employee_contribution_process.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6", style="text-align: justify">
+              There is also an option of investing in employees by providing those loans and other benefits for extra revenue in a company.
+              This section allows keeping track and updating about the loan being sanctioned and when the loan ends and starts.
+              The loan can be in various reason and the employee will be tabbed in their personal information section with their updated loan status.
+            </div>
+          </div>
+          <div class="row mt20 mb80">
+
+            <div class="col-sm-6", style="text-align: justify">
+              Investments can be created with few simple steps. Naturally its much harder to make an investment
+              from an employee can calculate it in other places where it's needed. But our application
+              will do everything for you. Another great feature is creating lons and returning loans. It is
+              now much simpler than you thought.
+              
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/provident_fund/pf_new_investment.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/provident_fund/pf_new_investment.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <%= render 'home/feature_modules', modules:@modules %>
+
+    </div>
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.preview-attachment').attachmentPreview();
+    });
+</script>

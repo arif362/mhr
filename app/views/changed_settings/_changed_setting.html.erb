@@ -1,0 +1,25 @@
+<tr id="changed-setting-<%= changed_setting.id %>">
+  <td>
+    <%= format_date changed_setting.from_date %>
+  </td>
+  <td>
+    <%= format_date changed_setting.to_date %>
+  </td>
+  <td>
+    <%= changed_setting.open_time.strftime("%I:%M %p") %>
+  </td>
+  <td>
+    <%= changed_setting.close_time.strftime("%I:%M %p") %>
+  </td>
+  <td>
+    <%= changed_setting.working_hours %>
+  </td>
+  <td class="actions">
+    <%= link_to edit_changed_setting_path(changed_setting), class: 'btn warning-color', remote: true do %>
+        <i class="fa fa-pencil-square-o"></i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: changed_setting.id, action_on: 'changed_settings', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"> </i>
+    <% end %>
+  </td>
+</tr>

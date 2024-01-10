@@ -1,0 +1,42 @@
+<h3>
+  Monthly expense of <%= @summary_data[:start_date].strftime("%B") %>
+</h3>
+<% if @summary_data[:grouped_expenses].present? %>
+    <canvas id="monthlyExpenseSalaryChart" width="400" height="100"></canvas>
+<% end %>
+
+<div class="no-data-found">
+  <% unless @summary_data[:grouped_expenses].present? %>
+      <%= render 'shared/no_data_found', message: 'No expense found to display graph' %>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    var ctx1 = document.getElementById("monthlyExpenseSalaryChart");
+    var myChart1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: <%= raw @summary_data[:categories] %>,
+            datasets: [
+                {
+                    label: 'Budget',
+                    data: <%= raw @summary_data[:budgets] %>,
+                    backgroundColor: <%= raw @colors.reverse %>
+                },
+                {
+                    label: 'Expense',
+                    data: <%= raw @summary_data[:amounts] %>,
+                    backgroundColor: <%= raw @colors %>
+                }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>

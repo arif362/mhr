@@ -1,0 +1,30 @@
+<div class="clearfix mt10">
+  <table class="table beaccount-table tablesorter table-responsive table-hover table-striped">
+    <thead>
+    <tr>
+      <th> Date</th>
+      <th> Type</th>
+      <th> Debit</th>
+      <th> Credit</th>
+      <th> Balance</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% balance = 0 %>
+    <% @history.each do |statement| %>
+        <tr>
+          <td> <%= statement.created_at.strftime('%d %b, %Y') %> </td>
+          <td> <%= statement.transable_type.split('::').last %> </td>
+          <td> <%= statement.debit || '-' %> </td>
+          <td> <%= statement.credit || '-' %> </td>
+          <td> <%= balance += (statement.debit.present? ? -statement.debit : statement.credit) %> </td>
+        </tr>
+    <% end %>
+    <tr style="background: #449D44; color: #ffffff;">
+      <td colspan="3"></td>
+      <td> Net Balance</td>
+      <td class="pt5 pb5"> <strong> <%= balance %> </strong> </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

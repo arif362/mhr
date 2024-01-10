@@ -1,0 +1,41 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Daily Progress
+      </h4>
+    </div>
+
+    <div class="secondary-color full-content-wrapper">
+      <div class="content-body row mt10 mb10">
+        <h4>
+          Add New Task For <%= @date %>
+        </h4>
+
+        <div class="task-list-wrapper">
+          <ul class="task-lists">
+            <% @tasks.each do |task| %>
+                <%= render task %>
+            <% end %>
+          </ul>
+        </div>
+
+        <%#= render 'form', task: @task %>
+
+        <%= form_for task, remote:task.new_record?? true:false do |form| %>
+            <div class="field form-group">
+              <%= form.text_area :title, class: 'form-control' %>
+              <%= hidden_field_tag :date, @date %>
+            </div>
+
+            <div class="actions">
+              <%= form.submit class: 'btn btn-default reset-border-radius' %>
+            </div>
+        <% end %>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

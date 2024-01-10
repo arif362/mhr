@@ -1,0 +1,141 @@
+@import "public_variables";
+
+$malibu: #048ABB;
+.company-info {
+  .info-body {
+    background: #F6F9FC;
+    padding: 20px 0px 50px 0px;
+    max-width: 1000px;
+    margin: auto;
+    .actions-button {
+      button {
+        color: #074E66;
+        font-weight: bold;
+      }
+      .add-button {
+        color: white;
+        background: #57C40A;
+      }
+    }
+    .padding-fifteen {
+      padding: 0 15px 0px 15px !important;
+    }
+    .content-info {
+      background: #fdfdfd;
+      border: solid 1px #D1DBE3;
+      padding: 0px 0px 30px 0px;
+      .table-warapper{
+        margin: auto;
+        max-width: 998px;
+        padding: 0;
+      }
+      .form-vertical{
+        margin: auto;
+        max-width: 825px;
+      }
+      label {
+        font-weight: bolder;
+        font-size: 15px;
+        padding-bottom: 5px;
+        color: #074E66;
+      }
+      input {
+        padding-top: 5px;
+        border-radius: 0;
+        height: 40px;
+      }
+      textarea {
+        border-radius: 0;
+      }
+      .text-center {
+        padding-top: 20px;
+      }
+
+    }
+  }
+}
+
+.company-logo {
+  max-width: 100%;
+  max-height: 150px;
+}
+
+.logo-wrapper{
+  position: relative;
+  display: table;
+  margin: auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  .logo-container{
+    text-align: center;
+    border: solid 1px #ddd;
+    width: 124px;
+    height: 124px;
+    display: table-cell;
+    border-radius: 50%;
+    img{
+      width: 120px;
+      height: 120px;
+    }
+  }
+}
+
+.custom-upload-file-wrap-placement {
+  right: 45px;
+  top: 40px;
+  span {
+    font-size: 25px;
+    //color: #000;
+  }
+  cursor: pointer;
+}
+
+.credit-card-billing-container {
+  h4 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+  }
+}
+
+.card-info, .billing-address {
+  h3 {
+    font-family: "Roboto", sans-serif;
+    color: $primary-color;
+    font-weight: 400;
+  }
+}
+
+/* Company profile new design */
+.cp-img-wrap {
+  position: relative;
+  height: 150px;
+  .cp-img {
+    float: left;
+    width: 150px;
+  }
+  .cp-img-info {
+    left: 0;
+    padding-left: 170px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0px, -50%);
+  }
+}
+
+.cp-header {
+  height: 150px;
+}
+
+.profile-info-ul-wrap {
+  font-size: 15px;
+  li {
+    label {
+      float: left;
+      min-width: 75px;
+    }
+    p {
+      padding-left: 80px;
+    }
+  }
+}
+

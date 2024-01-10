@@ -1,0 +1,81 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Provident Fund Cash Statement
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper">
+      <div class="clearfix mt10 content-body">
+        <div class="filter-wrapper">
+          <%= form_tag '', method: 'get', id: 'provident-fund-date-filter' do %>
+              <div class="clearfix">
+                <div class="col-sm-6">
+                  <div class="row input-group mb5">
+                    <%= text_field_tag :daterange, '', value: params[:daterange], class: 'form-control reset-border-radius' %>
+                    <span class="input-group-addon reset-border-radius" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+          <div class="clearfix">
+            <h4 class="text-center"> Porvident fund statement
+              from <%= "#{format_date @start_date} To #{format_date @end_date}" %> </h4>
+          </div>
+        </div>
+        <table class="table beaccount-table tablesorter table-responsive table-hover" style="background: #fdfdfd;">
+          <thead>
+          <tr>
+            <th> Date</th>
+            <th class="text-center"> Type</th>
+            <th class="text-center"> Debit</th>
+            <th class="text-center"> Credit(Return)</th>
+            <th class="text-center"> Balance</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% balance = @balance %>
+          <%= render 'initial_row' if balance != 0 %>
+          <% @statements.each do |statement| %>
+              <tr>
+                <td style="border: none; border-right: solid 1px #333333"> <%= statement.created_at.strftime('%d %b, %Y') %> </td>
+                <td style="border: none; border-right: solid 1px #333333" class="text-center"> <%= statement.transable_type.split('::').last %> </td>
+                <td style="border: none; border-right: solid 1px #333333" class="text-center"> <%= statement.debit || '-' %> </td>
+                <td style="border: none; border-right: solid 1px #333333" class="text-center"> <%= statement.credit || '-' %> </td>
+                <td style="border: none;" class="text-center"> <%= balance += (statement.debit.present? ? -statement.debit : statement.credit) %> </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <div class="no-data-found">
+          <% unless @statements.present? %>
+              <%= render 'shared/no_data_found', message: 'No data found' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            showDropdowns: true,
+            locale: {
+                format: 'DD-MM-YYYY',
+                separator: '  To  '
+            },
+            minDate: '<%= current_department.created_at.strftime('%d-%m-%Y') %>',
+//            maxDate: '<%#= Date.today.strftime('%d-%m-%Y') %>'
+        };
+
+        if (!<%= params[:daterange].present? %>) {
+            options.startDate = "<%= (Date.today - 6.months).strftime('%d-%m-%Y') %>";
+            options.endDate = "<%= Date.today.strftime('%d-%m-%Y') %>";
+        }
+
+        $('input[name="daterange"]').daterangepicker(options).on('apply.daterangepicker', function (ev, picker) {
+            $('#provident-fund-date-filter').submit();
+        });
+    });
+</script>

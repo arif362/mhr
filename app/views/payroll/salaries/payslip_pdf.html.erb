@@ -1,0 +1,145 @@
+<div class="payslip-wrap mt30">
+  <div class="payslip-month">
+    Payslip for the period of <%= Date::MONTHNAMES[@salary.month.to_i] %> <%= @salary.year %>
+  </div>
+
+  <div class="employee-information pt10">
+    <table class="pay-info-table ">
+      <tr>
+        <td class="info">
+          Employee Id
+        </td>
+
+        <td class="col-lg-4">
+          : #<%= @employee.id_card_no %>
+        </td>
+
+        <td class="col-lg-3">
+          Name
+        </td>
+
+        <td class="col-lg-3">
+          : <%= @employee.full_name %>
+        </td>
+
+      </tr>
+      <tr>
+        <td class="info">
+          Department
+        </td>
+
+        <td class="col-lg-3">
+          : <%= @employee.department.name %>
+        </td>
+
+        <td class="col-lg-3">
+          Designation
+        </td>
+
+        <td class="col-lg-3">
+          : <%= @employee.designation.name if @employee.designation.present? %>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td class="info">
+          Days Worked
+        </td>
+
+        <td class="col-lg-3">
+          :
+        </td>
+
+        <td class="col-lg-3">
+          Pay Date
+        </td>
+
+        <td class="col-lg-3">
+          : <%= format_date @salary.created_at %>
+        </td>
+
+      </tr>
+    </table>
+  </div>
+
+  <div class="salary-info clearfix">
+    <table class="pay-slip-table">
+      <tr>
+        <td>
+          <table>
+            <thead>
+            <tr>
+              <th class="top-border bottom-border info padding-3-0"> Addition</th>
+              <th class="top-border bottom-border padding-3-0 data-column <%= @right_border %>"> Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td class="info"> Basic Pay</td>
+              <td class="data-column <%= @right_border %>"> <%= @salary.basic_salary %></td>
+            </tr>
+            <% @salary.addition_category.each do |key, value| %>
+                <% if (key.to_s.include? '_amount') && value.to_f > 0.0 %>
+                    <tr>
+                      <td class="info"><%= key.to_s.humanize %></td>
+                      <td class="data-column <%= @right_border %>"> <%= value %></td>
+                    </tr>
+                <% end %>
+            <% end %>
+            </tbody>
+          </table>
+        </td>
+        <td>
+          <table>
+            <thead>
+            <tr>
+              <th class="top-border bottom-border info padding-3-0 <%= @left_border %>"> Deduction</th>
+              <th class="top-border bottom-border data-column padding-3-0"> Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @salary.deduction_category.each do |key, value| %>
+                <% if (key.to_s.include? '_deduct') && value.to_f > 0.0 %>
+                    <tr>
+                      <td class="info <%= @left_border %>"><%= key.to_s.humanize %></td>
+                      <td class="data-column"> <%= value %></td>
+                    </tr>
+                <% end %>
+            <% end %>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="bottom-border top-border net-pay">
+          Total Earnings
+          <span class="net-amount pull-right"> <%= @salary.total_addition %> </span>
+        </td>
+        <td class="bottom-border top-border left-border net-pay">
+          Total Deductions
+          <span class="net-amount pull-right"> <%= @salary.total_deduction %> </span>
+        </td>
+      </tr>
+      <tr>
+        <td class="bottom-border"></td>
+        <td class="bottom-border net-pay">
+          Net Pay(Rounded)
+          <span class="net-amount pull-right"> <%= (@salary.total_addition - @salary.total_deduction).round %> </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="authorised-signature clearfix">
+    <div class="left-signature" >
+      ------------------------------- </br>
+      Employer's Signature
+    </div>
+    <div class="right-signature " >
+      ------------------------------- </br>
+      Employee's Signature
+    </div>
+  </div>
+
+</div>

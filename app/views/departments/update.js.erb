@@ -1,0 +1,8 @@
+<% flash.clear %>
+<% if @department.errors.present? %>
+popupMessage('<%= escape_javascript( errors_to_message_string( @department.errors ) ).html_safe %>', 'alert-danger');
+<% else %>
+popupMessage('Department information updated successfully', 'alert-success');
+$('#department-info').html('<%= escape_javascript( render 'departments/info' ).html_safe %>');
+$('#global-modal').modal('hide');
+<% end %>

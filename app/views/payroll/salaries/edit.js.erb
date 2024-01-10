@@ -1,0 +1,7 @@
+<% if params[:no_modal] %>
+    $('#employee-salary-detail-section').html("<%= escape_javascript(render 'edit_form', state: params[:state]).html_safe %>")
+    $('#edit-from-detail').hide();
+    $('#edit-cancel-from-detail').show();
+<% else %>
+    $('#global-modal').modal('show').find('.modal-content').html('<%= escape_javascript( render 'edit_modal').html_safe %>');
+<% end %>

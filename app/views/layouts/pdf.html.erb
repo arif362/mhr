@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mihisoft</title>
+  <link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <%= wicked_pdf_stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= wicked_pdf_javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <style type="text/css">
+      table {
+          page-break-inside: auto !important;
+      }
+
+      thead {
+          display: table-header-group !important;
+      }
+
+      tr {
+          page-break-inside: avoid !important;
+          page-break-after: auto !important;
+      }
+
+      td, th {
+          page-break-inside: avoid !important;
+      }
+      table thead tr {
+          page-break-inside: avoid;
+      }
+      table tbody tr {
+          page-break-inside: avoid;
+      }
+
+      .table-responsive {
+          overflow: visible !important;
+      }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+
+  <div class="row reset-padding">
+    <div class="content-wrapper">
+
+      <div class="pf-statement-header-wrap">
+        <div class="pdf-report-logo-wrap clearfix">
+
+          <div class="pdf-report-logo">
+            <% if  current_department.image.present? %>
+                <%= wicked_pdf_image_tag current_department.image, width: 60, height: 60 %>
+
+                <% elsif current_department.company.image.present? %>
+                <%= wicked_pdf_image_tag current_department.company.image, width: 60, height: 60 %>
+
+                <% else %>
+                <%= wicked_pdf_image_tag 'company/company.png', width: 60, height: 60 %>
+
+            <% end %>
+            <%#= wicked_pdf_image_tag 'company/company.png', width: 60, height: 60 %>
+          </div>
+
+          <div class="pdf-report-title-wrap">
+            <div class="pdf-report-title-container p7 clearfix">
+              <div class="pdf-report-left-title">
+                <h4 class="m0"> <%= current_department.company.name %> </h4>
+                <span> <%= current_department.name %> </span>
+              </div>
+              <div class="pdf-report-right-title" >
+                <p class="m0">
+                  <% %>
+                  <%= current_department.email %> <%= "#{','}" if current_department.email.present? %><br>
+                  <%= current_department.mobile %> <%= "#{','}" if current_department.mobile.present? %><br>
+                  <%= current_department.address  %> <%= "#{','}" if current_department.address.present? %><br>
+                  <%= current_department.city %><%= ', ' + current_department.state if current_department.state.present? %> - <%= current_department.zip_code %>,
+                  <%= country_name(current_department) %>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <%= yield %>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

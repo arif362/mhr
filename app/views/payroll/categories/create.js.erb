@@ -1,0 +1,8 @@
+<% if @category.errors.any? %>
+    popupMessage("Category couldn't be created", 'alert-danger');
+<% else %>
+    $('#global-modal').modal('hide');
+    popupMessage("Category created successfully", 'alert-success');
+    $('#payroll-categories').append('<%= escape_javascript(render 'payroll/categories/category_table_row', category: @category).html_safe %>');
+    $('#no-data-found').remove();
+<%end%>

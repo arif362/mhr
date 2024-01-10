@@ -1,0 +1,84 @@
+// Place all the styles related to the remarks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.remark-row {
+  padding-left: 20px;
+  padding-right: 20px
+}
+
+.remark-name {
+  color: #0088cc
+}
+
+p.remark-message-admin {
+  position: relative;
+  width: auto;
+  display: inline-block;
+  min-width: 100px;
+  background-color: #fff;
+  border: 1px solid #666;
+  padding: 10px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+p.remark-message-admin:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 30px;
+  top: -20px;
+  border: 10px solid;
+  border-color: transparent transparent #666 #666;
+}
+
+p.remark-message-admin:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 32px;
+  top: -16px;
+  border: 8px solid;
+  border-color: transparent transparent #fff #fff;
+}
+
+p.remark-message-staff {
+  position: relative;
+  width: auto;
+  display: inline-block;
+  min-width: 100px;
+  background-color: #fff;
+  border: 1px solid #666;
+  padding: 10px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+p.remark-message-staff:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: 30px;
+  top: -20px;
+  border: 10px solid;
+  border-color: transparent #666 #666 transparent;
+}
+
+p.remark-message-staff:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: 32px;
+  top: -16px;
+  border: 8px solid;
+  border-color: transparent #fff #fff transparent;
+}

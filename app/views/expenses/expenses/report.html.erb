@@ -1,0 +1,46 @@
+<div class="">
+  <div class="row header-wrapper">
+    <h4> Yearly Expense Report </h4>
+  </div>
+  <div class="secondary-color">
+    <div class="content-body-wrapper">
+      <div class="row content-body report-table-wrapper pt10 clearfix">
+        <% if employee_role == 'admin' %>
+            <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius pull-right', prompt: 'Export To....'} %>
+        <% end %>
+        <div class="report-search-form">
+          <%= form_tag '', method: 'get', id: 'yearly-expense-report-form', class: 'clearfix' do %>
+              <div>
+                <%= label_tag :date_year, 'Select year', class: 'pr5' %>
+                <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control width-fix"} %>
+              </div>
+          <% end %>
+        </div>
+
+        <%= render 'expenses/expenses/report_partial' %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'shared/modal' %>
+
+<script type="text/javascript">
+    $(function () {
+        $("#date_year").on('change', function () {
+            $('#yearly-expense-report-form').submit();
+        });
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= report_expenses_expenses_path('pdf', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= report_expenses_expenses_path('docx', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= report_expenses_expenses_path('xls',  params) %>'
+            }
+        });
+    });
+</script>

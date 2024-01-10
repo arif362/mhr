@@ -1,0 +1,115 @@
+<%= form_for @company, html: {class: 'form-vertical', id: 'company-registration-form'} do |f| %>
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="logo-wrapper">
+          <div class="logo-container">
+            <%= image_tag @company.image.present? ? @company.image_url(:large) : 'company/company.png', id: 'company-logo', class: 'img-circle' %>
+          </div>
+          <label class="custom-upload-file-wrap custom-upload-file-wrap-placement" id="upload-company-logo">
+            <span class="fa fa-photo guest-color"> </span>
+            <%= f.file_field :image, class: 'hidden' %>
+          </label>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="company-info-content">
+          <div class="row clearfix">
+            <div class="form-group col-md-6">
+              <%= f.label :name, '*Company Name' %>
+              <%= f.text_field :name, class: 'form-control input-field-height reset-border-radius', placeholder: 'Company or Organization Name', data: {required: true} %>
+            </div>
+
+            <div class="form-group col-md-6">
+              <%= f.label :contact_email, 'Email' %>
+              <%= f.text_field :contact_email, class: 'form-control input-field-height reset-border-radius', placeholder: 'Company Email Optional' %>
+            </div>
+          </div>
+
+          <div class="row clearfix">
+            <div class="form-group col-md-6">
+              <%= f.label :mobile, "*Mobile" %>
+              <%= f.text_field :mobile, class: 'form-control input-field-height reset-border-radius', placeholder: 'Contact mobile or phone number', data: {required: true} %>
+            </div>
+
+            <div class="form-group col-md-6 input-validate-message-area">
+              <%= f.label :company_country, "*Country" %>
+              <%= country_select(:company, :country, {selected: f.object.country, include_blank: 'Select a country'}, {class: 'form-control custom-chosen input-field-height reset-border-radius ', id: 'company-country', data: {required: true}}) %>
+            </div>
+          </div>
+
+          <div class="row clearfix">
+            <div class="form-group col-md-6">
+              <%= f.label :address, "*Address" %>
+              <%= f.text_field :address, class: 'form-control input-field-height reset-border-radius', placeholder: 'Company Address', data: {required: true} %>
+            </div>
+
+            <div class="form-group col-md-6">
+              <%= f.label :city, 'City' %>
+              <%= f.text_field :city, class: 'form-control input-field-height reset-border-radius', placeholder: 'City Optional' %>
+            </div>
+          </div>
+
+          <div class="row clearfix">
+            <div class="form-group col-md-6">
+              <%= f.label :state, 'State' %>
+              <%= f.text_field :state, class: 'form-control input-field-height reset-border-radius', placeholder: 'State Optional' %>
+            </div>
+
+            <div class="form-group col-md-6">
+              <%= f.label :zip_code, "*Zip code" %>
+              <%= f.text_field :zip_code, class: 'form-control input-field-height reset-border-radius', placeholder: 'Zip Code', data: {required: true} %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-group col-md-12">
+      <div class="text-center">
+        <% if f.object.new_record? %>
+            <%= f.submit 'Submit To Continue', class: 'btnx btn-infox submit-btn' %>
+        <% else %>
+            <%= f.submit 'Save changes', class: 'btn btn-success' %>
+        <% end %>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $('#company-registration-form').syftValidator();
+
+        function validPayloadLenght(payload){
+            var payloadLenght = payload/1024/1024;
+            return payloadLenght < 1 ? true : false;
+        }
+
+        $('#company_image').change(function () {
+            var reader = new FileReader();
+
+            if(validPayloadLenght(this.files[0].size)){
+                reader.onload = function (e) {
+                    $('#company-logo').attr('src', e.target.result)
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+            else{
+
+                popupMessage('This image is not supported. File Size too large. ', 'alert-danger');
+                $('.hidden').val(null);
+
+
+            }
+
+        });
+
+
+//        $('#upload-company-logo').click(function () {
+//            $("input[type='file']").trigger('click');
+//        });
+    });
+</script>

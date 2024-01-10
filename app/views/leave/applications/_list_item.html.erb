@@ -1,0 +1,51 @@
+<tr id="leave-application-<%= leave_application.id %>">
+  <td>
+    <% if  leave_application.employee.present? %>
+        <%=link_to employee_profile_path(leave_application.employee), remote:true do%>
+            <%=  leave_application.employee.full_name %>
+        <% end %>
+    <% end %>
+  </td>
+  <td><%= leave_application.leave_category.name if leave_application.leave_category.present? %></td>
+  <td>
+    <% if  leave_application.attachment_url.present? %>
+        <% if leave_application.attachment.path.downcase.end_with?('.pdf', '.jpg', '.jpeg', '.gif', '.png') %>
+            <a href="javascript:void(0)" data-content="<%= leave_application.attachment_url %>" class="preview-attachment">View</a>
+        <% else %>
+            <%= link_to 'View', leave_attachment_leave_application_path(leave_application.id) %>
+        <% end %>
+    <% else %>
+        No Attachment
+    <% end %>
+  </td>
+  <td><%= leave_application.is_paid ? 'Paid' : 'Unpaid' %></td>
+  <td class="approve"><%= leave_application.status.capitalize  if leave_application.status.present? %></td>
+  <td class="actions">
+
+    <% if leave_application.status == AppSettings::STATUS[:pending] %>
+        <%= link_to leave_application_path(leave_application, q: params[:q]), class: 'btn info-color', title: 'View', remote: true do %>
+            <i class="fa fa-eye"> </i>
+        <% end %>
+        <%= link_to confirm_settings_path(action_item_id: leave_application.id, action_on: 'leave/applications', action_type: AppSettings::ACTIONS[:delete]), title: 'Remove', remote: true, class: 'btn danger-color' do %>
+            <i class="fa fa-trash"></i>
+        <% end %>
+    <% else %>
+        <%= link_to leave_application_path(leave_application, no_admin: true), class: 'btn info-color', title: 'View', remote: true do %>
+            <i class="fa fa-eye"> </i>
+        <% end %>
+        <% if leave_application.status == AppSettings::STATUS[:approved] %>
+            <%= link_to reject_application_leave_applications_path(id: leave_application.id, q: params[:q]), class: 'btn  danger-color', title: 'Reject', remote: true, data: {confirm: "Are you sure want to reject this application?"} do %>
+                <i class="fa fa-ban"> </i>
+            <% end %>
+        <% end %>
+    <% end %>
+    <%= link_to download_leave_applications_path('pdf', application_id: leave_application.id), class: 'btn info-color', title: 'Download' do %>
+        <i class="fa fa-download"> </i>
+    <% end %>
+  </td>
+</tr>
+<script type="text/javascript">
+    $(function(){
+        $('.preview-attachment').attachmentPreview();
+    });
+</script>

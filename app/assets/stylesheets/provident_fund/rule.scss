@@ -1,0 +1,36 @@
+// Place all the styles related to the provident_fund/rule controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.provident-fund-rule-form {
+  max-width: 450px;
+  margin: auto;
+  .popover {
+    max-width: 400px;
+  }
+}
+
+#provident-fund-rule-content {
+  .return-policy-list {
+    padding: 0;
+    margin: 0;
+    list-style: square;
+  }
+  .add-more-rule {
+    a {
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+    }
+  }
+  .content-body {
+    margin-top: 10px;
+    table {
+      tbody {
+        td {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}

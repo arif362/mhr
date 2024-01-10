@@ -1,0 +1,222 @@
+.leave-days {
+  ul {
+    list-style: decimal;
+    li {
+      display: inline;
+      .custom-label {
+        min-width: 88px;
+        margin: 0;
+      }
+      input[type='checkbox'] {
+        margin: -3px 3px 0 !important;
+        vertical-align: middle !important;
+      }
+    }
+    .add-date {
+      font-size: 20px;
+    }
+  }
+}
+
+.leave-days-no-admin {
+  ul {
+    li {
+      display: list-item;
+      margin-left: -15px;
+    }
+  }
+}
+
+.leave-date-range {
+  padding-top: 10px;
+  max-width: 500px;
+  margin: auto;
+}
+
+.date-input {
+  display: inline;
+  margin: 10px 0 0 3px;
+  max-width: 110px;
+  padding: 0 0 0 10px;
+  height: 28px;
+}
+
+.remove-input {
+  padding-right: 6px !important;
+  padding-left: 10px !important;
+}
+
+.leave-calendar {
+  background: #fdfdfd none repeat scroll 0 0;
+  margin: auto;
+  padding: 20px;
+}
+
+.leave-slide-row {
+  padding: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  min-height: 100px;
+  border: 1px solid #e7e7e7;
+  overflow: hidden;
+  height: auto;
+  position: relative;
+  .slide-avatar {
+    width: 20%;
+    float: left;
+    display: inline-block;
+    img{
+      width: 75px;
+    }
+  }
+  .slide-content {
+    position: absolute;
+    top: 0;
+    left: 20%;
+    display: block;
+    float: left;
+    width: 80%;
+    padding: 1.5% 2% 2% 2%;
+    overflow-y: auto;
+  }
+  .slide-footer {
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 78%;
+    margin: 1%;
+  }
+  .table-class {
+    display: table;
+    width: 100%;
+  }
+
+  .short-name-image {
+    padding: 39px 25px;
+    text-align: center;
+  }
+}
+
+.leave-application-custom-upload-file-wrap {
+  display: table;
+  width: 20%;
+  height: 32px;
+  overflow: hidden;
+  position: relative;
+  span {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+
+  }
+  .leave-application-custom-upload-file-item {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+}
+
+//.leave-type-category {
+//  //width: 100%;
+//  //text-align: right;
+//  span.leave-label {
+//    width: 110px;
+//    text-align: left;
+//    display: inline-block;
+//  }
+//}
+
+.leave-modal-right-side-wrap {
+  .leave-modal-right-side-category {
+    width: 80px;
+    float: left;
+    margin-bottom: 5px;
+  }
+  .leave-modal-right-side-type {
+    padding-left: 80px;
+  }
+}
+
+.leave-summary-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.inner-applications-table {
+
+  thead {
+    background: white !important;
+    color: black !important;
+    border-top: 1px solid rgba(220, 227, 202, 0.81);
+    border-right: 1px solid rgba(220, 227, 202, 0.81);
+    border-left: 1px solid rgba(220, 227, 202, 0.81);
+    tr {
+      th {
+        font-size: 13px;
+        padding: 8px 8px;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        padding: 5px 5px 0px 10px;
+      }
+    }
+  }
+
+  .actions {
+    width: 120px;
+    padding: 2px;
+  }
+}
+
+/* Leave calender */
+.fc-event {
+  background-color: yellowgreen;
+  border: inherit;
+  padding: 5px;
+  text-align: center;
+  border-radius: inherit;
+}
+
+/* Leave pendign notifications */
+.nav-item-pending-notification {
+  position: relative;
+  span {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    right: -14px;
+    top: -8px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    background-color: red;
+  }
+}
+
+
+/* Leave module pendign notifications */
+.leave-module-pending-notification {
+  position: relative;
+  span {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    right: 18px;
+    top: -14px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    background-color: red;
+  }
+}

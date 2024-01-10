@@ -1,0 +1,80 @@
+<div class="">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <i class="fa fa-newspaper-o"></i>
+    <h4 class="modal-title">
+      <%= @employee.full_name %>
+      <% if @employee.id_card_no.present? %>
+          (<%= @employee.id_card_no %>)
+      <% end %>
+    </h4>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-3 col-lg-3 " align="center">
+        <div class="short-profile-avatar">
+          <%= employee_avatar(@employee) %>
+        </div>
+        <div class=" reset-border-radius label mt10 label-<%= @employee.is_active ? 'success' : 'default' %>" style="display: inline-block; font-size: 16px;">
+          <%= @employee.is_active ? 'Active' : 'Inactive' %>
+        </div>
+      </div>
+      <div class=" col-md-9 col-lg-9 ">
+        <table class="table table-user-information table-striped beaccount-table">
+          <tbody>
+          <tr>
+            <td> <%= label_tag 'Name' %> </td>
+            <td> <%= @employee.full_name %> </td>
+          </tr>
+          <tr>
+            <td> <%= label_tag 'Designation' %> </td>
+            <td><%= @employee.designation.name if @employee.designation.present? %></td>
+          </tr>
+          <tr>
+            <td> <%= label_tag 'Email' %> </td>
+            <td> <%= @employee.email %></td>
+          </tr>
+          <tr>
+            <td> <%= label_tag 'Phone Number' %> </td>
+            <td><%= @employee.mobile %></td>
+          </tr>
+          <tr>
+            <td> <%= label_tag 'Joining date' %> </td>
+            <td><%= format_date(@employee.joining_date) %></td>
+          </tr>
+          <tr>
+            <td> <%= label_tag 'Employment Type' %> </td>
+            <td><%= @employee.employee_type %></td>
+          </tr>
+          <tr>
+            <td> <%= label_tag 'Date of Birth' %> </td>
+            <td><%= format_date(@employee.dob) %></td>
+          </tr>
+          <tr>
+            <td> <%= label_tag 'Gender' %> </td>
+            <td><%= @employee.gender %></td>
+          </tr>
+          <tr>
+            <td> <%= label_tag 'Home Address' %> </td>
+            <td><%= @employee.full_address %></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <!--<a data-original-title="Broadcast Message" data-toggle="tooltip" type="button"-->
+       <!--class="btn guest-color-bg white-color pull-left">-->
+      <!--<i class="fa fa-envelope"></i>-->
+    <!--</a>-->
+
+    <div class="pull-right">
+      <%= link_to 'Details', employee_path(@employee), class: 'btn btn-primary', title: 'View Detail' %>
+      <div class="btn btn-default" data-dismiss='modal'>Close</div>
+    </div>
+  </div>
+</div>

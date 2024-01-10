@@ -1,0 +1,183 @@
+<div class="show-invoice">
+  <div class="invoice-preview">
+    <div class="invoice-preview-container clearfix">
+      <!--<div class="invoice-tag <%#= @invoice.status %>"></div>-->
+
+      <div class="invoice-preview-content">
+
+        <div class="preview-content-top">
+          <div class="preview-top clearfix">
+            <div class="preview-top-left pull-left">
+              <div class="invoice-name"><%= @invoice.company.name || '' %></div>
+
+              <div class="invoice-organization">
+                <%= @invoice.company.address %> <br/>
+                <%= "#{@invoice.company.city}, #{@invoice.company.state } #{@invoice.company.zip_code}" if @invoice.company.city %>
+                <br/>
+                <%= @invoice.company.country %>
+              </div>
+            </div>
+
+            <div class="preview-top-right pull-right">
+              <% unless @invoice.department.image_url.blank? %>
+                  <div class="company_logo"><%= request.format.pdf? ? (wicked_pdf_image_tag @invoice.department.image_url(:thumb)) : (image_tag @invoice.department.image_url(:thumb)) %></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <table class="invoice-summary-table">
+          <tbody>
+          <tr>
+            <td>
+              <div class="preview-client-info">
+
+                <% if @client.present? %>
+                    <div class="preview_top_left">
+                      <div class="invoice_name"><%= @client.organization_name rescue '' %></div>
+
+                      <div class="invoice_organization">
+                        <%= @client.first_name.to_s + " " +@client.last_name.to_s %> <br/>
+
+                        <%= @client.address_street1 %> <br/>
+
+                        <%= "#{@client.city}, #{@client.province_state } #{@client.postal_zip_code}" if @client.city %>
+                        <br/>
+                        <%= @client.country %>
+                      </div>
+
+                    </div>
+                <% end %>
+              </div>
+            </td>
+            <td class="right-section">
+              <table>
+                <tbody>
+                <tr>
+                  <td>
+                    <label> Invoice # </label>
+                  </td>
+                  <td class="text-right"><%= @invoice.invoice_number %></td>
+                </tr>
+                <tr>
+                  <td>
+                    <label> Invoice Date </label>
+                  </td>
+                  <td class="text-right"><%= @invoice.invoice_date rescue "" %></td>
+                </tr>
+                <tr>
+                  <td>
+                    <label> Amount </label>
+                  </td>
+                  <td class="text-right">
+                    <%= number_to_currency(@invoice.due_amount, unit: @invoice.currency) %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label> Due date </label>
+                  </td>
+                  <td class="text-right"><%= @invoice.due_date rescue "" %></td>
+                </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <!--preview_content_top-->
+        <% if @invoice.invoice_line_items.present? %>
+            <div class="preview-content-middle">
+              <div class="table-warapper">
+                <table cellpadding="0" cellspacing="0" class='table action-table beaccount-table tablesorter table-responsive table-hover table-striped'>
+                  <thead>
+                  <tr>
+                    <th class="align_left"><%= t('views.common.item') %></th>
+                    <th class="align_left"><%= t('views.common.description') %></th>
+                    <th class="align_right"><%= t('views.common.unit_cost') %></th>
+                    <th class="align_right"><%= t('views.items.quantity') %></th>
+                    <th class="align_right"><%= t('views.invoices.line_total') %></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @invoice.invoice_line_items.each do |item|
+                    item_line_total= (item.item_unit_cost ||0) * (item.item_quantity ||0)
+                  %>
+                      <tr>
+                        <td class="align_left"><%= item.item_name rescue "" %></td>
+                        <td class="align_left"><%= item.item_description %></td>
+                        <td class="unit-amount-row"><%= number_to_currency(item.item_unit_cost, unit: "") %></td>
+                        <td class="unit-amount-row"><%= item.item_quantity.to_i %></td>
+                        <td class="unit-amount-row"><%= number_to_currency(item_line_total, unit: "") %></td>
+                      </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+              <!--grid_table-->
+            </div>
+        <% end %>
+
+        <table class="invoice-summary-table">
+          <tbody>
+          <tr>
+            <td>
+              <div class="preview-client-info">
+                <label><%= t('views.common.notes') %></label>
+
+                <p><%= @invoice.notes %></p>
+              </div>
+            </td>
+            <td class="right-section">
+              <table class="amount-summary">
+                <tbody>
+                <tr>
+                  <td>
+                    Subtotal
+                  </td>
+                  <td class="text-right">
+                    <%= number_to_currency(@invoice.sub_total, unit: @invoice.currency) %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class='bottom-border'>
+                    Discount <%= @invoice.discount_percentage %><%= @invoice.discount_type %>
+                  </td>
+                  <td class="text-right bottom-border">
+                    <%= number_to_currency(@invoice.discount_amount, unit: @invoice.currency) %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Total
+                  </td>
+                  <td class="text-right">
+                    <%= number_to_currency(@invoice.invoice_total, unit: @invoice.currency) %>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bottom-border">
+                    <%= t('views.invoices.amount_paid') %>
+                  </td>
+                  <td class="text-right bottom-border">
+                    -<%= number_to_currency(@invoice.paid_amount, unit: @invoice.currency) %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= t('views.invoices.amount_due') %>
+                  </td>
+                  <td class="text-right">
+                    <%= number_to_currency(@invoice.due_amount, unit: @invoice.currency) %>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="actions-button">
+  <div class="department-wrap">
+    <div class="department-container p10">
+
+      <div class="department-header">
+        <div class="clearfix">
+          <div class="pull-right">
+            <%= link_to new_department_path, remote: true, class: 'btn btn-default reset-border-radius' do %>
+                <i class="fa fa-plus"></i> Add New
+            <% end %>
+          </div>
+        </div>
+        <h3 class="text-center m0"> All Departments List </h3>
+        <div class="clearfix">
+          <div class="pull-right">
+            <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To....'} %>
+          </div>
+        </div>
+      </div>
+
+      <div class="department-body mt10 ">
+        <div class="table-warapper-bodyx">
+          <table class="table action-tablex beaccount-table tablesorter table-responsive table-hover table-striped company-departments">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Total Employee</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody id="department_list">
+            <% @departments.each do |department| %>
+                <tr class="departments_<%= department.id %>">
+                  <td><%= department.name %></td>
+                  <td><%= truncate(department.description, length: 50) %></td>
+                  <td><%= department.employees.count %></td>
+                  <td class="actions">
+                    <%= link_to department_path(department), class: 'btn info-color' do %>
+                        <i class="fa fa-eye"> </i>
+                    <% end %>
+                    <%= link_to edit_department_path(department), remote: true, class: 'btn warning-color' do %>
+                        <i class="fa fa-pencil"> </i>
+                    <% end %>
+                    <%= link_to confirm_settings_path(action_item_id: department.id, action_on: 'departments', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+                        <i class="fa fa-times"> </i>
+                    <% end %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+          <div id="pager">
+            <%= render 'shared/pagination' if @departments.size > 10 %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        if ($(".company-departments").find("tbody").find("tr").size() > 0) {
+            $(".company-departments").tablesorter({
+                headers: {
+                    3: {
+                        sorter: false
+                    }
+                }
+            }).tablesorterPager({container: '#pager'});
+        }
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= departments_companies_path('pdf') %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= departments_companies_path('docx') %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= departments_companies_path('xls') %>'
+            }
+        });
+    });
+</script>

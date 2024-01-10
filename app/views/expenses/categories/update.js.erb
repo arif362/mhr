@@ -1,0 +1,12 @@
+<% if @expense_category.errors.present? %>
+    popupMessage('Unable to update expense category, Please check your data and try again', 'alert-danger');
+<% else %>
+    <% if @expense_category.expense_category_id.present? %>
+        popupMessage('Expense subcategory successfully updated', 'alert-info');
+        $('#sub-categories-of-<%= @expense_category.expense_category_id %>').find('#expense-sub-category-table-body').find('#expense-sub-category-<%= @expense_category.id %>').replaceWith("<%= escape_javascript(render 'expenses/categories/sub_category_item', expense_sub_category: @expense_category).html_safe %>");
+    <% else %>
+        popupMessage('Expense category successfully updated', 'alert-info');
+        $('#expense-category-<%= @expense_category.id %>').replaceWith("<%= escape_javascript(render 'expenses/categories/category_item', expense_category: @expense_category).html_safe %>");
+    <% end %>
+    $('#global-modal').modal('hide');
+<% end %>

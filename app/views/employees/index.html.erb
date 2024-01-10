@@ -1,0 +1,200 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Employee List
+      </h4>
+    </div>
+    <div class="reset-padding secondary-color">
+      <div class="actions-button pt10 pb10x clearfix">
+        <div class="pull-left">
+          <% if params[:all].present? %>
+              <%= link_to employees_path, style: 'color: #0C6A85' do %>
+                  <i class="fa fa-user-times"></i> Only active employee
+              <% end %>
+          <% else %>
+              <%= link_to employees_path(all: true), style: 'color: #0C6A85' do %>
+                  <i class="fa fa-check-square"></i> All employee including inactive
+              <% end %>
+          <% end %>
+        </div>
+        <div class="pull-right">
+          <%= link_to '#', 'data-toggle' => 'modal', class: 'btn btn-default reset-border-radius upload_employee' do %>
+              <i class="fa fa-upload"></i> Upload Employees
+          <% end %>
+
+          <%= link_to new_employee_path, class: 'btn btn-default reset-border-radius', remote: true do %>
+              <i class="fa fa-plus"></i> New Employee
+          <% end %>
+
+        </div>
+      </div>
+
+      <div class="content-body row mt10 mb30">
+
+        <div class="table-content">
+          <div class="site-header">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="rowx">
+                  <div class="col-sm-4 mb10">
+                    <div class="row">
+                      <table class="site-header-table">
+                        <tr>
+                          <td>
+                            <%= form_tag '', method: 'get' do %>
+                                <div class="input-group">
+                                  <span class="input-group-addon reset-border-radius" id="sizing-addon2">
+                                    <i class="fa fa-search"></i>
+                                  </span>
+                                  <input type="text" id="employee-search-box" class="form-control reset-border-radius" name="q" value="<%= params[:q] %>" placeholder="Search name, EID, email, phone, type " aria-describedby="sizing-addon2">
+                                  <% if params[:q].present? %>
+                                      <a class="clear-search color-danger"> <i class="fa fa-times"></i> </a>
+                                  <% end %>
+                                </div>
+                            <% end %>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="col-sm-offset-2 col-sm-6">
+                    <div class="row">
+                      <table class="pull-right">
+                        <tr>
+                          <td>
+                            <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radiusx', style: 'border-radius: 0 !important', prompt: 'Export To....'} %>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb20">
+            <strong class="hover-color-bg white-color p5 text-center" style="display: inline-block; width: 325px">
+              Total Employee <%= @employees.count %>
+            </strong>
+          </div>
+          <div class="table-warapper ">
+            <div class="table-warapper-body">
+              <table id="employee-list">
+                <thead>
+                <tr class="trew">
+                  <th><span> Name</span></th>
+                  <th><span>Email</span></th>
+                  <th><span>Status</span></th>
+                  <th><span>Mobile</span></th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @employees.each do |employee| %>
+                    <%= render 'employee_row', employee: employee %>
+                <% end %>
+                </tbody>
+              </table>
+              <%= will_paginate @employees, {next_label: "<i class='fa fa-chevron-right'> </i>", previous_label: "<i class='fa fa-chevron-left'> </i>"} %>
+              <div class="no-data-found">
+                <% unless @employees.present? %>
+                    <%= render 'shared/no_data_found', message: 'No employee found' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="new-modal-wrap modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-mdx">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <i class="fa fa-newspaper-o"></i>
+        <h4 class="modal-title">Attachment</h4>
+      </div>
+
+      <%= form_tag import_employees_path, multipart: true do %>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 class="mt0">
+                  Browse the file.
+                </h3>
+
+                <div class="add-attechment-wrap">
+                  <div class="custom-upload-file-wrap btn btn-default reset-border-radius primary-color">
+                    <span id="uploaded_file"><i class="fa fa-paperclip"></i> Choose File</span>
+                    <%= file_field_tag :file, class: 'custom-upload-file-item', id: 'employee-upload-choose-file' %>
+                  </div>
+                </div>
+                <%= link_to download_templete_employees_path, class: 'primary-color btn btn-default mt15 reset-border-radius' do %>
+                    <i class="fa fa-cloud-download"></i> Download Templete
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer pt0">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <%= submit_tag "Import", class: "btn btn-default" %>
+          </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#employee-upload-choose-file').change(function () {
+            var reader = new FileReader();
+            var file = this.files[0];
+            reader.onload = function (e) {
+                $('#uploaded_file').html(truncate(file.name));
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '/employees.pdf?q=' + $('#employee-search-box').val();
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '/employees.docx?q=' + $('#employee-search-box').val();
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '/employees.xls?q=' + $('#employee-search-box').val();
+            }
+        });
+
+        $('.clear-search').click(function () {
+            var element = $(this);
+            element.parent().find("input[name='q']").val('');
+            element.hide();
+            element.parents('form').submit();
+        });
+
+        $('.upload_employee').click(function () {
+            $('#myModal').modal('show');
+        });
+
+    });
+
+    function truncate(full_string) {
+        console.log(full_string);
+        if (full_string.length > 25) {
+            return full_string.substring(0, 25) + "...";
+        }
+        else {
+            return full_string;
+        }
+    }
+</script>

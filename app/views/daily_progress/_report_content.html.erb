@@ -1,0 +1,80 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        My Progress Report
+      </h4>
+    </div>
+
+    <div class="secondary-color full-content-wrapper">
+      <div class="row actions-button">
+
+        <div class="col-md-6 p0 pt10">
+          <%= form_tag '', method: 'get', remote: true, id: 'daterange-my-report-form' do %>
+              <div class="input-group">
+                <%= text_field_tag :daterange, '', value: params[:daterange], class: 'form-control reset-border-radius' %>
+                <span class="input-group-addon reset-border-radius" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+              </div>
+          <% end %>
+        </div>
+
+      </div>
+
+      <div class="content-body row mt10 mb10">
+        <% if @my_progress_reports.present? %>
+            <% @my_progress_reports.each do |key, report| %>
+                <div class="card mb10">
+                  <h3 class="card-header card-primary mt0">Daily Progress of
+                    <b> <%= key %> </b>
+                    <%= work_progress(report) %>
+                  </h3>
+
+                  <div class="panel-body">
+                    <ul>
+                      <% report.each do |task| %>
+                          <li class="task-<%= task.is_complete ? 'complete' : 'incomplete' %>">
+                            <%= task.title %>
+                          </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+            <% end %>
+
+        <% else %>
+            <p class="bs-callout bs-callout-info mt5 mb5 clearfix">
+              No progress found
+            </p>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function() {
+
+        var options = {
+            showDropdowns: true,
+            locale: {
+                format: 'DD-MM-YYYY',
+                separator: '  To  '
+            },
+            minDate: '<%= current_department.created_at.strftime('%d-%m-%Y') %>',
+            maxDate: '<%= Date.today.strftime('%d-%m-%Y') %>'
+        };
+
+        if (!<%= params[:daterange].present? %>) {
+            options.startDate = "<%= Date.today.beginning_of_month.strftime('%d-%m-%Y') %>";
+            options.endDate = "<%= Date.today.strftime('%d-%m-%Y') %>";
+        }
+
+        $('input[name="daterange"]').daterangepicker(options).on('apply.daterangepicker', function (ev, picker) {
+            $('#daterange-my-report-form').submit();
+        });
+    });
+
+
+</script>

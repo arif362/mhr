@@ -1,0 +1,145 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Employee Card
+      </h4>
+    </div>
+    <div class="content-body row mt10 mb30">
+      <div class="card-access-control" style="margin: auto; float: right">
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="m0xx"> Access Control </h3>
+            <label>
+              <%= check_box_tag :access %> Reception
+            </label> <br/>
+            <label>
+              <%= check_box_tag :access %> Cafe
+            </label> <br/>
+            <label>
+              <%= check_box_tag :access %> Library
+            </label> <br/>
+            <label>
+              <%= check_box_tag :access %> Media Room
+            </label> <br/>
+            <label>
+              <%= check_box_tag :access %> Conference Room
+            </label> <br/>
+            <label>
+              <%= check_box_tag :access %> Admin Room
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div id="employee-card">
+        <div class="card-fornt">
+          <div class="card-info">
+            <h3 class="company-name"> <%= current_company.name %> </h3>
+
+            <div class="company-logo">
+              <%= image_tag(current_department.image_url, class: 'card-logo') if current_department.image.present? %>
+            </div>
+            <div class="card-icon-image">
+              <div class="emp-image">
+                <%= image_tag(@employee.image_url, style: 'width: 75px; height: 75px;border-radius: 17px 0;') %>
+              </div>
+              <div class="emp-name">
+                <%= @employee.full_name %>
+                </br>
+                <%= @employee.designation.name %> <br/>
+                Blood Group: <%= @employee.blood_group %>
+              </div>
+            </div>
+            <div class="auth-sign">
+              <%= image_tag('final_signature.png') %>
+              <div style="border-top: 1px dotted #333333;">
+                Authorised`s Signature
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <%= current_department.address %>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="pull-left bar-code-image">
+            <%= image_tag "data:image/png;base64,#{Rack::Utils.escape(@barcode_image)}" %> <br/>
+            Serial No: <%= @employee.id_card_no %>
+          </div>
+          <div class="employee-info">
+            <ul class="employee-id">
+              <li>
+                Employee No: <%= @employee.id %>
+              </li>
+              <li>
+                D.O.B: <%= @employee.dob.strftime('%d-%m-%Y') if @employee.dob.present? %>
+              </li>
+            </ul>
+          </div>
+          <div class="terms-condition">
+            <ul>
+              <li>
+                <div class="list-icone"><i class="fa fa-square list-icon"></i></div>
+                <div class="condition">
+                  This card holder is an employee of <%= current_department.name %>. This ID CARD is valid
+                  from <%= Date.today.strftime('%d-%m-%Y') %>
+                  To <%= (Date.today + 1.year).strftime('%d-%m-%Y') %>.
+                </div>
+              </li>
+              <li>
+                <div class="list-icone"><i class="fa fa-square list-icon"></i></div>
+                <div class="condition">
+                  If this Card is lost please inform the nearest police station or Employer Head Office:
+                  85-86 Chandrima Super Market(2nd Floor), Dhaka-1205.
+                  <br/>Tel: 9613254, 9661627 Mob:01724965912 <br/> Email: <%= current_department.email %>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="text-center">
+            <%#= image_tag('head.png', class: 'main-logo', style: 'width: 65px') %>
+            <%#= image_tag('sattar.png', class: 'main-logo', style: 'width: 102px') %>
+            <%#= image_tag('magic.png', class: 'main-logo', style: 'width: 102px') %>
+            <%#= image_tag('national.jpg', class: 'main-logo', style: 'width: 145px') %>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+
+      <div style="padding: 10px;">
+        <a href="javascript:void(0);" class="done btn btn-primary pull-right"> Done & Print </a>
+        <a href="javascript: void(0);" class="print btn btn-primary pull-right" style="display: none"> Print </a>
+      </div>
+
+      <script type="text/javascript">
+          $(function () {
+              $('.done').click(function () {
+//                  html2canvas(document.getElementById('employee-card'), {
+//                      onrendered: function (canvas) {
+//                          document.getElementById('employee-card').innerHTML = '';
+//                          document.getElementById('employee-card').appendChild(canvas);
+//                          $('.done').hide();
+//                          $('.print').show();
+//                      }
+//                  });
+                  alert('Your card is ready to print, Please connect your printer');
+              });
+
+              $('.print').click(function () {
+                  print_vcard();
+              });
+          });
+
+          function print_vcard() {
+              var canvas = document.getElementsByTagName("canvas")[0];
+              var win = window.open();
+              win.document.write("<br><img src='" + canvas.toDataURL() + "'/>");
+              win.print();
+              win.location.reload();
+          }
+      </script>
+    </div>
+  </div>
+</div>

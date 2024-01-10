@@ -1,0 +1,93 @@
+<div class="p10">
+
+  <div class="row ">
+    <div class="col-md-12">
+
+      <h4>Department Expense Budget</h4>
+
+      <p class="text-warning text-justify">
+        It has been generally created expense category
+        from <%= link_to 'categories menu of expense module', expenses_categories_path %> in this current year but there
+        are no information how much amount
+        you expect to allacate in every expense category in current year.You should add your expected budget for every
+        expense category by
+        the click on the Add Expense Budget button which will help you to compare company expenses less or more between
+        current and previous years from expense dashboard. we have prepared for you different kinds
+        of <%= link_to 'graphs or charts like bar chart', expense_dashboard_path %>.
+
+      </p>
+    </div>
+
+  </div>
+
+  <div class="clearfix mb10">
+    <div class="btn-group ">
+      <%= form_tag '', method: 'get', remote: true, id: 'yearly-budget-form' do %>
+          <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control"} %>
+          <% if params[:sq].present? %>
+              <%= hidden_field_tag :sq, params[:sq] %>
+          <% end %>
+      <% end %>
+    </div>
+    <div class="pull-right">
+      <div class="btn-group mr10">
+        <%= link_to new_expenses_budget_path, class: 'btn btn-default reset-border-radius' do %>
+            <i class="fa fa-plus"> </i> Add Expense Budget
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="leave-categories-table">
+    <table class='table beaccount-table action-table table-striped table-hover'>
+      <thead>
+      <tr>
+        <th> Title</th>
+        <th> Budget(<%= @setting.currency.upcase if @setting.currency.present? %>)</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @categories.each do |cat| %>
+          <% bud = get_budget_id(cat, params[:date].present? ? params[:date][:year].to_i : Date.today.year) %>
+          <tr>
+            <td><%= cat.name %></td>
+            <td><%= bud.amount if bud.present? %></td>
+
+            <td>
+              <% if bud.present? %>
+                  <%= link_to edit_expenses_budget_path(bud.id), class: 'btn warning-color', remote: true do %>
+                      <i class="fa fa-pencil"></i>
+                  <% end %>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= render 'shared/pagination' if @categories.size > 10 %>
+    <div class="no-data-found">
+      <% unless @categories.present? %>
+          <%= render 'shared/no_data_found', message: 'No expense budget' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        if ($(".beaccount-table").find("tbody").find("tr").size() > 0) {
+            $(".beaccount-table").tablesorter({
+                headers: {
+                    4: {
+                        sorter: false
+                    }
+                },
+                widthFixed: true,
+                widgets: ['zebra']
+            }).tablesorterPager({container: $("#pager")});
+        }
+
+        $('#date_year').change(function () {
+            $('#yearly-budget-form').submit();
+        });
+    });
+</script>

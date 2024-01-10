@@ -1,0 +1,32 @@
+<tr id="attendance-item-<%= attendance.id %>">
+  <td>
+    <% if attendance.employee.present? %>
+        <%= link_to employee_profile_path(attendance.employee), remote: true do %>
+            <%= attendance.employee.full_name %>
+        <% end %>
+        <%= link_to employee_wise_report_attendance_attendances_path(employee_id: attendance.employee.id, date: {month: Date.today.month, year: Date.today.year}), class: 'attendance-report-link', title: 'Attendance Report' do %>
+            <i class="fa fa-pie-chart"> </i>
+        <% end %>
+        <%= link_to stats_attendance_attendances_path(employee_id: attendance.employee.id), class: 'attendance-report-link', title: 'Attendance Stats' do %>
+            <i class="fa fa-line-chart"> </i>
+        <% end %>
+    <% end %>
+  </td>
+  <td><%= attendance.employee.email if attendance.employee.present? %></td>
+  <td><%= get_time_from_datetime(attendance.in_time) %></td>
+  <td><%= get_time_from_datetime(attendance.out_time) %></td>
+  <td><%= format_duration(attendance.duration) %></td>
+  <td class="actions">
+    <% if attendance.out_time.present? %>
+        <%= link_to new_attendance_attendance_path(employee_id: attendance.employee_id, is_attendance: true, selected_date: (params[:date].present? ? params[:date] : Date.today)), class: 'btn secondary-guest-color', remote: true do %>
+            <i class="fa fa-plus"></i>
+        <% end %>
+    <% end %>
+    <%= link_to edit_attendance_attendance_path(attendance), class: 'btn warning-color', remote: true do %>
+        <i class="fa fa-pencil"></i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: attendance.id, action_on: 'attendance/attendances', action_type: AppSettings::ACTIONS[:delete], action_data: {date: params[:date].present? ? params[:date] : Date.today}), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"></i>
+    <% end %>
+  </td>
+</tr>

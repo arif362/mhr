@@ -1,0 +1,74 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Provident Fund Contribution
+        <a href="#process-contribution-modal" class="pull-right" data-target="#process-contribution-modal" data-toggle="modal">
+          <i class="fa fa-cog"></i> Process Contribution
+        </a>
+        <%#= link_to "javascript:void(0);", class: 'pull-right', data: {toggle: 'modal', target: '#process-contribution-modal'} do %>
+            <!--<i class="fa fa-cog"></i> Process Contribution-->
+        <%# end %>
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper">
+      <div class="row actions-button">
+        <div class="contribution-search-form clearfix">
+          <%= form_tag employee_contributions_provident_fund_contributions_path, method: :get do %>
+              <%= select_tag :month, options_for_select((1..12).collect { |m| [Date::MONTHNAMES[m], m] }, params[:month]), class: 'form-control mr10' %>
+              <%= select_tag :year, options_for_select((current_department.year..Time.now.year), params[:year]), class: 'form-control mr10' %>
+              <%= submit_tag 'Search', class: 'primary-color-bg-with-hover' %>
+          <% end %>
+        </div>
+      </div>
+      <% if @contributions.present? %>
+          <div class="content-body row mt10">
+            <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped">
+              <thead>
+              <tr>
+                <th>Account ID</th>
+                <th>Employee</th>
+                <th>Email</th>
+                <th>Company Contribution</th>
+                <th>Employee Contribution</th>
+                <th>Session</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @contributions.each do |contribution| %>
+                  <tr>
+                    <td> #<%= contribution.id %> </td>
+                    <td><%= link_to contribution.provident_fund_account.employee.full_name, employee_path(contribution.provident_fund_account.employee) %> </td>
+                    <td><%= contribution.provident_fund_account.employee.email %> </td>
+                    <td>
+                      <%= contribution.company_contribution %>
+                    </td>
+                    <td>
+                      <%= contribution.employee_contribution %>
+                    </td>
+                    <td>
+                      <%= Date::MONTHNAMES[contribution.month] %>, <%= contribution.year %>
+                    </td>
+                    <td class="actions">
+                      <%= link_to edit_provident_fund_account_contribution_path(contribution.provident_fund_account_id, contribution), class: 'btn warning-color' do %>
+                          <i class="fa fa-pencil-square-o"></i>
+                      <% end %>
+                      <%= link_to provident_fund_account_path(contribution), class: 'btn danger-color', method: :delete, data: {confirm: 'Are you sure?'} do %>
+                          <i class="fa fa-times"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+      <% else %>
+          <p class="text-center">
+            No contributions found. <%= link_to 'Back to list', provident_fund_accounts_path %> </p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render 'provident_fund/contributions/process_contribution' %>

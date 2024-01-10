@@ -1,0 +1,10 @@
+<% if @bonus_payment.destroyed? %>
+    popupMessage('Successfully Deleted', 'alert-success');
+    $('#global-modal').modal('hide');
+    $('#bonus-<%= @bonus_payment.id %>').remove();
+    if ($(".bonus-payments-table").find("tbody").find("tr").size() <= 0) {
+        $('.no-data-found').html("<%= escape_javascript(render 'shared/no_data_found', message: 'No bonus category').html_safe %>")
+    }
+<% else %>
+    popupMessage('<%= escape_javascript( errors_to_message_string(@bonus_payment.errors) ).html_safe  %>', 'alert-danger');
+<% end %>

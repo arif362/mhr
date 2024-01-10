@@ -1,0 +1,9 @@
+<% if @changed_setting.errors.present? %>
+popupMessage('<%= escape_javascript( errors_to_message_string(@changed_setting.errors)).html_safe %>', 'alert-danger');
+<% else %>
+$('#global-modal').modal('hide');
+<% flash.clear %>
+popupMessage('New additional settings added', 'alert-success');
+$('#department-changed-settings-list').prepend('<%= escape_javascript(render 'changed_setting', changed_setting: @changed_setting).html_safe %>');
+$('#no-data-found').remove();
+<% end %>

@@ -1,0 +1,6 @@
+<tr id="attendance-<%=attendance.id%>">
+  <td><%= format_date(attendance.in_date) %></td>
+  <td><%= get_time_from_datetime(attendance.in_time) %></td>
+  <td><%= get_time_from_datetime(attendance.out_time) %></td>
+  <td><%= format_duration(attendance.duration.to_f) %></td>
+</tr>

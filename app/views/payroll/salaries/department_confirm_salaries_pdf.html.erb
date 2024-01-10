@@ -1,0 +1,25 @@
+<table class="table action-table beaccount-table table-responsive salaries-list table-hover table-striped">
+  <thead>
+  <tr>
+    <th>Serial No.</th>
+    <th>Department</th>
+    <th>Amount</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% if @salaries.present? %>
+      <% @salaries.each.with_index(1) do |salary, index| %>
+          <tr id="unconfirm-salary-<%= salary.department.id %>">
+            <td><%= index %></td>
+            <td><%= salary.department.name %></td>
+            <td>
+              <%= salary.total_salary %>
+            </td>
+          </tr>
+      <% end %>
+
+  <% else %>
+  <tr><p>No data found</p></tr>
+  <% end %>
+  </tbody>
+</table>

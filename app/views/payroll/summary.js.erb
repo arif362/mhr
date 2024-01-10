@@ -1,0 +1,4 @@
+$('#gross_salary_graph').html("<%= escape_javascript(render 'gross_salary_graph').html_safe %>");
+$('#salary_deduct_graph').html("<%= escape_javascript(render 'deduction_graph').html_safe %>");
+$('#net_salary_graph').html("<%= escape_javascript(render 'net_salary_graph').html_safe %>");
+$('#total-net-salary').html("Total <span class='warning-color'><%= amount_with_currency('%.02f' % @summary[:net_total]) %></span> paid out till date <span class='warning-color'>'<%= format_date(params[:date].present? ? Date.new(params[:date][:year].to_i) : Date.today.beginning_of_year) %>'</span> to <span class='warning-color'>'<%= format_date(params[:date].present? ? Date.new(params[:date][:year].to_i).end_of_year : Date.today) %>'</span>.");

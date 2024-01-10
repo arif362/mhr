@@ -1,0 +1,83 @@
+<!--<div class="col-md-9">-->
+  <!--<canvas id="comparisionExpenseSalaryChart" width="400" height="150"></canvas>-->
+<!--</div>-->
+<!--<div class="col-md-3">-->
+  <!--<div class="total-expense-wrap mt20">-->
+    <!--<p class="lead primary-color text-centerx">Total Expense</p>-->
+
+    <!--<div class="life-expense-item mb10 clearfix">-->
+      <!--<div class="life-expense-item-title"><%= @compare_data_1[:start_date].strftime("%B") %></div>-->
+      <!--<div class="life-expense-item-value">-->
+        <!--<p style="background-color: rgb(201, 54, 220)"><%= @compare_data_1[:total] %></p>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="life-expense-item clearfix">-->
+      <!--<div class="life-expense-item-title"><%= @compare_data_2[:start_date].strftime("%B") %></div>-->
+      <!--<div class="life-expense-item-value">-->
+        <!--<p class=""><%= @compare_data_2[:total] %></p>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div class="col-md-12">
+  <canvas id="comparisionExpenseSalaryChart" width="400" height="150"></canvas>
+
+  <div class="col-md-12">
+    <div class="total-expense-wrap mt20x">
+      <p class="lead primary-color text-centerx">Total Expense</p>
+
+      <div class="row">
+        <div class="life-expense-item mb10 clearfix col-md-6">
+          <!--<div class="life-expense-item-title"><%#= @compare_data_1[:start_date].strftime("%B") %></div>-->
+          <div class="life-expense-item-value">
+            <p style="background-color: #93A9D0"><%= @compare_data_1[:total] %></p>
+          </div>
+        </div>
+
+        <div class="life-expense-item clearfix col-md-6">
+          <!--<div class="life-expense-item-title"><%#= @compare_data_2[:start_date].strftime("%B") %></div>-->
+          <div class="life-expense-item-value pl0 pr100">
+            <p class=""><%= @compare_data_2[:total] %></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+    var ctx = document.getElementById("comparisionExpenseSalaryChart");
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: <%= raw @compare_data_1[:categories] %>,
+            datasets: [
+                {
+                    backgroundColor: '#93A9D0',
+                    label: '<%= raw @compare_data_1[:start_date].strftime("%B") %>',
+                    data: <%= raw @compare_data_1[:amounts] %>,
+                    borderWidth: 1
+                },
+                {
+                    backgroundColor: '#89A54E',
+                    label: '<%= raw @compare_data_2[:start_date].strftime("%B") %>',
+                    data: <%= raw @compare_data_2[:amounts] %>,
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0
+                    }
+                }]
+            }
+        }
+    });
+</script>

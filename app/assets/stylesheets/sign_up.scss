@@ -1,0 +1,207 @@
+/* Add Public Variable */
+@import "public_variables";
+
+.submit-btn {
+  background: #074e66 none repeat scroll 0 0;
+  border: inherit;
+  color: #fff;
+  height: 41px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  &:hover {
+    text-decoration: none;
+    background-color: $hover-color;
+  }
+}
+
+.cost-table {
+  width: 70%;
+  margin: auto;
+  padding: 0px;
+  float:right;
+  .panel, .panel-heading {
+    background: #fdfdfd;
+  }
+  tbody {
+    tr {
+      td {
+        text-align: left;
+      }
+    }
+  }
+}
+
+/* Progress Bar Design */
+
+.beaccount-progress-bar > .bpb-step {
+  padding: 0;
+  position: relative;
+}
+
+.beaccount-progress-bar > .bpb-step + .bpb-step {
+}
+
+.beaccount-progress-bar > .bpb-step .bpb-step-num {
+  color: #595959;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.beaccount-progress-bar > .bpb-step .bpb-info {
+  color: #999;
+  font-size: 14px;
+}
+
+.beaccount-progress-bar > .bpb-step > .custom-progress-item {
+  border-radius: 0;
+  box-shadow: none;
+  height: 8px;
+  margin: 24px 0;
+  position: relative;
+}
+
+.beaccount-progress-bar > .bpb-step > .custom-progress-item > .custom-progress-bar-item {
+  width: 0px;
+  box-shadow: none;
+  background: $primary-color;
+}
+
+.progress-bar-color {
+  height: 25% !important;
+}
+
+.beaccount-progress-bar > .bpb-step.complete > .custom-progress-item > .custom-progress-bar-item {
+  width: 100%;
+}
+
+.beaccount-progress-bar > .bpb-step.active > .custom-progress-item > .custom-progress-bar-item {
+  width: 50%;
+}
+
+.beaccount-progress-bar > .bpb-step:first-child.active > .custom-progress-item > .custom-progress-bar-item {
+  width: 0%;
+}
+
+.beaccount-progress-bar > .bpb-step:last-child.active > .custom-progress-item > .custom-progress-bar-item {
+  width: 100%;
+}
+
+.beaccount-progress-bar > .bpb-step:first-child > .custom-progress-item {
+  left: 50%;
+  width: 50%;
+}
+
+.beaccount-progress-bar > .bpb-step:last-child > .custom-progress-item {
+  width: 50%;
+}
+
+.progress-outline {
+  background: #fff none repeat scroll 0 0;
+  border: 2px solid #074e66;
+  border-radius: 50%;
+  bottom: 28px;
+  display: block;
+  height: 22px;
+  left: 50%;
+  margin-left: -15px;
+  margin-top: -15px;
+  position: relative;
+  width: 22px;
+}
+
+.progress-inline::after {
+  background: #00bbea none repeat scroll 0 0;
+  border-radius: 100%;
+  content: "";
+  height: 12px;
+  left: 3px;
+  position: absolute;
+  top: 3px;
+  width: 12px;
+}
+
+.reg-wrap {
+  background: #fff;
+  font-family: "Roboto", sans-serif;
+  .reg-container {
+    .reg-wrap-header {
+      border-bottom: 1px solid #e9e9e9;
+      .create-acnt-step {
+        //margin: auto auto 0;
+        //width: 100%;
+      }
+      h4 {
+        font-family: "Roboto",sans-serif;
+        font-weight: 400;
+        margin-top: 0;
+        //text-align: center;
+      }
+    }
+    .reg-form-wrap {
+      background: #fff;
+      margin: auto 20%;
+      form {
+        font-family: Roboto, sans-serif;
+        .reg-form-column {
+          //border-top: 1px solid #f0f0f0;
+          .your-profile-container {
+            padding: 15px 30px 0;
+            h3 {
+              font-family: "Roboto", sans-serif;
+              font-weight: 400;
+              color: $primary-color;
+            }
+          }
+          .reg-form-left-column {}
+          .reg-form-right-column {}
+        }
+        .signup-btn {
+          background: #fff;
+          margin-bottom: 20px;
+        }
+      }
+    }
+
+  }
+}
+
+@media screen and (max-width: 990px){
+  .your-profile-media-col {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 715px){
+  .submit-btn {
+    width: 100%;
+  }
+  .reg-wrap-header h4 {
+    font-size: 14px;
+  }
+  .bpb-step-num {
+    font-size: 12px !important;
+  }
+}
+
+@media screen and (max-width: 550px){
+  .reg-wrap .reg-container .reg-form-wrap {
+    margin: inherit;
+  }
+}
+
+@media screen and (max-width: 450px){
+  .submit-btn {
+    //width: inherit;
+  }
+
+  .bpb-step-num {
+    display: none;
+  }
+
+  .your-profile-container h3 {
+    font-size: 16px;
+  }
+}

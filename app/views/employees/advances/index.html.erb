@@ -1,0 +1,64 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="advances-content">
+    <div class="header-wrapper">
+      <h4>Employee Advances</h4>
+    </div>
+    <div class="content-body-wrapper">
+      <div class="row actions-button ">
+        <div class="pull-right mb10x">
+          <%= link_to new_employees_advance_path, remote: true, class: 'btn btn-default reset-border-radius' do %>
+              <i class="fa fa-plus"> </i> New Advance
+          <% end %>
+          <%= link_to new_employees_advance_return_path, remote: true, class: 'btn btn-default reset-border-radius' do %>
+              <i class="fa fa-plus"> </i> Advance Return
+          <% end %>
+        </div>
+      </div>
+
+      <div class="content-body mt10">
+        <div class="row">
+          <div class="col-sm-10">
+            <div class="report-search-form mb15">
+              <%= form_tag '', method: 'get', id: "advance-employee-status-form", remote: true do %>
+                  <%= select_tag :employee, options_for_select(@employees.collect { |emp| [emp.full_name, emp.id] }, params[:employee]), {class: 'custom-chosen form-control custom-label-select employee-change-select-submit', prompt: 'All Employee'} %>
+                  <%= select_tag :status, options_for_select(Employees::AdvanceReturn::STATUS.collect { |key, value| [value] }, params[:status]), {class: 'form-control status-change-select-submit'} %>
+                  <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control"} %>
+                  <%= submit_tag 'Search', class: 'primary-color-bg-with-hover reset-border-radius' %>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-sm-2 ">
+            <div class="report-search-form clearfix">
+              <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius pull-right', prompt: 'Export To....'} %>
+            </div>
+          </div>
+        </div>
+
+        <div id="advances">
+          <%= render 'advances_table', advances: @advances %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+      $('#export_to').on('change', function () {
+          var export_to = $(this).val();
+          var employee = $('#employee').val();
+          var status = $('#status').val();
+          var year = $('#date_year').val();
+
+          if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+              window.location.href = '/employees/advances.pdf?employee='+employee+'&status='+status+'&date[year]='+year;
+          }
+          else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+              window.location.href = '/employees/advances.docx?employee='+employee+'&status='+status+'&date[year]='+year;
+          }
+          else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+              window.location.href = '/employees/advances.xls?employee='+employee+'&status='+status+'&date[year]='+year;
+          }
+      });
+  });
+</script>

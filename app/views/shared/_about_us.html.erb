@@ -1,0 +1,23 @@
+<li class="top-menu-dropdown">
+  <a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown">
+    About us <i style="vertical-align: top;" class="fa fa-sort-down"></i>
+  </a>
+
+  <ul class="top-menu-dropdown-content last-dropdown">
+    <li>
+      <%= link_to community_posts_path do %>
+          Blog
+      <% end %>
+    </li>
+    <li>
+      <%= link_to modules_employee_path do %>
+          Resources
+      <% end %>
+    </li>
+    <li>
+      <%= link_to "#{root_url }#contact_us" do %>
+          Contact us
+      <% end %>
+    </li>
+  </ul>
+</li>

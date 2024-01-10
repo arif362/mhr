@@ -1,0 +1,17 @@
+<tr id="expense-category-<%= expense_category.id %>">
+  <td><%= expense_category.name %></td>
+  <td><%= truncate(expense_category.description, length: 60) %></td>
+  <td>
+    <a data-toggle="collapse" data-target="#expense-subcategories-of-<%= expense_category.id %>" class="accordion-toggle" style="cursor: pointer"> Sub Categories </a>
+
+    <%= link_to expenses_category_path(expense_category), class: 'btn info-color', remote: true do %>
+        <i class="fa fa-eye"></i>
+    <% end %>
+    <%= link_to edit_expenses_category_path(expense_category), class: 'btn warning-color', remote: true do %>
+        <i class="fa fa-pencil"></i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: expense_category.id, action_on: 'expenses/categories', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"></i>
+    <% end %>
+  </td>
+</tr>

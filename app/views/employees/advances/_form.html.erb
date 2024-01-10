@@ -1,0 +1,78 @@
+<%= form_for @advance, html: {id: 'advance_create_form'} do |f| %>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+      <i class="fa fa-newspaper-o"></i>
+      <h4 class="modal-title">Add new advances</h4>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="form-group input-validate-message-area">
+        <%= f.label 'Employee', '*Employee' %>
+        <%= f.select :employee_id, current_active_employees.collect { |emp| [emp.full_name, emp.id] }, {prompt: 'Select Employee'}, {class: 'custom-chosen form-control custom-label-select', data: {required: true}} %>
+      </div>
+
+      <div class="col-md-6 reset-padding">
+        <div class="form-group">
+          <%= f.label :amount, '*Amount' %>
+          <%= f.text_field :amount, class: 'form-control', data: {required: true} %>
+        </div>
+      </div>
+      <div class="col-md-6 reset-padding pl15">
+        <div class="form-group">
+          <%= f.label :date, '*Date' %>
+          <%= f.text_field :date, class: "form-control", data: {required: true} %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :purpose %>
+        <%= f.text_area :purpose, class: "form-control", rows: '3' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :return_policy %>
+        <%= f.select :return_policy, options_for_select(AppSettings::ADVANCE_TYPES.collect { |key, value| [value] }, @advance.return_policy), {prompt: 'Select Return Policy'}, {class: 'custom-chosen form-control custom-label-select'} %>
+      </div>
+      <div class="form-group input-advance-installment">
+        <%= f.label :installment, 'Number of installment (month)' %>
+        <%= f.text_field :installment, class: "form-control" %>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="pull-right">
+        <%= f.submit "Submit", class: "btn btn-success" %>
+        <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $('#advance_create_form').syftValidator();
+        $('#global-modal').on('shown.bs.modal', function () {
+            $('#employees_advance_employee_id', this).chosen();
+        });
+
+        $('#employees_advance_return_policy').change(function () {
+            if ($(this).val() == 'installment' || $(this).val() == 'Installment') {
+                $('.input-advance-installment').show();
+                $('#employees_advance_installment').attr('data-required',true);
+            }
+            else {
+                $('.input-advance-installment').find('.helper-text').remove();
+                $('.input-advance-installment').hide();
+                $('#employees_advance_installment').removeClass('danger-class');
+                $('#employees_advance_installment').removeAttr('data-required');
+            }
+        });
+
+        $('#employees_advance_date').datetimepicker({
+            format: 'YYYY-MM-DD',
+            defaultDate: "<%= Date.today %>",
+        });
+
+        <% if @advance.present? && @advance.return_policy.present? && @advance.return_policy == AppSettings::ADVANCE_TYPES[:installment] %>
+        $('.input-advance-installment').show();
+        <% end %>
+    });
+</script>

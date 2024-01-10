@@ -1,0 +1,7 @@
+$('#changed-setting-<%= @changed_setting.id %>').remove();
+$('#global-modal').modal('hide');
+<% flash.clear %>
+popupMessage('Additional settings deleted', 'alert-success');
+if ($(".changed-settings-table").find("tbody").find("tr").size() <= 0) {
+    $('.no-data-found').html("<%= escape_javascript(render 'shared/no_data_found', message: 'No additional settings found').html_safe %>")
+}

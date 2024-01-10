@@ -1,0 +1,24 @@
+// Place all the styles related to the provident_fund/contribution controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#provident-fund-contribution-form {
+  max-width: 450px;
+  margin: auto;
+}
+
+.contribution-search-form {
+  text-align: right;
+  margin: 10px 0;
+  input, select {
+    max-width: 220px;
+    display: inline-block;
+  }
+}
+
+.confirm-all-contribution {
+  height: 15px;
+  width: 15px;
+  vertical-align: middle;
+  padding: 3px;
+}

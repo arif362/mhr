@@ -1,0 +1,78 @@
+<div class="comments-item-wrap mb10">
+  <div class="comments-item-container">
+    <div class="comments-item-row">
+      <div class="clearfix">
+        <div class="comments-profile-img-wrap">
+          <div class="cpi-container">
+            <a href="javacript:void(0);">
+              <%= image_tag post.author.image.present? ? post.author.image_url(:thumb) : 'employees/default_profile_image.png' %>
+            </a>
+          </div>
+        </div>
+
+        <div class="post-content-wrap">
+          <h3 class="m0">
+            <%= link_to post.title, community_post_path(post) %>
+          </h3>
+
+          <div class="user-span-item mb8">
+            By <strong><%= post.author.short_name %></strong>
+            <span class="pl8"><%= post.created_at.to_formatted_s(:long_ordinal) %></span>
+            <% if post.community_category.present? %>
+            <span class="pl8"> About <b>
+              <%= link_to community_root_path(community_category: post.community_category.title) do %>
+                  <%= post.community_category.title %>
+                  </b>
+              <% end %>
+            </span>
+            <% end %>
+            <br>
+            <span class="pl30x pull-rightx">
+              <%= link_to "/community/posts/#{post.id}#just_all_comments" do %>
+                  <% if post.community_comments.present? %>
+                  <%= post.community_comments.count %>
+                      <i class="fa fa-comments-o" aria-hidden="true"></i>
+                  <% end %>
+              <% end %>
+            </span>
+            <span class="pl10 pull-rightx">
+                <%= link_to community_post_path(post) do %>
+                    <% if post.attachment.present? %>
+                        1<i class="fa fa-paperclip" aria-hidden="true"></i>
+                        <% end %>
+                    <% end %>
+              </span>
+          </div>
+
+          <div class="user-description-item mt10x">
+            <div>
+              <%#= raw (truncate(post.content, length: 250, separator: ' ', omission: '... '))%>
+              <%= truncate(strip_tags(post.content), length: 250, :omission => '... ') { link_to "Read More", community_post_path(post), class: 'primary-color' } %>
+            </div>
+          </div>
+
+          <!--<div class="user-description-span-item mb8">-->
+          <!--<a data-toggle="collapse" data-target="#reply-comments">-->
+          <!--Reply-->
+          <!--</a>-->
+          <!--<span>time</span>-->
+          <!--</div>-->
+          <!--<div id="reply-comments" class="collapse">-->
+          <!--<%#= form_tag '' do %>-->
+          <!--<div class="input-group">-->
+          <!--<input id="email" type="text" class="form-control" placeholder="write a reply...">-->
+          <!--<div class="input-group-addon">-->
+          <!--<div class="upload-button " style="position: inherit">-->
+          <!--<i class="fa fa-camera"></i>-->
+          <!--<%#= file_field_tag :image, class: 'file-upload-btn' %>-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--<%# end %>-->
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

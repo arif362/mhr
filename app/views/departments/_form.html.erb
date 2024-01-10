@@ -1,0 +1,135 @@
+<%= form_for @department, remote: true, html:{ class:'form-vertical', id: 'department-form'} do |f| %>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <i class="fa fa-newspaper-o"></i>
+      <h4 class="modal-title"> <%= @department.name.present? ?  @department.name: 'Add New Department' %> </h4>
+    </div>
+
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="logo-wrapper pt0x m0">
+                <div class="logo-container">
+                  <%= image_tag @department.image.present? ? @department.image_url(:large) : 'company/company.png', id: 'department-logo', class: 'img-circle' %>
+                </div>
+
+                <label class="custom-upload-file-wrap custom-upload-file-wrap-placement" id="upload-department-logo">
+                  <span class="fa fa-photo guest-color"> </span>
+                  <%= f.file_field :image, class: 'hidden' %>
+                </label>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+          <div class="form-group">
+            <%= f.label "Name*", class: 'control-label', for: 'name' %>
+            <%= f.text_field :name, class: "form-control", id: 'name', data: {required: true}, value: @department.name %>
+          </div>
+            <div class="form-group">
+              <%= f.label 'Contact Mail', class: 'control-label', for: 'email' %>
+              <%= f.text_field :email, class: "form-control", id: 'email', value: @department.email %>
+            </div>
+            </div>
+
+          <div class="col-md-12 reset-padding ">
+            <div class="form-group">
+              <%= f.label 'Contact Number', class: 'control-label', for: 'mobile' %>
+              <%= f.text_field :mobile, class: "form-control", id: 'mobile', value: @department.mobile %>
+            </div>
+          </div>
+          <div class="col-md-6 reset-padding">
+            <div class="form-group">
+              <%= f.label 'About', class: 'control-label', for: 'description' %>
+              <%= f.text_area :description, class: "form-control",rows: '3', id: 'description', value: @department.description %>
+            </div>
+          </div>
+          <div class="col-md-6 reset-padding pl15">
+            <div class="form-group">
+              <%= f.label :address, class: 'control-label', for: 'address' %>
+              <%= f.text_area :address, class: "form-control",rows: '3', id: 'address', value: @department.address %>
+            </div>
+          </div>
+          <div class="col-md-6 reset-padding">
+            <div class="form-group">
+              <%= f.label :city, class: 'control-label', for: 'city' %>
+              <%= f.text_field :city, class: "form-control", id: 'city', value: @department.city %>
+            </div>
+          </div>
+          <div class="col-md-6 reset-padding pl15">
+            <div class="form-group">
+              <%= f.label :state, class: 'control-label', for: 'state' %>
+              <%= f.text_field :state, class: "form-control", id: 'state', value: @department.state %>
+            </div>
+          </div>
+          <div class="col-md-6 reset-padding">
+            <div class="form-group">
+              <%= f.label :zip_code, class: 'control-label', for: 'zip_code' %>
+              <%= f.text_field :zip_code, class: "form-control", id: 'zip_code', value: @department.zip_code %>
+            </div>
+          </div>
+          <div class="col-md-6 reset-padding pl15">
+            <div class="form-group">
+              <%= f.label :country, class: 'control-label', for: 'country' %>
+              <%= country_select(:department, :country, {selected: @department.country, include_blank: 'Select a country' }, { class: 'form-control custom-chosen', id: 'country'}) %>
+            </div>
+          </div>
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer clearfix">
+      <div class="pull-right">
+        <%= f.submit 'Save', class: 'btn btn-primary department_submit' %>
+        <div class='btn btn-default' data-dismiss="modal">Close</div>
+      </div>
+    </div>
+<% end %>
+<script type="text/javascript">
+    $(function(){
+        $('#department-form').syftValidator();
+
+        function validPayloadLenght(payload){
+            var payloadLenght = payload/1024/1024;
+            return payloadLenght < 1 ? true : false;
+        }
+
+
+        $('#department_image').change(function () {
+            var reader = new FileReader();
+            if(validPayloadLenght(this.files[0].size)){
+                reader.onload = function (e) {
+                    $('#department-logo').attr('src', e.target.result)
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+            else{
+
+                popupMessage('This image is not supported. File Size too large. ', 'alert-danger');
+                $('.hidden').val(null);
+
+
+            }
+        });
+
+//        $('#upload-department-logo').click(function () {
+//            $("input[type='file']").trigger('click');
+//        });
+
+        $('#department-form').submit(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).ajaxSubmit({
+                url: $(this).attr('action'),
+                dataType: 'script',
+                method: $(this).attr('method')
+            });
+        });
+
+    });
+</script>

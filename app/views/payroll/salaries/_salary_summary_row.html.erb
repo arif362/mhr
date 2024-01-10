@@ -1,0 +1,25 @@
+<tr id="employee-sum-salary-<%= salary.id %>">
+  <td>
+    <%= Date::MONTHNAMES[salary.month] %>
+  </td>
+  <td>
+    <%= salary.year %>
+  </td>
+  <td>
+    <%= salary.total %>
+  </td>
+  <td>
+    <%= format_date(salary.created_at) %>
+  </td>
+  <td>
+    <%= link_to payroll_salary_payslip_path(salary), class: 'info-color' do %>
+        Payslip
+    <% end %>
+    <%= link_to payroll_salary_path(salary), remote: true , class: 'btn info-color' do %>
+        <i class="fa fa-eye"> </i>
+    <% end %>
+    <%#= link_to edit_payroll_salary_path(salary, state: Payroll::Salary::STATES[:summary]), remote: true , class: 'btn warning-color' do %>
+        <!--<i class="fa fa-pencil"></i>-->
+    <%# end %>
+  </td>
+</tr>

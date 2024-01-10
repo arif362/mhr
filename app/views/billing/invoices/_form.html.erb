@@ -1,0 +1,177 @@
+<%= nested_form_for @invoice, :html => {:class => 'invoice-form', :novalidate => ""} do |f| %>
+    <% @parent_f = f %>
+
+    <div class="invoice-form-container">
+      <div class="content_middle clearfix">
+        <div class="row invoice-top-inputs">
+          <div class="col-lg-12">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <%= f.label :company_id, content_tag(:span, t('company')) %>
+                <%= text_field_tag 'company', current_department.company.name, :class => 'company_read_only form-control reset-border-radius' %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :client_id, content_tag(:span, t('client')) %>
+                <%= f.select :client_id, options_for_select(current_department.clients.collect { |c| ["#{c.contact_name}(#{c.organization_name})", c.id] }, f.object.client_id), {:prompt => "", :include_blank => ""}, {"data-placeholder" => "Select a client...", :class => "invoice_client medium chzn-select form-control reset-border-radius", "data-form-container" => "clients_holder", "data-dropdown-width" => "300"} %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :payment_terms_id, content_tag(:span, t('views.invoices.terms')) %>
+                <ul class="field_description select form-xcontrol">
+                  <li style=" list-style: none; "><%= t('views.invoices.terms_hint') %></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="right-section">
+                <div class="form-group">
+                  <%= f.label :invoice_number, content_tag(:span, 'Invoice #') %>
+                  <%= f.text_field :invoice_number, :required => true, class: 'form-control reset-border-radius' %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :invoice_date, content_tag(:span, t('views.invoices.invoice_date')) %>
+                  <%= f.text_field :invoice_date, value: f.object.invoice_date, :required => true, class: 'form-control reset-border-radius datepicker' %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :due_date, t("views.invoices.due_date") %>
+                  <%= f.text_field :due_date, :placeholder => "TBD", required: true, class: 'form-control reset-border-radius datepicker' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>window.currency_symbol = "<%= @invoice.currency.present? ? @invoice.currency : "$" %>"</script>
+        <div class="col-lg-12">
+          <div class="table-warapper">
+            <table cellpadding="0" cellspacing="0" class="table action-table excel-table tablesorter table-responsive table-hover table-striped" id="invoice_grid_fields">
+              <thead>
+              <tr>
+                <th class="align_center">&nbsp;</th>
+                <th class="align_left"><%= t('item') %></th>
+                <th class="align_left"><%= t('views.common.description') %></th>
+                <th class="align_center"><%= t('views.common.unit_cost') %></th>
+                <th class="align_right"><%= t('views.common.qty') %></th>
+                <th class="align_center"><%= t('views.invoices.line_total') %></th>
+              </tr>
+              </thead>
+              <%= f.fields_for :invoice_line_items, :wrapper => false %>
+              <tr style="border:none;" class="no_hover">
+                <td>&nbsp</td>
+                <td class="text-left">
+                  <%= f.link_to_add t("views.invoices.add_line_item"), :invoice_line_items, :class => "btn btn-sm btn-default", id: 'add-line-item' %>
+                </td>
+                <td>&nbsp</td>
+                <td>&nbsp</td>
+                <td style="vertical-align: middle">
+                  <%= t('views.invoices.subtotal') %>
+                </td>
+                <td style="vertical-align: middle; text-align: center;">
+                  <%= f.hidden_field :sub_total %>
+                  <%= label_tag '', f.object.sub_total, :id => 'invoice_sub_total_lbl', :class => 'invoice-sub-total' %>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+
+          <div class="grid_summary custom">
+            <div class="grid-summary-content pull-right">
+              <div class="grid-summary-row discount">
+                <div class="grid-summary-title">
+                  <!--Discount <span class="discount_percentage_lbl"></span>%-->
+                  Discount <%= f.select :discount_type, @discount_types, {selected: f.object.discount_type}, {:class => "discount-select form-control reset-border-radius pull-right", :id => "discount_type"} %>
+                </div>
+
+                <div class="grid-summary-description custom">
+                  <%= f.hidden_field :discount_amount %>
+                  <%= label_tag '', '', :id => 'invoice_discount_amount_lbl', :style => 'font-weight:normal; display:none;' %>
+                  <%= f.text_field :discount_percentage, :class => "invoice-discount line_item_qtip" %>
+                </div>
+              </div>
+
+              <div class="grid-summary-row net-total">
+                <div class="grid-summary-title">
+                  <%= t('views.invoices.net_total') %>
+                </div>
+                <div class="grid-summary-description">
+                  <%= f.hidden_field :invoice_total || 0 %>
+                  <%= label_tag '', f.object.invoice_total, :id => 'invoice_total_lbl', :class => 'net_total_value' %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clear"></div>
+          <div class="form-group">
+            <%= f.label :notes %> <br/>
+            <%= f.text_area :notes, maxlength: 400, class: 'invoice-note' %>
+            <ul class="field_description">
+              <li class="text-limit" style="list-style: none">
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content_bottom text-center">
+          <% button_text = action_name == "new" ? t('views.common.save_as_draft') : t('views.common.save') %>
+          <%= f.submit t('views.invoices.send_invoice'), :class => 'btn btn-default reset-border-radius' %>
+          <%= f.submit "#{button_text}", :class => 'btn btn-success reset-border-radius', :name => "save_as_draft" %>
+          <%= link_to t("views.common.cancel"), params[:invoice_for_client] ? billing_clients_path : billing_invoices_path, :class => 'btn btn-warning reset-border-radius' %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $(document).on('blur', '.invoice-form .line-item-qtip', function () {
+            container = $(this).parents('tr');
+            ucost = container.find('.cost').val();
+            qty = container.find('.qty').val();
+            if (ucost && qty) {
+                ucost = parseFloat(ucost);
+                qty = parseFloat(qty);
+                container.find('.line-total').html(ucost * qty);
+            }
+            else {
+                container.find('.line-total').html(0.00);
+            }
+            update_total();
+        });
+
+        $('#billing_invoice_discount_percentage').keyup(function () {
+            update_total();
+        });
+
+        $('#discount_type').change(function () {
+            update_total();
+        });
+
+        $('.datepicker').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+    });
+
+    function update_total() {
+        line_total = 0;
+        net_total = 0;
+        $('.line-total').each(function (index, element) {
+            line_total += parseFloat($(element).html());
+        });
+        $('#billing_invoice_sub_total').val(line_total);
+        $('.invoice-sub-total').html(line_total);
+        discount_type = $('#discount_type').val();
+        discount = parseFloat($('#billing_invoice_discount_percentage').val());
+        net_total = line_total;
+        if (discount_type == '%' && discount) {
+            net_total = line_total - (line_total * (discount / 100.0));
+        }
+        else if (discount) {
+            net_total = line_total - discount;
+        }
+        $('#billing_invoice_invoice_total').val(net_total);
+        $('.net_total_value').html(net_total);
+    }
+</script>

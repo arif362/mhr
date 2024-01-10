@@ -1,0 +1,6 @@
+<% if @status %>
+$('#feedback-form').html("<div class='alert alert-success' style='margin-bottom: 0;'> Thank you for your kind feedback </div>");
+$('.modal-footer').remove();
+<%else%>
+alert("Unable to send your feedback, Please try again!");
+<%end%>

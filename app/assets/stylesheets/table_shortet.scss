@@ -1,0 +1,93 @@
+/* tables */
+table.tablesorter {
+  width: 100%;
+  text-align: left;
+}
+
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+  background-color: #1A7791;
+  color: #fdfdfd;
+}
+
+table.tablesorter thead tr .header {
+  background-image: image-url('bg.png');
+  background-repeat: no-repeat;
+  background-position: center left;
+  cursor: pointer;
+  text-indent: 12px;
+}
+
+table.tablesorter tbody td {
+  vertical-align: top;
+}
+
+table.tablesorter tbody tr.odd td {
+  background-color: #F0F0F6;
+}
+
+table.tablesorter thead tr .headerSortUp {
+  background-image: image-url('asc.png');
+}
+
+table.tablesorter thead tr .headerSortDown {
+  background-image: image-url('desc.png');
+}
+
+#pager {
+  padding: 4px 0;
+  margin: 0 0 5px 0 !important;
+  .pagedisplay {
+    border: 1px solid #e8e8e8;
+    font-size: 16px;
+    text-align: center;
+    vertical-align: middle;
+    width: 50px;
+  }
+  .paging-perpage {
+    padding: 4px 10px 0;
+    a {
+      text-decoration: none;
+      padding: 0 3px;
+      display: inline-block;
+
+      color: #717171;
+      background: #e9e9e9;
+      border-radius: 3px;
+      border: solid 1px #c0c0c0;
+      box-shadow: inset 0px 1px 0px rgba(255, 255, 255, .7), 0px 1px 3px rgba(0, 0, 0, .1);
+      text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.7);
+
+      &.active {
+        background: #CCCCCC;
+      }
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+  .paging-action {
+    padding-right: 10px;
+    img {
+      cursor: pointer;
+    }
+  }
+}
+
+.weekend-table {
+  tbody {
+    tr {
+      td {
+        &:first-child {
+          vertical-align: middle;
+        }
+      }
+      td, th {
+        border: inherit;
+        label {
+          margin: 0;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}

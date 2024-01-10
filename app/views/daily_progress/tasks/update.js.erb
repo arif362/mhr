@@ -1,0 +1,8 @@
+if (<%= @task.errors.any? %>) {
+    alert('Something wrong please check your input!')
+}
+else {
+    $("#task-<%= @task.id %>").html("<%= escape_javascript(render @task) %>");
+    $('#global-modal').modal('hide');
+    popupMessage('Task updated successfully', 'alert-success');
+}

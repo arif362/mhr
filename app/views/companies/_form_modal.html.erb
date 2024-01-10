@@ -1,0 +1,146 @@
+<%= form_for @company, html: {class: 'form-vertical', id: 'company-registration-form'} do |f| %>
+
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+      <i class="fa fa-newspaper-o"></i>
+      <h4 class="modal-title">
+        '<%= @company.name %>' Company
+      </h4>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="logo-wrapper pt0x m0">
+            <div class="logo-container">
+              <%= image_tag @company.image.present? ? @company.image_url(:large) : 'company/company.png', id: 'company-logo', class: 'img-circle' %>
+            </div>
+            <label class="custom-upload-file-wrap custom-upload-file-wrap-placement" id="upload-company-logo">
+              <span class="fa fa-photo guest-color"> </span>
+              <%= f.file_field :image, class: 'hidden' %>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="form-group">
+            <%= f.label :name, '*Company Name' %>
+            <%= f.text_field :name, class: 'form-control input-field-height reset-border-radius', placeholder: 'Company or Organization Name', data: {required: true} %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :contact_email, 'Email' %>
+            <%= f.text_field :contact_email, class: 'form-control input-field-height reset-border-radius', placeholder: 'Company Email Optional' %>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :mobile, "*Mobile" %>
+            <%= f.text_field :mobile, class: 'form-control input-field-height reset-border-radius', placeholder: 'Contact mobile or phone number', data: {required: true} %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group input-validate-message-area">
+            <%= f.label :company_country, "*Country" %>
+            <%= country_select(:company, :country, {selected: f.object.country, include_blank: 'Select a country'}, {class: 'form-control custom-chosen reset-border-radius', data: {required: true}}) %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :address, "*Address" %>
+            <%= f.text_field :address, class: 'form-control reset-border-radius', placeholder: 'Company Address', data: {required: true} %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :city, 'City' %>
+            <%= f.text_field :city, class: 'form-control reset-border-radius', placeholder: 'City Optional' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :state, 'State' %>
+            <%= f.text_field :state, class: 'form-control reset-border-radius', placeholder: 'State Optional' %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-groupx">
+            <%= f.label :zip_code, "*Zip code" %>
+            <%= f.text_field :zip_code, class: 'form-control reset-border-radius', placeholder: 'Zip Code', data: {required: true} %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <div class="">
+        <% if f.object.new_record? %>
+            <%= f.submit 'Submit To Continue', class: 'submit-btn' %>
+        <% else %>
+            <%= f.submit 'Save changes', class: 'btn btn-success' %>
+        <% end %>
+        <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+//    $(function () {
+//        $('#company-registration-form').syftValidator();
+//
+//        $('#company_image').change(function () {
+//            var reader = new FileReader();
+//            reader.onload = function (e) {
+//                $('#company-logo').attr('src', e.target.result)
+//            };
+//            reader.readAsDataURL(this.files[0]);
+//        });
+
+//        $('#upload-company-logo').click(function () {
+//            $("input[type='file']").trigger('click');
+//        });
+/*experimrnt*/
+
+        $(function () {
+            $('#company-registration-form').syftValidator();
+
+            function validPayloadLenght(payload){
+                var payloadLenght = payload/1024/1024;
+                return payloadLenght < 1 ? true : false;
+            }
+
+            $('#company_image').change(function () {
+                var reader = new FileReader();
+
+                if(validPayloadLenght(this.files[0].size)){
+                    reader.onload = function (e) {
+                        $('#company-logo').attr('src', e.target.result)
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+                else{
+
+                        popupMessage('This image is not supported. File Size too large. ', 'alert-danger');
+                        $('.hidden').val(null);
+
+
+                    }
+
+            });
+
+    });
+
+
+</script>

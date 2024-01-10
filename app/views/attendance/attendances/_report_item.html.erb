@@ -1,0 +1,19 @@
+<td class="attendance-report-item">
+  <% if value[day][:day_off].present? && value[day][:in_time].present? %>
+      <%= value[day][:day_off].day_off_type[0] + 'P' %>
+      <%= render 'report_popup', value: value, day: day, dayoff: true, in_time: true, leave_app: false %>
+  <% elsif value[day][:day_off].present? %>
+      <%= value[day][:day_off].day_off_type[0] %>
+      <% unless value[day][:day_off].day_off_type == AppSettings::DAYOFF_TYPES[:weekend] %>
+        <%= render 'report_popup', value: value, day: day, dayoff: true, in_time: false, leave_app: false %>
+      <% end %>
+  <% elsif value[day][:in_time].present? %>
+      <i class="fa fa-check success-color" aria-hidden="true"></i>
+      <%= render 'report_popup', value: value, day: day, dayoff: false, in_time: true, leave_app: false %>
+  <% elsif value[day][:leave_status].present? %>
+      L
+      <%= render 'report_popup', value: value, day: day, dayoff: false, in_time: false, leave_app: true %>
+  <% else %>
+      <i class="fa fa-times danger-color" aria-hidden="true"></i>
+  <% end %>
+</td>

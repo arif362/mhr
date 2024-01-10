@@ -1,0 +1,7 @@
+$('.sidebar-menu-active').removeClass('sidebar-menu-active');
+<% if params[:c_settings].present? %>
+$('#info-content').html('<%= escape_javascript( render 'settings/feature' ).html_safe %>');
+$('.<%= params[:c_settings] %>').addClass('sidebar-menu-active');
+<% else %>
+$('#info-content').html('<%= escape_javascript( render 'settings/feature_content' ).html_safe %>');
+<% end %>

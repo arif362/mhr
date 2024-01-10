@@ -1,0 +1,24 @@
+Departments <br><br>
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th> Name</th>
+        <th> Description</th>
+        <th> Total Employee</th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @departments.each do |department| %>
+          <tr>
+            <td><%= department.name %></td>
+            <td><%= department.description %></td>
+            <td><%= department.employees.count %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

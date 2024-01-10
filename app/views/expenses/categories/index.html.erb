@@ -1,0 +1,53 @@
+<div class="row reset-padding">
+  <div id="expense" class="tab-pane">
+    <div class="header-wrapper">
+      <h4> Expense Category </h4>
+    </div>
+    <div class="secondary-color" id="settings-expense-category">
+      <div class="content-body-wrapper">
+        <div class="row content-body leave-settings-panel">
+          <div class="clearfix" style="margin-bottom: 10px">
+            <%= link_to new_expenses_category_path, remote: true, class: 'btn btn-default reset-border-radius pull-right' do %>
+                <i class="fa fa-plus"> </i> New Category
+            <% end %>
+          </div>
+          <div class="table-warapper" id="expense-category-table">
+            <div class="table-warapper-body">
+              <table class="table action-table beaccount-table table-responsive table-hoverx table-striped expense-categories-table" style="border-collapse:collapse;">
+                <thead>
+                <tr class="trew">
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody id="expense-category-table-body">
+                <% @expense_categories.each do |expense_category| %>
+                    <%= render 'expenses/categories/category_item', expense_category: expense_category %>
+                    <%= render 'expenses/categories/inner_sub_categories', expense_category: expense_category %>
+                <% end %>
+                </tbody>
+              </table>
+              <div class="no-data-found">
+                <% unless @expense_categories.present? %>
+                    <%= render 'shared/no_data_found', message: 'No expense category' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.accordian-body').on('show.bs.collapse', function () {
+            $(this).closest("table")
+                    .find(".collapse.in")
+                    .not(this)
+                    .collapse('toggle')
+        });
+    });
+</script>

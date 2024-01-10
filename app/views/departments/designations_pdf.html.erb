@@ -1,0 +1,23 @@
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th> Name</th>
+        <th> Responsibilities</th>
+        <th> Status</th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @designations.each do |designation| %>
+          <tr>
+            <td><%= designation.name %></td>
+            <td><%= designation.description %></td>
+            <td><%= designation.is_active ? 'Active' : 'Inactive' %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

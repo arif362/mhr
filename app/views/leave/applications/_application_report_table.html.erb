@@ -1,0 +1,71 @@
+<div class="table-warapper " >
+  <div class="table-warapper-body">
+    <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped" id="yearly-leave-table" >
+      <thead>
+      <tr class="trew">
+        <th>Name</th>
+        <th>Leave Category</th>
+        <th>Type</th>
+        <th>Total Days</th>
+        <th>Days</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% leave_application_days.each do |leave_day| %>
+          <% if leave_day.leave_application.present? %>
+              <tr>
+                <td>
+                  <% if leave_day.leave_application.employee.present? %>
+                      <%= link_to employee_profile_path(leave_day.leave_application.employee), remote: true do %>
+                          <%= leave_day.leave_application.employee.full_name %>
+                      <% end %>
+                  <% end %>
+                </td>
+                <td><%= leave_day.leave_application.leave_category.name %></td>
+                <td><%= leave_day.leave_application.is_paid ? 'Paid' : 'Unpaid' %></td>
+                <td><%= leave_day.leave_application.total_days %></td>
+                <% days = '' %>
+                <% leave_day.leave_application.leave_days.each do |application_leave_day| %>
+                    <% if application_leave_day.is_approved %>
+                        <% days = days.present? ? days + ', ' + format_date_2(application_leave_day.day).to_s : format_date_2(application_leave_day.day).to_s %>
+                    <% end %>
+                <% end %>
+                <td><%= days %></td>
+                <td>
+                  <%= link_to leave_application_path(leave_day.leave_application, no_admin: true), title:"View", remote: true do %>
+                      <i class="fa fa-eye"> </i>
+                  <% end %>
+                  <%= link_to download_leave_applications_path('pdf', application_id: leave_day.leave_application.id), class: 'btn info-color', title: 'Download' do %>
+                      <i class="fa fa-download"> </i>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <div id="pager2">
+      <%= render 'shared/pagination' if leave_application_days.size > 10 %>
+    </div>
+    <% unless leave_application_days.present? %>
+        <%= render 'shared/no_data_found', message: 'No leave application found' %>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        if ($("#yearly-leave-table").find("tbody").find("tr").size() > 0) {
+            $("#yearly-leave-table").tablesorter({
+                widthFixed: true,
+                widgets: ['zebra'],
+                headers: {
+                    5: {
+                        sorter: false
+                    }
+                }
+            }).tablesorterPager({container: $("#pager2")});
+        }
+    });
+</script>

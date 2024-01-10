@@ -1,0 +1,170 @@
+<div class="table-warapper">
+  <div class="table-warapper-body">
+    <table class="table beaccount-table tablesorter table-responsive table-hover table-striped border " >
+      <thead>
+      <tr class="trew">
+        <th class="border">Category</th>
+        <% (@start_date..@end_date).each do |date| %>
+            <th class="border"><%= date.day %></th>
+        <% end %>
+        <th class="border"><b>Total</b></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @expense_categories.each do |category| %>
+          <% if category.expense_sub_categories.present? %>
+              <tr data-toggle="collapse" data-target=".expense-<%= category.id %>" class="accordion-toggle" style="cursor: pointer;">
+          <% else %>
+              <tr data-toggle="collapse" data-target=".expense-<%= category.id %>" class="accordion-toggle">
+          <% end %>
+            <td class="border">
+              <% if category.expense_sub_categories.present?%>
+                  <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+                  <!--<i class="fa fa-angle-double-right" aria-hidden="true"></i>-->
+              <% end %>
+              <%= category.name %>
+            </td>
+            <% (@start_date..@end_date).each do |date| %>
+                <% day = date.day %>
+                <td class="border">
+                  <% if @expense_report[category.id][day][:amount] > 0 %>
+                      <%= link_to report_breakdown_expenses_expenses_path(category_id: category.id, day: day, month: date.month, year: date.year), target: "_blank" do%>
+                          <%= @expense_report[category.id][day][:amount] %>
+                      <% end %>
+                  <% else %>
+                      <%= @expense_report[category.id][day][:amount] %>
+                  <% end %>
+                </td>
+            <% end %>
+            <td class="border">
+              <b>
+                <% if @expense_report[category.id][:total_amount] > 0 %>
+                    <%= link_to report_breakdown_expenses_expenses_path(category_id: category.id, month: @start_date.month, year: @start_date.year), target: "_blank" do%>
+                        <%= @expense_report[category.id][:total_amount] %>
+                    <% end %>
+                <% else %>
+                    <%= @expense_report[category.id][:total_amount] %>
+                <% end %>
+              </b>
+            </td>
+          </tr>
+
+          <% if category.expense_sub_categories.present? %>
+              <tr class="accordian-body collapse hidden-row expense-<%= category.id %>">
+                <td colspan="<%= (@end_date.day - @start_date.day) + 3 %>" class="subcategory-inside border">Sub categories(<%= num_of_sub =  category.expense_sub_categories.count %>)</td>
+              </tr >
+              <% category.expense_sub_categories.each do |sub_category| %>
+                  <tr  class="accordian-body collapse hidden-row expense-<%= category.id %>">
+                    <td class="subcategory-inside border">
+                      <%= sub_category.name %>
+                    </td>
+                    <% (@start_date..@end_date).each do |date| %>
+                        <% day = date.day %>
+                        <td class="border">
+                          <% if @expense_report[category.id][:sub_category_report][sub_category.id][day][:amount] > 0 %>
+                              <%= link_to report_breakdown_expenses_expenses_path(sub_category_id: sub_category.id, day: day, month: date.month, year: date.year), target: "_blank" do%>
+                                  <%= @expense_report[category.id][:sub_category_report][sub_category.id][day][:amount] %>
+                              <% end %>
+                          <% else %>
+                              <%= @expense_report[category.id][:sub_category_report][sub_category.id][day][:amount] %>
+                          <% end %>
+                        </td>
+                    <% end %>
+                    <td>
+                      <b>
+                        <% if @expense_report[category.id][:sub_category_report][sub_category.id][:total_amount] > 0 %>
+                            <%= link_to report_breakdown_expenses_expenses_path(sub_category_id: sub_category.id, month: @start_date.month, year: @start_date.year), target: "_blank" do%>
+                                <%= @expense_report[category.id][:sub_category_report][sub_category.id][:total_amount] %>
+                            <% end %>
+                        <% else %>
+                            <%= @expense_report[category.id][:sub_category_report][sub_category.id][:total_amount] %>
+                        <% end %>
+                      </b>
+                    </td>
+                  </tr>
+              <% end %>
+              <% if num_of_sub > 0 %>
+                  <tr class="accordian-body collapse hidden-row expense-<%= category.id %>">
+                    <td class="subcategory-inside border"><b>Total</b></td>
+                    <% (@start_date..@end_date).each do |date| %>
+                        <td class="border">
+                          <b>
+                            <% if @expense_report[category.id][:sub_category_report][:month_total][date.day] > 0 %>
+                                <%= link_to report_breakdown_expenses_expenses_path(category_id: category.id, day: date.day, month: date.month, year: date.year), target: "_blank" do%>
+                                    <%= @expense_report[category.id][:sub_category_report][:month_total][date.day] %>
+                                <% end %>
+                            <% else %>
+                                <%= @expense_report[category.id][:sub_category_report][:month_total][date.day] %>
+                            <% end %>
+                          </b>
+                        </td>
+                    <% end %>
+                    <td class="border">
+                      <b>
+                        <% if @expense_report[category.id][:sub_category_report][:month_total][:amount] > 0 %>
+                            <%= link_to report_breakdown_expenses_expenses_path(category_id: category.id, month: params[:date].present? ? params[:date][:month] : Date.today.month, year: params[:date].present? ? params[:date][:year] : Date.today.year), target: "_blank" do%>
+                                <%= @expense_report[category.id][:sub_category_report][:month_total][:amount] %>
+                            <% end %>
+                        <% else %>
+                            <%= @expense_report[category.id][:sub_category_report][:month_total][:amount] %>
+                        <% end %>
+                      </b>
+                    </td>
+                  </tr>
+              <% end %>
+              <tr class="accordian-body collapse hidden-row expense-<%= category.id %>">
+                <td colspan="<%= (@end_date.day - @start_date.day) + 3 %>" class="subcategory-inside border" style="height: 25px;"> </td>
+              </tr >
+          <% end %>
+      <% end %>
+      <% if @expense_categories.present? %>
+          <tr>
+            <td class="border"><b>Total</b></td>
+            <% (@start_date..@end_date).each do |date| %>
+                <td class="border">
+                  <b>
+                    <% if @expense_report[:month_total][date.day] > 0 %>
+                        <%= link_to report_breakdown_expenses_expenses_path(day: date.day, month: date.month, year: date.year), target: "_blank" do%>
+                            <%= @expense_report[:month_total][date.day] %>
+                        <% end %>
+                    <% else %>
+                        <%= @expense_report[:month_total][date.day] %>
+                    <% end %>
+                  </b>
+                </td>
+            <% end %>
+            <td>
+              <b>
+                <% if @expense_report[:month_total][:amount] > 0 %>
+                    <%= link_to report_breakdown_expenses_expenses_path(month: params[:date].present? ? params[:date][:month] : Date.today.month, year: params[:date].present? ? params[:date][:year] : Date.today.year), target: "_blank" do%>
+                        <%= @expense_report[:month_total][:amount] %>
+                    <% end %>
+                <% else %>
+                    <%= @expense_report[:month_total][:amount] %>
+                <% end %>
+              </b>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="no-data-found">
+      <% unless @expense_categories.present? %>
+          <%= render 'shared/no_data_found', message: 'No expense category found' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.accordion-toggle').click(function(){
+            if($(this).find('.fa-angle-double-down').length > 0){
+                $(this).find('.fa-angle-double-down').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
+            }
+            else{
+                $(this).find('.fa-angle-double-up').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
+            }
+        });
+    });
+</script>

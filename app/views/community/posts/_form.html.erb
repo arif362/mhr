@@ -1,0 +1,72 @@
+<div class="community-formx community-discussion-wrap mb0">
+  <%= form_for Community::Post.new, remote: true, class: 'login-form', html: {id: 'community-post'} do |f| %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+      <div class="form-group">
+        <%= f.text_field :title, placeholder: 'Title', class: 'form-control reset-border-radius' %>
+      </div>
+
+      <div class="clearfix">
+        <div class="col-sm-4 pl0 pr0 form-group">
+          <%= f.select :community_category_id, Community::Category.where(is_active: true).collect { |u| [u.title, u.id] }, {}, {class: 'form-control reset-border-radius'} %>
+        </div>
+        <div class="col-sm-8 form-group pr0">
+          <div class="custom-upload-file-wrap btn btn-default reset-border-radius">
+            <span id="uploaded_file"><i class="fa fa-paperclip "></i> Attachment</span>
+            <%= f.file_field :attachment, class: 'custom-upload-file-item reset-border-radius' %>
+          </div>
+        </div>
+        <span id="uploaded_file" class="pull-right alert-success alert-dismissable ">
+            <!--<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>-->
+          </span>
+      </div>
+
+
+      <div class="form-group">
+        <%= f.text_area :content, placeholder: 'Description', id: 'community-content', class: 'form-control', rows: '5' %>
+      </div>
+
+      <div class="form-group clearfix">
+        <%= f.submit 'Submit', class: 'pull-right btn btn-default pl20 pr20 reset-border-radius' %>
+      </div>
+
+  <% end %>
+</div>
+<script type="text/javascript">
+    $.trumbowyg.svgPath = '<%= asset_path('icons.svg') %>';
+    $(function () {
+        $('#community_post_attachment').change(function () {
+            var reader = new FileReader();
+            var file = this.files[0];
+            reader.onload = function (e) {
+                $('#uploaded_file').html(file.name);
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        $('#community-content').trumbowyg({
+            btns: [
+                ['formatting'],
+                'btnGrp-semantic',
+                ['superscript', 'subscript'],
+                ['link'],
+                'btnGrp-justify',
+                'btnGrp-lists',
+                ['horizontalRule'],
+                ['removeformat'],
+                ['fullscreen']
+            ],
+            autogrow: true
+        });
+
+        $('#community-post').submit(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).ajaxSubmit({
+                url: $(this).attr('action'),
+                method: $(this).attr('method'),
+                dataType: 'script'
+            });
+        });
+    });
+</script>

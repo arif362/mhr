@@ -1,0 +1,14 @@
+<tr class="employees_<%= employee.id %>">
+  <td><%= link_to employee.full_name, employee_path(employee) %></td>
+  <td><%= employee.designation.name if employee.designation.present? %></td>
+  <td><%= employee.email %></td>
+  <td><%= employee.mobile %></td>
+  <td class="actions">
+    <%= link_to edit_employee_path(employee), class: 'btn warning-color' do %>
+        <i class="fa fa-pencil-square"></i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: employee.id, action_on: controller_name.to_s, action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"> </i>
+    <% end %>
+  </td>
+</tr>

@@ -1,0 +1,40 @@
+<div class="row reset-padding secondary-color">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>Payroll Increment</h4>
+    </div>
+    <div class="secondary-color">
+      <div class="content-body-wrapper">
+        <div class=" actions-button clearfix">
+          <div class="pull-right">
+            <div class="btn-group" id="link-to-payroll-increments">
+              <%= link_to payroll_increments_path, class:'btn btn-default reset-border-radius' do%>
+                  <i class="fa fa-bars"></i> All Increments
+              <% end %>
+            </div>
+          </div>
+          <div class="report-search-form">
+            <%= form_tag '', method: 'get' do %>
+                <%= select_tag :employee, options_for_select(current_department.employees.collect { |emp| [emp.full_name, emp.id] }, params[:employee]), {class: 'custom-chosen form-control custom-label-select employee-change-select-submit', prompt: 'Select Employee'} %>
+            <% end %>
+          </div>
+        </div>
+        <div class="content-body clearfix mt10" id="increments">
+            <%= render 'payroll/increments/increments_table', increments: @increments %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(function(){
+        $('.employee-change-select-submit').change(function(){
+            $.ajax({
+                url: '/employees/'+ $(this).val() +'/increments',
+                type: 'get',
+                dataType: 'script',
+                data: { tag: 'increments'}
+            });
+        });
+    });
+</script>

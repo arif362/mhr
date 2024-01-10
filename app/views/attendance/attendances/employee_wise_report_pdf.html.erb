@@ -1,0 +1,99 @@
+<div class="title-wrap">
+  <div class="text-center pt10">
+    <h4 class="mb0 pb10">
+      Attendance report of "<%= @employee.full_name %>" at
+      <span style="font-size: 14px">
+        <%= form_tag '', method: 'get', id: 'month-year-attendance-report-employee-form' do %>
+          <%= Date::MONTHNAMES[params[:date].present? ? params[:date][:month].to_i : Date.today] %>
+            <%= params[:date].present? ? params[:date][:year].to_i : Date.today %>
+      <% end %>
+      </span>
+    </h4>
+  </div>
+</div>
+
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container">
+    <div class="p10 glass-color-bg nb-pdf-wrap">
+      <ul class="common-ul-style clearfix">
+        <li>
+          <i class="fa fa-check"></i> Present
+        </li>
+        <li>
+          <i class="fa fa-times"></i> Absent
+        </li>
+        <li>
+          <span> L </span> In Leave
+        </li>
+        <li>
+          <span> W </span> Weekend
+        </li>
+        <li>
+          <span> WP </span> Weekend But Present
+        </li>
+        <li>
+          <span> H </span> Holiday
+        </li>
+        <li>
+          <span> HP </span> Holiday But Present
+        </li>
+        <li>
+          <span> C </span> Custom Holiday
+        </li>
+        <li>
+          <span> CP </span> Custom Holiday But Present
+        </li>
+      </ul>
+    </div>
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th><label> Date</label></th>
+        <th><label> Present</label></th>
+        <th><label> Holiday Reason</label></th>
+        <th><label> Holiday Hour</label></th>
+        <th><label> Leave Type</label></th>
+        <th><label> Leave Reason</label></th>
+        <th><label> In Time</label></th>
+        <th><label> Out Time</label></th>
+        <th><label> Worked Hour</label></th>
+        <th><label> Late</label></th>
+        <th><label> Over Time</label></th>
+      </tr>
+      </thead>
+      <tbody class="custom-pf-table-tbody">
+      <% @attendance_report.each do |employee_id, value| %>
+          <% (@start_date.day..@end_date.day).each do |day| %>
+              <tr>
+                <td><%= day %></td>
+                <td>
+                  <% if value[day][:day_off].present? && value[day][:in_time].present? %>
+                      <%= value[day][:day_off].day_off_type[0] + 'P' %>
+                  <% elsif value[day][:day_off].present? %>
+                      <%= value[day][:day_off].day_off_type[0] %>
+                  <% elsif value[day][:in_time].present? %>
+                      <i class="fa fa-check success-color" aria-hidden="true"></i>
+                  <% elsif value[day][:leave_status].present? %>
+                      L
+                  <% else %>
+                      <i class="fa fa-times danger-color" aria-hidden="true"></i>
+                  <% end %>
+                </td>
+                <td><%= value[day][:day_off].present? ? value[day][:day_off].title : '-' %></td>
+                <td><%= (value[day][:day_off].present? && value[day][:day_off].day_off_type == AppSettings::DAYOFF_TYPES[:custom_holiday]) ? value[day][:day_off].hours : '-' %></td>
+                <td><%= value[day][:leave_status].present? ? value[day][:leave_status].leave_category.name : '-' %></td>
+                <td>
+                  <%= value[day][:leave_status].present? ? truncate(value[day][:leave_status].message, length: 20) : '-' %>
+                </td>
+                <td><%= value[day][:in_time].present? ? get_time_from_datetime(value[day][:in_time]) : '-' %></td>
+                <td><%= value[day][:out_time].present? ? get_time_from_datetime(value[day][:out_time]) : '-' %></td>
+                <td><%= value[day][:total_duration] > 0 ? format_duration(value[day][:total_duration]) : '-' %></td>
+                <td><%= value[day][:late_time] > 0 ? format_duration(value[day][:late_time]) : '-' %></td>
+                <td><%= value[day][:over_time] > 0 ? format_duration(value[day][:over_time]) : '-' %></td>
+              </tr>
+          <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

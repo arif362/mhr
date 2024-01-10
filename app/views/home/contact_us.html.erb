@@ -1,0 +1,58 @@
+<!-- Contact Us Section Design -->
+<div class="contact-us-wrapper <%= 'full-height' if(controller_name == 'home' && action_name == 'contact_us')%> " id="contact_us">
+  <div class="contact-us-bg-opacity">
+    <div class="contact-us-container container mt45 ">
+      <div class="contact-us-row row">
+        <h2 class="title title-h2 text-center">Send us a quote</h2>
+
+        <div class="form-wrapper clearfix">
+          <!--send us a quote section-->
+          <%= form_for(@contact_us, url: submit_contact_path, html: {class: 'form-vertical', role: 'form', id: 'send-us-quote-form'}) do |f| %>
+              <div class="form-name-item-row clearfix">
+                <div class="form-name-item-container col-md-4">
+                  <div class="form-name-item-group form-group">
+                    <!-- <input name='your-name' type="text" class="custom-form-control custom-placeholder" placeholder="Name *" onfocus="this.placeholder=''" onblur="this.placeholder='Name *'"> -->
+                    <%= f.text_field :name, class: "custom-form-control custom-placeholder", placeholder: 'Name *', onfocus: "this.placeholder=''", onblur: "this.placeholder='Name *'", required: true %>
+                  </div>
+                </div>
+
+                <div class="form-name-item-container col-md-4">
+                  <div class="form-name-item-group form-group">
+                    <!--  <input name='your-email' type="email" class="custom-form-control custom-placeholder" placeholder="Email *" onfocus="this.placeholder=''" onblur="this.placeholder='Email *'"> -->
+                    <%= f.email_field :email, class: "custom-form-control custom-placeholder", placeholder: 'Email *', onfocus: "this.placeholder=''", onblur: "this.placeholder='Email *'", required: true %>
+                  </div>
+                </div>
+
+                <div class="form-name-item-container col-md-4">
+                  <div class="form-name-item-group form-group">
+                    <!--   <input name="your-subject" type="text" class="custom-form-control custom-placeholder" placeholder="Subject" onfocus="this.placeholder=''" onblur="this.placeholder='Subject'"> -->
+                    <%= f.text_field :subject, class: "custom-form-control custom-placeholder", onfocus: "this.placeholder=''", onblur: "this.placeholder='Subject'", placeholder: 'Subject' %>
+                  </div>
+                </div>
+
+                <div class="form-name-item-container col-md-12">
+                  <div class="form-name-item-group form-group">
+                    <!--   <textarea name="your-message" class="custom-form-control custom-placeholder" rows="5" placeholder="Message" onfocus="this.placeholder=''" onblur="this.placeholder='Message'"></textarea> -->
+                    <%= f.text_area :message, class: "custom-form-control custom-placeholder", placeholder: 'Message', onfocus: "this.placeholder=''", onblur: "this.placeholder='Message'", rows: 5 %>
+                  </div>
+                </div>
+              </div>
+
+              <script type="text/javascript">
+                  var onloadCallback = function () {
+                      grecaptcha.render('g_recaptcha', {
+                          'sitekey': '6LcZ8xEUAAAAAJxRTPhrnRslryX_mbXYjkoFTOf1'
+                      });
+                  };
+              </script>
+              <div id="g_recaptcha" class="pl14"></div>
+              <div class="col-xs-12 text-right">
+                <%= f.submit 'SUBMIT', class: 'custom-button', id: 'send-us-quote-submit-btn' %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

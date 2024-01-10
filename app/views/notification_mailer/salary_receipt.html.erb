@@ -1,0 +1,141 @@
+<div style="border: solid black 1px;height: auto;min-height: 450px;margin: 10px auto auto auto;position: relative;">
+  <div style="text-align: center;">
+    <div style="font-size: 20px;font-weight: bold;margin: 7px 0;line-height: 21px;"><%= @salary.department.company.name %></div>
+    <%= @salary.department.company.address %>
+  </div>
+  <div style="position: absolute;right: 0;top: 0;">
+    <%= image_url(@salary.department.company.image.url(:thumb)) %>
+  </div>
+
+  <div style="text-align: center;padding-bottom: 15px;padding-top: 15px;font-weight: bold;">
+    Payslip for the period of <%= Date::MONTHNAMES[@salary.month.to_i] %> <%= @salary.year %>
+  </div>
+
+  <div>
+    <table style="width: 100%;margin-bottom: 15px;">
+      <tr>
+        <td style="width: 24.9%;font-size: 12px;text-align: left;text-indent: 7px;">
+          Employee Id
+        </td>
+
+        <td style="width: 24.9%;font-size: 12px;">
+          : #<%= @employee.id_card_no %>
+        </td>
+
+        <td style="width: 24.9%;font-size: 12px;">
+          Name
+        </td>
+
+        <td style="width: 24.9%;font-size: 12px;">
+          : <%= @employee.full_name %>
+        </td>
+
+      </tr>
+      <tr>
+        <td style="width: 24.9%;font-size: 12px;text-align: left;text-indent: 7px;">
+          Department
+        </td>
+
+        <td style="width: 24.9%;font-size: 12px;">
+          : <%= @employee.department.name %>
+        </td>
+
+        <td style="width: 24.9%;font-size: 12px;">
+          Designation
+        </td>
+
+        <td style="width: 24.9%;font-size: 12px;">
+          : <%= @employee.designation.name if @employee.designation.present? %>
+        </td>
+
+      </tr>
+
+      <tr>
+        <td style="width: 24.9%;font-size: 12px;text-align: left;text-indent: 7px;">
+          Days Worked
+        </td>
+
+        <td style="width: 24.9%;font-size: 12px;">
+          :
+        </td>
+
+        <td style="width: 24.9%;font-size: 12px;">
+          Pay Date
+        </td>
+
+        <td style="width: 24.9%;font-size: 12px;">
+          : <%= @salary.created_at.strftime('%d %B, %Y') %>
+        </td>
+
+      </tr>
+    </table>
+  </div>
+
+  <div style="display: block">
+    <table style="font-size: 13px;width: 100%;">
+      <tr>
+        <td style="vertical-align: top;">
+          <table style="width: 100%">
+            <thead>
+            <tr>
+              <th style="border-top: solid 1px #333333;border-bottom: solid 1px #333333;text-indent: 7px;text-align: left;padding-top: 3px;padding-bottom: 3px;"> Addition</th>
+              <th style="border-top: solid 1px #333333;border-bottom: solid 1px #333333;padding-top: 3px;padding-bottom: 3px;width: 150px;text-align: right;padding-right: 10px;<%= @right_border %>"> Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td style="text-indent: 7px;text-align: left;"> Basic Pay</td>
+              <td style="width: 150px;text-align: right;padding-right: 10px;<%= @right_border %>"> <%= @salary.basic_salary %></td>
+            </tr>
+            <% @salary.addition_category.each do |key, value| %>
+                <% if (key.to_s.include? '_amount') && value.to_f > 0.0 %>
+                    <tr>
+                      <td style="text-indent: 7px;text-align: left;"><%= key.to_s.humanize %></td>
+                      <td style="width: 150px;text-align: right;padding-right: 10px;<%= @right_border %>"> <%= value %></td>
+                    </tr>
+                <% end %>
+            <% end %>
+            </tbody>
+          </table>
+        </td>
+        <td style="vertical-align: top;">
+          <table>
+            <thead>
+            <tr>
+              <th style="border-top: solid 1px #333333;border-bottom: solid 1px #333333;text-indent: 7px;text-align: left;padding-top: 3px;padding-bottom: 3px;<%= @left_border %>"> Deduction</th>
+              <th style="border-top: solid 1px #333333;border-bottom: solid 1px #333333;width: 150px;text-align: right;padding-right: 10px;padding-top: 3px;padding-bottom: 3px;"> Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @salary.deduction_category.each do |key, value| %>
+                <% if (key.to_s.include? '_deduct') && value.to_f > 0.0 %>
+                    <tr>
+                      <td style="text-indent: 7px;text-align: left;<%= @left_border %>"><%= key.to_s.humanize %></td>
+                      <td style="width: 150px;text-align: right;padding-right: 10px;"> <%= value %></td>
+                    </tr>
+                <% end %>
+            <% end %>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top;border-top: solid 1px #333333;border-bottom: solid 1px #333333;font-size: 15px;font-weight: bold;padding: 4px;text-indent: 4px;">
+          Total Earnings
+          <span style="font-size: 15px;font-weight: bold;padding: 4px;text-indent: 4px; float: right"> <%= @salary.total_addition %> </span>
+        </td>
+        <td style="vertical-align: top;border-top: solid 1px #333333;border-bottom: solid 1px #333333; border-left: solid 1px #333333;font-size: 15px;font-weight: bold;padding: 4px;text-indent: 4px;">
+          Total Deductions
+          <span style="font-size: 15px;font-weight: bold;padding: 4px;text-indent: 4px;float: right;"> <%= @salary.total_deduction %> </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top;border-bottom: solid 1px #333333;"></td>
+        <td style="vertical-align: top;border-bottom: solid 1px #333333;font-size: 15px;font-weight: bold;padding: 4px;text-indent: 4px;">
+          Net Pay(Rounded)
+          <span style="font-size: 15px;font-weight: bold;padding: 4px;text-indent: 4px;float: right;"> <%= (@salary.total_addition - @salary.total_deduction).round %> </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="step-content-wrapper">
+  <h2>General Settings</h2>
+  <%= form_for @setting, remote: true do |f| %>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :open_time %>
+            <%= f.text_field :open_time, class: 'form-control reset-border-radius', id: "department_open_time", value: f.object.open_time.present? ? f.object.open_time.strftime("%I:%M %p") : '' %>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :working_hours %>
+            <%= f.number_field :working_hours, class: 'form-control reset-border-radius' %>
+          </div>
+        </div>
+        <!--<div class="col-sm-6">-->
+        <!--<div class="form-group">-->
+        <!--<%#= f.label :close_time %>-->
+        <!--<%#= f.text_field :close_time, class: 'form-control reset-border-radius', id: "department_close_time", value: f.object.close_time.present? ? f.object.close_time.strftime("%I:%M %p") : '' %>-->
+        <!--</div>-->
+        <!--</div>-->
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :time_zone %>
+            <%= f.time_zone_select :time_zone, nil, {include_blank: true}, {class: 'form-control reset-border-radius'} %>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :currency %>
+            <%= f.currency_select :currency, nil, {include_blank: true}, {class: 'form-control reset-border-radius'} %>
+          </div>
+        </div>
+      </div>
+
+      <%= hidden_field_tag :step_wise, 'yes' %>
+
+      <div class="clearfix">
+        <div class="pull-right">
+          <%= f.submit 'Save Changes', class: 'primary-color-bg-with-hover' %>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#department_open_time').datetimepicker({
+            format: 'LT'
+        });
+    });
+</script>

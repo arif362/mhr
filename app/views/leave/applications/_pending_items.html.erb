@@ -1,0 +1,62 @@
+<div class="table-warapper-body">
+  <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped pending-application-list">
+    <thead>
+    <tr class="trew">
+      <th>Employee</th>
+      <th>Leave Category</th>
+      <th>Attachment</th>
+      <th>Type</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody class="application-list">
+    <% leave_applications.each do |leave_application| %>
+        <tr id="leave-application-<%= leave_application.id %>">
+          <td><%= leave_application.employee.full_name if leave_application.leave_category.present? %></td>
+          <td><%= leave_application.leave_category.name if leave_application.leave_category.present? %></td>
+          <td>
+            <% if  leave_application.attachment_url.present? %>
+                <a href="javascript:void(0)" data-content="<%= leave_application.attachment_url %>" class="preview-attachment">View</a>
+            <% else %>
+                No Attachment
+            <% end %>
+          </td>
+          <td><%= leave_application.is_paid ? 'Paid' : 'Unpaid' %></td>
+          <td class="approve"><%= leave_application.status.capitalize %></td>
+          <td class="actions">
+            <%= link_to leave_application_path(leave_application), class: 'btn info-color', remote: true do %>
+                <i class="fa fa-eye"> </i>
+            <% end %>
+            <% if leave_application.status == AppSettings::STATUS[:pending] %>
+                <%= link_to confirm_settings_path(action_item_id: leave_application.id, action_on: 'leave/applications', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+                    <i class="fa fa-trash"></i>
+                <% end %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div id="pager1">
+    <%= render 'shared/pagination' if leave_applications.size > 10 %>
+  </div>
+</div>
+<script>
+  $(function(){
+      $('.preview-attachment').attachmentPreview();
+      if ($(".pending-application-list").find("tbody").find("tr").size() > 0) {
+          $(".pending-application-list")
+                  .tablesorter({
+                      headers:{
+                        5:{
+                            sorter: false
+                        }
+                      },
+                      widthFixed: true,
+                      widgets: ['zebra']
+                  })
+                  .tablesorterPager({container: $("#pager1")});
+      }
+  });
+</script>

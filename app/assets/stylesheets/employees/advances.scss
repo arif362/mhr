@@ -1,0 +1,20 @@
+// Place all the styles related to the expenses/advances controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.emplyees-advance-wrapper {
+  padding: 20px;
+}
+
+.emplyees-advance-side-amount {
+  float: right;
+  line-height: 45px;
+}
+
+.lower-border {
+  border-bottom: 1px dashed #0C6A83;
+}
+
+.input-advance-installment {
+  display: none;
+}

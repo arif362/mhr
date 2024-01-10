@@ -1,0 +1,68 @@
+<div class="row">
+  <%= form_for(access_right, html: {:class => "form-horizontal clearfix", id: "access_right"}, remote: true) do |f| %>
+      <%= f.hidden_field :employee_id %>
+
+      <% AccessRight::PERMISSION_LIST.each_with_index do |(key, value), index| %>
+          <% if is_available_module?(key) %>
+              <div class="col-sm-6 access-right-section">
+                <div class="panel panel-default reset-border-radius">
+                  <div class="panel-heading reset-border-radius"> <%= key %> </div>
+                  <div class="panel-body reset-border-radius">
+                    <% value.each do |controller| %>
+                        <div class="form-group select">
+                          <label class="col-sm-4 control-label">
+                            <%= controller.to_s.humanize.camelize %>
+                          </label>
+
+                          <div class="col-sm-6">
+                            <% if can_access? 'edit', 'access_rights' %>
+                                <%= select_tag :"access_right[permissions][#{key.to_s}][#{controller.to_s}]",
+                                               options_for_select(AccessRight::PERMISSION_TYPES, f.object.permissions.present? && f.object.permissions[key].present? ? f.object.permissions[key][controller] : nil),
+                                               :class => "select form-control input-sm reset-border-radius" %>
+                            <% else %>
+                                <%= f.object.get_permission_type(f.object.permissions[key][controller]) %>
+                            <% end %>
+                          </div>
+                          <div class="col-sm-1">
+                            <i class="fa fa-spinner fa-lg fa-spin green hidden"></i>
+                            <i class="fa fa-check fa-lg green"></i>
+                          </div>
+                        </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+      <% end %>
+      <!--<div class="col-sm-12">-->
+      <!--<div class="panel panel-default reset-border-radius">-->
+      <!--<div class="panel-heading reset-border-radius"> Custom Permissions</div>-->
+      <!--<div class="panel-body reset-border-radius">-->
+      <!--<%# AccessRight::CUSTOM_PERMISSION_LIST.each do |item| %>-->
+
+      <!--<div class="form-group select">-->
+      <!--<label class="col-sm-5 control-label">-->
+      <!--<%#= item.to_s.humanize %>-->
+      <!--</label>-->
+
+      <!--<div class="col-sm-6">-->
+      <!--<%# if can_access? 'edit', 'access_rights' %>-->
+      <%#= select_tag :"access_right[custom_permissions][#{item.to_s}]",
+#                                        options_for_select(AccessRight::CUSTOM_PERMISSION_TYPES, f.object.custom_permissions[item]),
+                                       :class => "select form-control input-sm reset-border-radius" %>
+      <!--<%# else %>-->
+      <!--<%#= f.object.get_custom_permission_type(f.object.custom_permissions[item]) %>-->
+      <!--<%# end %>-->
+      <!--</div>-->
+      <!--<div class="col-sm-1">-->
+      <!--<i class="fa fa-spinner fa-lg fa-spin green hidden"></i>-->
+      <!--<i class="fa fa-check fa-lg green"></i>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <!--<%# end %>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+  <% end %>
+</div>

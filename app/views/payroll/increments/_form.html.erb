@@ -1,0 +1,27 @@
+<%= form_tag payroll_increments_path do %>
+    <div class="form-group">
+      <%= label_tag 'Amount' %>
+      <%= number_field_tag "payroll_increment[increment_amount]",'', class: 'form-control reset-border-radius' %>
+    </div>
+    <div class="form-group">
+      <%= label_tag 'Activate Date' %>
+      <%= text_field_tag "payroll_increment[active_date]",'', class: 'form-control reset-border-radius' %>
+    </div>
+    <%= hidden_field_tag "payroll_increment[incremented_by]", current_employee.full_name.to_s %>
+    <%= hidden_field_tag "payroll_increment[previous_basic]", @employee.basic_salary %>
+    <%= hidden_field_tag "payroll_increment[department_id]", current_department.id %>
+    <%= hidden_field_tag "payroll_increment[employee_id]", @employee.id %>
+    <div class="form-group pull-right">
+      <%= submit_tag 'Submit', class: 'btn primary-color-bg-with-hover reset-border-radius' %>
+      <%= link_to 'Cancel', payroll_increments_path,  class: 'btn btn-default reset-border-radius' %>
+    </div>
+<% end %>
+<script type="text/javascript">
+  $('#payroll_increment_active_date').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    });
+</script>

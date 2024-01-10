@@ -1,0 +1,46 @@
+
+
+<div>
+  <h4 style="margin-left: 10px" xmlns="http://www.w3.org/1999/html"> A Company named <span style="color: #009926"><%= @new_company.name %></span> has been created.</h4>
+  <!--<p style="margin-left: 12px">Thanks for registering your company with us. You now have a total business process automation. Your business is safe with us.<br/></p>-->
+
+  <table border="1">
+    <tr><td>Company Name</td><td><%= @new_company.name %></td></tr>
+    <tr><td>Owner Name</td><td><%= @company_owner_new.full_name %></td></tr>
+    <tr><td>Company E-mail</td><td><%= @new_company.contact_email %></td></tr>
+    <tr><td>Owner E-mail</td><td><%= @company_owner_new.email %></td></tr>
+    <tr><td>Mobile</td><td><%= @new_company.mobile %></td></tr>
+    <tr><td>Country</td><td><%= @new_company.country %></td></tr>
+  </table>
+
+  <br/>
+  <p style="margin-left: 10px">Best Regards, MHR</p>
+</div>
+
+<div style="background-color: snow; height: 200px">
+  <h3 style="margin-left: 10px; padding-top: 10px ">Our Available Modules</h3>
+
+  <table class="tg">
+    <tr>
+      <th class="tg-yw4l" style="border-right: inset"><a href="#">Employee</a></th>
+      <th class="tg-yw4l" style="border-right: inset"><a href="#">Attendance</a></th>
+      <th class="tg-yw4l"><a href="#">Leave</a></th>
+    </tr>
+    <tr>
+      <th class="tgNo"></th>
+      <th class="tgNo"></th>
+      <th class="tgNo"></th>
+    </tr>
+    <tr>
+      <td class="tg-yw4l" style="border-right: inset"><a href="#">Expense</a></td>
+      <td class="tg-yw4l" style="border-right: inset"><a href="#">Provident Fund</a></td>
+      <td class="tg-yw4l" ><a href="#">Payroll</a></td>
+    </tr>
+  </table>
+
+</div>
+<script>
+    $("td#tg-yw4l").bind("click",function() {
+        location = "url to go to when clicked";
+    });
+</script>

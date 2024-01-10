@@ -1,0 +1,29 @@
+<table class="table action-table beaccount-table table-responsive salaries-list table-hover table-striped">
+  <thead>
+  <tr>
+    <th>Employee</th>
+    <th>Month</th>
+    <th>Year</th>
+    <th>Amount</th>
+  </tr>
+  </thead>
+  <% @salaries.each do |salary| %>
+      <tr id="unconfirm-salary-<%= salary.id %>">
+        <td>
+          <%= link_to employee_profile_path(salary.employee), remote: true do %>
+              <%= salary.employee.full_name %>
+          <% end %>
+        </td>
+        <td>
+          <%= Date::MONTHNAMES[salary.month] %>
+        </td>
+        <td>
+          <%= salary.year %>
+        </td>
+        <td>
+          <%= salary.total %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

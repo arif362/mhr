@@ -1,0 +1,54 @@
+Attendance Report Breakdown <br><br>
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <th><label> Date</label></th>
+      <th><label> Present</label></th>
+      <th><label> Holiday Reason</label></th>
+      <th><label> Holiday Hour</label></th>
+      <th><label> Leave Type</label></th>
+      <th><label> Leave Reason</label></th>
+      <th><label> In Time</label></th>
+      <th><label> Out Time</label></th>
+      <th><label> Worked Hour</label></th>
+      <th><label> Late</label></th>
+      <th><label> Over Time</label></th>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @attendance_report.each do |employee_id, value| %>
+          <% (@start_date.day..@end_date.day).each do |day| %>
+              <tr>
+                <td><%= day %></td>
+                <td>
+                  <% if value[day][:day_off].present? && value[day][:in_time].present? %>
+                      <%= value[day][:day_off].day_off_type[0] + 'P' %>
+                  <% elsif value[day][:day_off].present? %>
+                      <%= value[day][:day_off].day_off_type[0] %>
+                  <% elsif value[day][:in_time].present? %>
+                      P
+                  <% elsif value[day][:leave_status].present? %>
+                      L
+                  <% else %>
+                      A
+                  <% end %>
+                </td>
+                <td><%= value[day][:day_off].present? ? value[day][:day_off].title : '' %></td>
+                <td><%= (value[day][:day_off].present? && value[day][:day_off].day_off_type == AppSettings::DAYOFF_TYPES[:custom_holiday]) ? value[day][:day_off].hours : '' %></td>
+                <td><%= value[day][:leave_status].present? ? value[day][:leave_status].leave_category.name : '' %></td>
+                <td>
+                  <%= value[day][:leave_status].present? ? truncate(value[day][:leave_status].message, length: 20) : '' %>
+                </td>
+                <td><%= value[day][:in_time].present? ? get_time_from_datetime(value[day][:in_time]) : '' %></td>
+                <td><%= value[day][:out_time].present? ? get_time_from_datetime(value[day][:out_time]) : '' %></td>
+                <td><%= value[day][:total_duration] > 0 ? format_duration(value[day][:total_duration]) : '' %></td>
+                <td><%= value[day][:late_time] > 0 ? format_duration(value[day][:late_time]) : '' %></td>
+                <td><%= value[day][:over_time] > 0 ? format_duration(value[day][:over_time]) : '' %></td>
+              </tr>
+          <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

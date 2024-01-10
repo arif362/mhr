@@ -1,0 +1,71 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Billing Clients
+      </h4>
+    </div>
+    <div class="secondary-color">
+      <div class="content-body-wrapper">
+        <div class="row actions-button mb10">
+          <div class="col-md-6 reset-padding">
+            <%= form_tag '', method: 'get', remote: true, id: 'daterange-expenses-form' do %>
+                <div class="input-group">
+                  <%= text_field_tag :daterange, '', value: params[:daterange], class: 'form-control reset-border-radius' %>
+                  <span class="input-group-addon reset-border-radius" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                  <% unless @heading == 'All' %>
+                      <%= hidden_field_tag :q, @heading %>
+                  <% end %>
+                </div>
+            <% end %>
+          </div>
+          <div class="col-md-6 reset-padding">
+            <div class="pull-right">
+              <div class="btn-group">
+                <%= link_to new_billing_client_path, class: 'btn btn-default reset-border-radius' do %>
+                    <i class="fa fa-plus"></i> New Client
+                <% end %>
+              </div>
+              <div class="btn-group">
+                <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To....'} %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row content-body">
+          <div class="table-warapper" id="expenses-table">
+            <div class="table-warapper-body">
+              <table cellpadding="0" cellspacing="0" class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped">
+                <colgroup>
+                  <col class="one"/>
+                  <col class="two"/>
+                  <col class="three"/>
+                  <col class="four"/>
+                  <col class="five"/>
+                  <col class="six"/>
+                  <col class="seven"/>
+                </colgroup>
+                <thead id="client_head">
+                <%= render 'client_header' %>
+                </thead>
+                <tbody id="client_body">
+                <%= render 'clients' %>
+                <tfoot id="paging_links">
+                </tfoot>
+                </tbody>
+              </table>
+              <%= render 'shared/pagination' if @clients.size > 10 %>
+              <div class="no-data-found">
+                <% unless @clients.present? %>
+                    <%= render 'shared/no_data_found', message: 'No client found' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%#= render 'payments/unpaid_invoices' %>

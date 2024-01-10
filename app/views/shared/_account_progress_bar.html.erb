@@ -1,0 +1,30 @@
+<div class="create-acnt-step">
+
+  <div class="row beaccount-progress-bar mt15 ">
+    <% AppSettings::REGISTRATION_PROGRESS.each_with_index do |(key, value), index| %>
+
+        <div class="col-xs-4 complete bpb-step">
+          <div class="text-center bpb-step-num"><%= value %></div>
+
+          <div class="custom-progress-item">
+            <div class="progress-bar progress-bar-color custom-progress-bar-item"></div>
+          </div>
+
+          <a title="<%= value %>" href="#" class="progress-outline  <%= index <= step_value ? 'progress-inline' : ''  %>">
+
+          </a>
+
+          <div class="bpb-info text-center"></div>
+        </div>
+
+    <% end %>
+  </div>
+
+</div>
+
+<script type="text/javascript"><!-- Added tooltip -->
+    $(function(){
+
+        $('[title]').tooltip({placement: 'bottom', container: 'body'});
+    });
+</script>

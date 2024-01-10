@@ -1,0 +1,70 @@
+<h4 id="post_comments">Leave a Comment</h4>
+
+
+<div class="leave-a-comment-wrap">
+  <%= form_for Community::Comment.new(post_id: post.id), remote: true, html: {id: 'community-comment'} do |f| %>
+
+      <div class="form-group">
+        <%= f.text_area :content, placeholder: 'Description', id: 'comment-content', class: 'form-control', rows: '3' %>
+      </div>
+
+      <div class="leave-a-comment-submit-btn-wrap clearfix">
+
+        <div class="custom-upload-file-wrap btn btn-default reset-border-radius">
+          <span id="uploaded_file"><i class="fa fa-paperclip "></i> Attachment</span>
+          <%= f.file_field :attachment, class: 'custom-upload-file-item reset-border-radius' %>
+        </div>
+
+        <div class="leave-a-comment-submit-btn-wrap pull-right">
+          <%= f.hidden_field :post_id %>
+          <% if employee_signed_in? %>
+              <%= f.submit 'Submit', class: "btn btn-default reset-border-radius" %>
+          <% else %>
+              <a href="#" , id="new-comment-not-login" data-message="Before post a comment you need to log in first." class="btn btn-default" data-scroll-to="#community-login-form" data-scroll-focus="#community-login-email" data-scroll-offset="-55" data-scroll-speed="700">
+                Submit
+              </a>
+          <% end %>
+        </div>
+
+      </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    $.trumbowyg.svgPath = '<%= asset_path('icons.svg') %>';
+    $(function () {
+        $('#community_comment_attachment').change(function () {
+            var reader = new FileReader();
+            var file = this.files[0];
+            reader.onload = function (e) {
+                $('#uploaded_file').html(file.name);
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        $('#comment-content').trumbowyg({
+            btns: [
+                ['formatting'],
+                'btnGrp-semantic',
+                ['superscript', 'subscript'],
+                ['link'],
+                'btnGrp-justify',
+                'btnGrp-lists',
+                ['horizontalRule'],
+                ['removeformat'],
+                ['fullscreen']
+            ],
+            autogrow: true
+        });
+
+        $('#community-comment').submit(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).ajaxSubmit({
+                url: $(this).attr('action'),
+                dataType: 'script',
+                method: $(this).attr('method')
+            });
+        });
+    });
+</script>

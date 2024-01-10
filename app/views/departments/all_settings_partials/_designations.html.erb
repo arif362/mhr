@@ -1,0 +1,47 @@
+<div class="step-content-wrapper">
+  <h2>Add Employee Designations</h2>
+
+  <!-- Add to button start-->
+  <div class="clearfix">
+    <div class="pull-right">
+      <div class="btn-group mr10 reset-padding">
+        <%= link_to new_designation_path(department: @department), remote: true, class: 'btn btn-default reset-border-radius' do %>
+
+            <i class="fa fa-plus"></i> Add New
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!-- Add to button close-->
+
+  <!-- Designation table start-->
+  <div class="table-warapper mt10">
+    <div class="table-warapper-body">
+      <table class="table action-table tablesorter beaccount-table designation-list-table table-responsive table-hover table-striped">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Responsibilities</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody id="designation-list">
+        <% @designations.each do |designation| %>
+            <%= render 'departments/templates/add_designation', designation: designation %>
+        <% end %>
+        </tbody>
+      </table>
+      <div id="pager1">
+        <%= render 'shared/pagination' if @designations.size > 10 %>
+      </div>
+      <div class="no-data-found">
+        <% unless @designations.present? %>
+            <%= render 'shared/no_data_found', message: 'No designation found' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!-- Designation table close-->
+
+</div>

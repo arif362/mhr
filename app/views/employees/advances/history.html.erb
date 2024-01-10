@@ -1,0 +1,45 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="advances-content">
+    <div class="header-wrapper">
+      <h4>Advance History</h4>
+    </div>
+    <div class="content-body-wrapper">
+      <div class="content-body clearfix mt10">
+        <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'pull-right form-control custom-export-to reset-border-radiusx', style: 'border-radius: 0 !important', prompt: 'Export To....'} %>
+
+        <div class="report-search-form mb15">
+          <%= form_tag '', method: 'get', id: "advance-employee-history-form" do %>
+              <%= select_tag :employee_id, options_for_select(@employees.collect { |emp| [emp.full_name, emp.id] }, params[:employee_id]), {class: 'custom-chosen form-control custom-label-select employee-change-select-submit', prompt: 'All Employee', id: 'advance-history-employee-select'} %>
+          <% end %>
+        </div>
+
+        <div id="advance-history">
+          <%= render 'advance_report' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+      $('#advance-history-employee-select').change(function() {
+          $('#advance-employee-history-form').submit();
+      });
+
+      $('#export_to').on('change', function () {
+          var export_to = $(this).val();
+          //var employee = $('#advance-history-employee-select').val();
+
+          if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+              window.location.href = '<%= history_employees_advances_path('pdf', params) %>';
+          }
+          else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+              window.location.href = '<%= history_employees_advances_path('docx', params) %>';
+          }
+          else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+              window.location.href = '<%= history_employees_advances_path('xls', params) %>';
+          }
+      });
+  });
+</script>

@@ -1,0 +1,2 @@
+module ProvidentFund::InvestmentsHelper
+end

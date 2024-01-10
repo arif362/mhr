@@ -1,0 +1,10 @@
+<% if @leave_category.errors.any? %>
+    popupMessage('Unable to delete leave category, Please try again!', 'alert-danger');
+<% else %>
+    popupMessage('Leave category successfully deleted', 'alert-info');
+    $("#leave-category-<%= @leave_category.id %>").remove();
+    $('#global-modal').modal('hide');
+    if ($(".leave-categories-table").find("tbody").find("tr").size() <= 0) {
+        $('.no-data-found').html("<%= escape_javascript(render 'shared/no_data_found', message: 'No leave category').html_safe %>")
+    }
+<% end %>

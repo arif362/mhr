@@ -1,0 +1,31 @@
+<tr class="employees_<%= employee.id %>" id="employee-<%= employee.id %>">
+  <td>
+    <%= employee_avatar(employee, 'avatar img-circle image_size') %>
+    <%= link_to employee.full_name, employee_profile_path(employee), remote: true, class: 'user-profile-link' %>
+    <span> <%= employee.designation.name if employee.designation.present? %> </span>
+  </td>
+  <td><%= employee.email %></td>
+  <td>
+    <div class="label label-<%= employee.is_active ? 'success' : 'default' %>" id="employee_status_<%= employee.id %>">
+      <%= employee.is_active ? 'Active' : 'Inactive' %>
+    </div>
+  </td>
+  <td><%= employee.mobile %></td>
+  <td class="actions">
+    <%= link_to edit_employee_path(employee), remote: true, class: 'btn btn-warning', title: "Edit" do %>
+        <i class="fa fa-pencil"></i>
+    <% end %>
+    <% if employee.is_active.present? %>
+        <%= link_to confirm_settings_path(action_item_id: employee.id, action_on: 'employees', action_type: AppSettings::ACTIONS[:deactivate]), title: "Deactivate", remote: true, class: 'btn btn-danger' do %>
+            <i class="fa fa-ban"> </i>
+        <% end %>
+    <% else %>
+        <%= link_to confirm_settings_path(action_item_id: employee.id, action_on: 'employees', action_type: AppSettings::ACTIONS[:active]), title: "Active", remote: true, class: 'btn btn-success' do %>
+            <i class="fa fa-check-circle"> </i>
+        <% end %>
+    <% end %>
+    <%= link_to employee_card_path(employee), class: 'btn btn-primary mr0' do %>
+        <i class="fa fa-id-card-o"></i>
+    <% end %>
+  </td>
+</tr>

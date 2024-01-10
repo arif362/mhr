@@ -1,0 +1,8 @@
+<% if @designation.errors.present? %>
+    popupMessage('<%=escape_javascript( errors_to_message_string(@designation.errors)).html_safe %>', 'alert-danger');
+<% else %>
+    $('#designation-list').append('<%= escape_javascript(render 'departments/templates/add_designation', designation: @designation)%>')
+    $('#global-modal').modal('hide');
+    popupMessage('Designation created successfully', 'alert-success');
+    $('#no-data-found').remove();
+<% end %>

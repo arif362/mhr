@@ -1,0 +1,251 @@
+<div id="employee-profile">
+  <div class="clearfix">
+    <%= link_to edit_employee_path(@employee), remote: true, class: 'btn btn-warning pull-right reset-border-radius' do %>
+        <i class="fa fa-pencil-square-o"></i>
+    <% end %>
+  </div>
+  <div class="p10">
+
+    <div class="row clearfix">
+      <div class="col-sm-4">
+        <div class="pl10x">
+          <%= image_tag @employee.image.present? ? @employee.image.large.url : 'employees/default_profile_image.png', class: "img-responsive avatar" %>
+          <h4> <%= @employee.full_name %> </h4>
+        <span class="label-tag reset-border-radiusx" style="background: <%= @employee.color %>;">
+          <%= @employee.designation.name if @employee.designation.present? %>
+        </span>
+        </div>
+      </div>
+
+      <div class="col-sm-8">
+        <ul class="common-ul-style profile-info-ul-wrap">
+          <li>
+            <label> National ID </label>
+            <p> <%= @employee.nid %> </p>
+          </li>
+          <li>
+            <label> Joining date: </label>
+            <p> <%= format_date(@employee.joining_date) %> </p>
+          </li>
+          <li>
+            <label> Date of Birth </label>
+            <p> <%= format_date(@employee.dob) %> </p>
+          </li>
+          <li>
+            <label> Gender </label>
+            <p> <%= @employee.gender %> </p>
+          </li>
+          <li>
+            <label> Email </label>
+            <p> <%= @employee.email %> </p>
+          </li>
+          <li>
+            <label> Phone Number </label>
+            <p> <%= @employee.mobile %> </p>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="profile-section-tab mt30">
+      <div class="">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#accont-info" aria-controls="accont-info" role="tab" data-toggle="tab">Account Information</a>
+          </li>
+
+          <li role="presentation">
+            <a href="#employee-info" aria-controls="employee-info" role="tab" data-toggle="tab">Employee Information</a>
+          </li>
+
+          <li role="presentation">
+            <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab">Personal Information</a>
+          </li>
+
+          <li role="presentation">
+            <a href="#contanct-info" aria-controls="contanct-info" role="tab" data-toggle="tab">Contact Information</a>
+          </li>
+
+          <li role="presentation">
+            <a href="#kin-info" aria-controls="kin-info" role="tab" data-toggle="tab">Kin Information</a>
+          </li>
+        </ul>
+        <!-- Nav tabs -->
+
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="accont-info">
+            <div class="account-info-table-wrap p20">
+              <table class="table table-hover custom-user-info-table">
+                <tbody>
+                <tr>
+                  <td> First Name</td>
+                  <td> <%= @employee.first_name %> </td>
+                </tr>
+                <tr>
+                  <td>Last Name</td>
+                  <td><%= @employee.last_name %></td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td><%= @employee.email %></td>
+                </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="employee-info">
+            <div class="employee-info-table-wrap p20">
+              <table class="table table-hover custom-user-info-table">
+                <tbody>
+                <tr>
+                  <td> Employee ID</td>
+                  <td> <%= @employee.id_card_no %> </td>
+                </tr>
+                <tr>
+                  <td>Designaiton</td>
+                  <td><%= @employee.designation.name if @employee.designation.present? %></td>
+                </tr>
+                <tr>
+                  <td>Type</td>
+                  <td><%= @employee.employee_type %></td>
+                </tr>
+                <tr>
+                  <td>Basic Salary</td>
+                  <td><%= amount_with_currency('%.02f' % @employee.get_basic_salary) %></td>
+                </tr>
+                <tr>
+                  <td>Joining Date</td>
+                  <td><%= format_date(@employee.joining_date) %></td>
+                </tr>
+                <tr>
+                  <td>Previous Employeement History</td>
+                  <td><%= @employee.previous_employment_history if @employee.previous_employment_history.present? %></td>
+                </tr>
+
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="personal-info">
+            <div class="personal-info-table-wrap p20">
+              <table class="table table-hover custom-user-info-table ">
+                <tbody>
+
+                <tr>
+                  <td> National Identity (NID)</td>
+                  <td> <%= @employee.nid %> </td>
+                </tr>
+                <tr>
+                  <td>Nationality</td>
+                  <td><%= @employee.nationality %></td>
+                </tr>
+                <tr>
+                  <td>Religion</td>
+                  <td><%= @employee.religion %></td>
+                </tr>
+                <tr>
+                  <td>Gender</td>
+                  <td><%= @employee.gender %></td>
+                </tr>
+                <tr>
+                  <td>Blood group</td>
+                  <td><%= @employee.blood_group %></td>
+                </tr>
+                <tr>
+                  <td>Date of birth</td>
+                  <td><%= format_date(@employee.dob) %></td>
+                </tr>
+                <tr>
+                  <td>Marital Status</td>
+                  <td><%= @employee.marital_status %></td>
+                </tr>
+                <tr>
+                  <td>Attachment</td>
+                  <td>
+                    <% if @employee.attachment.url.present? %>
+                        <% if @employee.attachment.path.downcase.end_with?('.pdf', '.jpg', '.jpeg', '.gif', '.png') %>
+                            <a href="javascript:void(0)" data-content="<%= @employee.attachment.url %>" class="preview-attachment">View</a>
+                        <% else %>
+                            <%= link_to 'View', identity_attachment_employee_path(@employee.id) %>
+                        <% end %>
+                    <% else %>
+                        No Attachment
+                    <% end %>
+                  </td>
+                </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="contanct-info">
+            <div class="contact-info-table-wrap p20">
+              <table class="table table-hover custom-user-info-table">
+                <tbody>
+
+                <tr>
+                  <td> Mobile</td>
+                  <td> <%= @employee.mobile %> </td>
+                </tr>
+                <tr>
+                  <td>Location</td>
+                  <td><%= @employee.location %></td>
+                </tr>
+                <tr>
+                  <td>Present Address</td>
+                  <td><%= @employee.present_address %></td>
+                </tr>
+                <tr>
+                  <td>Permanent Address</td>
+                  <td><%= @employee.permanent_address %></td>
+                </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div role="tabpanel" class="tab-pane" id="kin-info">
+            <div class="kin-info-table-wrap p20">
+              <table class="table table-hover custom-user-info-table ">
+                <tbody>
+                <tr>
+                  <td> Kin Name</td>
+                  <td> <%= @employee.kin_name %> </td>
+                </tr>
+                <tr>
+                  <td>Kin Contact</td>
+                  <td><%= @employee.kin_contact %></td>
+                </tr>
+                <tr>
+                  <td>Kin Relationship</td>
+                  <td><%= @employee.kin_relationship %></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Tab panes -->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.preview-attachment').attachmentPreview();
+
+        /* Add clearfix in li */
+        var ulOject = $('.profile-info-ul-wrap');
+        ulOject.find('li').addClass('clearfix');
+        ulOject.find('p').css('paddingLeft', '125px');
+    });
+</script>

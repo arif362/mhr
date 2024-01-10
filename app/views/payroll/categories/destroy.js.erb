@@ -1,0 +1,11 @@
+<% if @category.errors.any? %>
+    popupMessage('Unable to delete payroll category, Please try again!', 'alert-danger');
+
+<% else %>
+    popupMessage('Payroll Category successfully deleted', 'alert-info');
+    $("#payroll-category-<%= @category.id %>").remove();
+    $('#global-modal').modal('hide');
+    <% if @number_of_categories <= 0 %>
+        $('.no-category-found').html("<%= escape_javascript(render 'shared/no_data_found', message: 'No category found').html_safe %>")
+    <% end %>
+<% end %>

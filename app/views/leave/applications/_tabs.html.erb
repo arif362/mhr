@@ -1,0 +1,35 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" class="nav-item nav-item-all">
+    <%= link_to 'All', leave_applications_path, remote: true %>
+  </li>
+  <li role="presentation" class="nav-item-pending-notification nav-item nav-item-<%= AppSettings::STATUS[:pending].downcase %>">
+    <%= link_to AppSettings::STATUS[:pending].capitalize, leave_applications_path(q: AppSettings::STATUS[:pending]), remote: true %>
+    <span id="pending-notification"> <%= @pending_count %> </span>
+  </li>
+  <li role="presentation" class="nav-item nav-item-<%= AppSettings::STATUS[:approved].downcase %> ">
+    <%= link_to AppSettings::STATUS[:approved].capitalize, leave_applications_path(q: AppSettings::STATUS[:approved]), remote: true %>
+  </li>
+  <li role="presentation" class="nav-item nav-item-<%= AppSettings::STATUS[:rejected].downcase %>">
+    <%= link_to AppSettings::STATUS[:rejected].capitalize, leave_applications_path(q: AppSettings::STATUS[:rejected]), remote: true %>
+  </li>
+</ul>
+<script type="text/javascript">
+    $(function () {
+        $('.nav-tabs li a').click(function () {
+            var tabUrl = $(this).attr('href');
+            window.history.pushState("", "", tabUrl);
+        });
+        <% if params[:q].present? %>
+        $(".nav-item").removeClass('active-white');
+        $('.nav-item-<%= params[:q].downcase %>').addClass('active-white');
+        <%else%>
+        $('.nav-item-all').addClass('active-white');
+        <%end%>
+
+        var spanEmpty = $('.nav-item-pending-notification').find('span');
+        <% if @pending_count < 1 %>
+        spanEmpty.remove();
+        <% end %>
+
+    });
+</script>

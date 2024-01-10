@@ -1,0 +1,8 @@
+$('.active-white').removeClass('active-white');
+<% if params[:q].present? %>
+$('.nav-item-<%= params[:q] %>').addClass('active-white');
+<% else %>
+$('.nav-item-all').addClass('active-white');
+<% end %>
+
+$('#leave-application-table').html('<%= escape_javascript( render 'leave/applications/all_leave_application' ).html_safe %>');

@@ -1,0 +1,47 @@
+<div class="header-wrapper row">
+  <h4>
+    Category Wise Expense Report
+  </h4>
+</div>
+<div class="secondary-color">
+  <div class="content-body-wrapper">
+    <div class="row content-body report-table-wrapper">
+      <div class="col-md-10 reset-padding">
+        <div class="report-search-form clearfix">
+          <%= form_tag '', method: 'get', id: 'yearly-expense-report-form' do %>
+              <% if @expense_category.present? %>
+                  <%= select_tag :category_id, options_for_select(@expense_categories.collect{ |category| [category.name, category.id]}, @expense_category.id), {class:'form-control category-change'}  %>
+              <% else %>
+                  <%= select_tag :category_id, options_for_select(@expense_categories.collect{ |category| [category.name, category.id]}), {class:'form-control reset-border-radius category-change mx-w130'}  %>
+              <% end %>
+              <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control"} %>
+              <%= submit_tag 'Search', class: 'primary-color-bg-with-hover' %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-sm-2 reset-padding mb10">
+        <div class="pull-right">
+          <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To....'} %>
+        </div>
+      </div>
+      <%= render 'expenses/expenses/category_wise_report_partial' %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= category_wise_report_expenses_expenses_path('pdf', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= category_wise_report_expenses_expenses_path('docx', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= category_wise_report_expenses_expenses_path('xls',  params) %>'
+            }
+        });
+    });
+</script>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mihisoft</title>
+</head>
+<body>
+<%= current_department.company.name %><br>
+<%= current_department.name %><br>
+<%= current_department.email %><br>
+<%= current_department.mobile %><br>
+<%= current_department.address %>, <br>
+<%= current_department.city %><%= ', ' + current_department.state if current_department.state.present? %> - <%= current_department.zip_code %>,
+<%= country_name(current_department) %><br><br><br>
+
+<%= yield %>
+
+</body>
+</html>

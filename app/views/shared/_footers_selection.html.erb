@@ -1,0 +1,23 @@
+<% if employee_signed_in?  %>
+    <% if current_employee.next_path.present? %>
+        <%= render 'shared/registration_footer' %>
+    <% else %>
+        <footer class="p20 clearfix" style="background: #cccccc; width: 100%;">
+          Department: <%= current_department.name %>
+          <div style="float: right"> <b>|</b>
+            <%= link_to community_root_path , {:style=>'color: #074D65; font-weight: bold' } do %>
+                Community
+            <% end %>
+          </div>
+
+          <%= link_to 'Contact Us', contact_us_path, class:'pull-right mr5',style:'color: #074D65; font-weight: bold; ' %>
+
+        </footer>
+    <% end %>
+<% else %>
+    <% if devise_controller? %>
+        <%= render 'shared/registration_footer' %>
+    <% else %>
+        <%= render 'shared/footer' %>
+    <% end %>
+<% end %>

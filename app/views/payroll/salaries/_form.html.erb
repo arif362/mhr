@@ -1,0 +1,205 @@
+<%= form_for @salary, remote: true do |f| %>
+    <div class="col-md-12 reset-padding form-group" xmlns="http://www.w3.org/1999/html">
+      <div class="col-md-3 reset-padding">
+        <%= f.label :basic_salary %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field :basic_salary, value: @employee.get_basic_salary, class: "form-control editable-amount",:data => {:category => 'add' }, readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <%= f.hidden_field :employee_id, value: @employee.id %>
+    <%= f.hidden_field :month, value: @salary_month %>
+    <%= f.hidden_field :year, value: @salary_year %>
+
+
+    <% @payroll_employee_categories.each do |emp_category| %>
+        <%= render 'employee_category_on_salary', f: f, emp_category: emp_category %>
+    <% end %>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Unpaid Leave (Days)' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field 'deduction_category[unpaid_leave_days]', value: @employee_status[:leaves_report][:unpaid_leave], class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Unpaid Leave Deduct' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <% @total_deduct += amount_from_days(@daily_rate, @employee_status[:leaves_report][:unpaid_leave]).to_f %>
+        <%= f.text_field 'deduction_category[unpaid_leave_deduct]', value: amount_from_days(@daily_rate, @employee_status[:leaves_report][:unpaid_leave]), class: "form-control editable-amount",:data => {:category => 'deduct' }%>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Late Days' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field 'deduction_category[late_days]', value: @employee_status[:attendance_report][:late_days], class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Late Time (hour)' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field 'deduction_category[late_time]', value: hour_from_second(@employee_status[:attendance_report][:late_time]), class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Late Time Deduct' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <% @total_deduct += amount_from_hours(@hourly_rate, hour_from_second(@employee_status[:attendance_report][:late_time])).to_f %>
+        <%= f.text_field 'deduction_category[late_time_deduct]', value: amount_from_hours(@hourly_rate, hour_from_second(@employee_status[:attendance_report][:late_time])), class: "form-control editable-amount",:data => {:category => 'deduct' } %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Over Time (Hours)' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field 'addition_category[over_time]', value: hour_from_second(@employee_status[:attendance_report][:over_time]), class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Over Time Amount' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <% @total_addition += amount_from_hours(@hourly_rate, hour_from_second(@employee_status[:attendance_report][:over_time])).to_f %>
+        <%= f.text_field 'addition_category[over_time_amount]', value: amount_from_hours(@hourly_rate, hour_from_second(@employee_status[:attendance_report][:over_time])), class: "form-control editable-amount",:data => {:category => 'add' }%>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Less Worked (Hour)' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field 'deduction_category[less_worked_hours]', value: hour_from_second(@employee_status[:attendance_report][:less_worked_hour]), class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Less Work Deduct' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <% @total_deduct += amount_from_hours(@hourly_rate, hour_from_second(@employee_status[:attendance_report][:less_worked_hour])).to_f %>
+        <%= f.text_field 'deduction_category[less_work_deduct]', value: amount_from_hours(@hourly_rate, hour_from_second(@employee_status[:attendance_report][:less_worked_hour])), class: "form-control editable-amount",:data => {:category => 'deduct' }%>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Absent Days' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field 'deduction_category[absent_days]', value: @employee_status[:absent_days], class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= label_tag 'Absent Deduct' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <% @total_deduct += amount_from_days(@daily_rate, @employee_status[:absent_days]).to_f %>
+        <%= f.text_field 'deduction_category[absent_deduct]', value: amount_from_days(@daily_rate, @employee_status[:absent_days]), class: "form-control editable-amount",:data => {:category => 'deduct' } %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= f.label :total_addition, 'Total earnings' %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field :total_addition, value: number_with_precision(@total_addition, precision: 2), class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= f.label :total_deduction %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field :total_deduction, value: number_with_precision(@total_deduct, precision: 2), class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+
+    <div class="col-md-12 reset-padding form-group">
+      <div class="col-md-3 reset-padding">
+        <%= f.label :total %>
+      </div>
+      <div class="col-md-9 salary-form-reset-padding">
+        <%= f.text_field :total, value: number_with_precision(@total_addition - @total_deduct, precision: 0), class: "form-control", readonly: "readonly" %>
+      </div>
+    </div>
+
+    <div class="col-md-12 reset-padding form-group">
+      <%= f.submit class: 'btn btn-primary invite-submit pull-right' %>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $('.editable-amount').keyup(function(){
+        calculate_salary()
+    });
+    function calculate_salary() {
+        var total_add = 0
+        var total_deduct = 0
+        $('.editable-amount').each(function( index ) {
+            var value = ($(this).val())
+            if (value == null || value=='')
+            {
+                console.log(('test'))
+                value = 0
+            }
+
+            else {
+                value = parseFloat(value)
+            }
+            console.log(value)
+            var  category =  $(this).data( "category" ) ;
+            if (category == 'add') {
+                total_add = total_add + value
+            }
+
+            else {
+                total_deduct = total_deduct + value
+            }
+        });
+
+        $('#payroll_salary_total_addition').val(total_add);
+        $('#payroll_salary_total_deduction').val(total_deduct);
+        $('#payroll_salary_total').val((total_add - total_deduct).toFixed(2));
+    }
+
+</script>

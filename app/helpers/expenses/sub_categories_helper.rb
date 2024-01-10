@@ -1,0 +1,2 @@
+module Expenses::SubCategoriesHelper
+end

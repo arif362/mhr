@@ -1,0 +1,32 @@
+<% if @multiple_new_tasks.present? && @m_tasks.present? %>
+<% @m_tasks.each do |key, task| %>
+$('#daily_progress_task_title').val('');
+$(".task-lists").append("<%= escape_javascript(render 'task', task:task) %>");
+
+if (<%= params[:commit] == 'Save' %>){
+    $('#global-modal').modal('hide');
+    popupMessage('Task created successfully', 'alert-success');
+}
+
+if (<%= params[:commit] == 'Save And Continue' %>){
+    popupMessage('Task created successfully. Create another...', 'alert-success');
+}
+<% end %>
+
+<% elsif params[:daily_progress_task][:title].present? && @task.present? %>
+
+$('#daily_progress_task_title').val('');
+$(".task-lists").append("<%= escape_javascript(render 'task', task:@task) %>");
+
+if (<%= params[:commit] == 'Save' %>){
+    $('#global-modal').modal('hide');
+    popupMessage('Task created successfully', 'alert-success');
+}
+
+if (<%= params[:commit] == 'Save And Continue' %>){
+    popupMessage('Task created successfully. Create another...', 'alert-success');
+}
+
+<% else %>
+alert('Something wrong please check your input!')
+<% end %>

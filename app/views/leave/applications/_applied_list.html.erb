@@ -1,0 +1,28 @@
+<tr>
+  <td><%= application.leave_category.name if application.leave_category.present? %></td>
+  <td>
+    <% if  application.attachment_url.present? %>
+        <% if application.attachment.path.downcase.end_with?('.pdf', '.jpg', '.jpeg', '.gif', '.png')%>
+            <a href="javascript:void(0)" data-content="<%= application.attachment_url %>" class="preview-attachment">View</a>
+        <% else %>
+            <%= link_to 'View', leave_attachment_leave_application_path(application.id) %>
+        <% end %>
+
+    <% else %>
+        No Attachment
+    <% end %>
+  </td>
+  <td><%= application.is_paid ? 'Paid' : 'Unpaid' %></td>
+  <td><%= application.status.capitalize if application.status.present? %></td>
+  <td><%= application.total_days.present? ? application.total_days : application.leave_days.count  %></td>
+  <td class="actions">
+    <%= link_to leave_application_path(application, no_admin: true), remote: true, class: 'btn info-color' do%>
+        <i class="fa fa-eye"></i>
+    <% end %>
+  </td>
+</tr>
+<script type="text/javascript">
+    $(function(){
+        $('.preview-attachment').attachmentPreview();
+    });
+</script>

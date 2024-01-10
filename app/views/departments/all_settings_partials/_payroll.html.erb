@@ -1,0 +1,19 @@
+<div class="step-content-wrapper">
+  <h2>Add Payroll Categories</h2>
+
+  <div class="actions-button">
+    <div class="clearfix">
+      <div class="pull-right">
+        <div class="btn-group" id="new-payroll-category-button">
+          <%= link_to new_payroll_category_path(department: @department), remote:true, class:'btn btn-default reset-border-radius' do%>
+              <i class="fa fa-plus"></i> Add New
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="categories">
+    <%= render 'payroll/categories/categories_table' %>
+  </div>
+</div>

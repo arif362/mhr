@@ -1,0 +1,5 @@
+<% if params[:employee_id].present? %>
+    $('#bonuses').html('<%= escape_javascript( render 'payroll/bonus_payments/employee_bonus' ).html_safe %>');
+<% else %>
+    $('#bonuses').html('<%= escape_javascript( render 'payroll/bonus_payments/bonus_payments_table', bonuses: @bonuses ).html_safe %>');
+<% end %>

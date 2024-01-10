@@ -1,0 +1,17 @@
+<% if @salary.errors.any? %>
+    popupMessage('Unable to create salary. Please try again!', 'alert-danger');
+<% else %>
+
+    $('#salary-detail-header').replaceWith("<%= escape_javascript(render 'salary_detail_header', salary: @salary, salary_month: @salary.month, salary_year: @salary.year).html_safe %>");
+    $('#employee-salary-detail-section').html("<%= escape_javascript(render 'salary_detail').html_safe %>");
+    $('#employee-salary-summary-tbody').prepend("<%= escape_javascript(render 'salary_summary_row', salary: @salary).html_safe %>");
+    $('#employee-select').html('<%= escape_javascript( select_tag :employee_id, options_for_select(active_employees(@salary.month, @salary.year).collect { |emp| [emp.full_name, emp.id, {class: is_salary_initialized(emp, @salary.month, @salary.year) ? "employee-select-check" : "" }]}, @salary.employee_id), {class: 'custom-chosen form-control custom-label-select employee-change-select-submit', prompt: 'All Employee'} ).html_safe %>');
+    $("#employee_id").chosen();
+    $('.employee-change-select-submit').change(function(){
+        $('#payroll-salaries-sorting-form').submit();
+    });
+    $('#no-data-found').remove();
+
+    popupMessage('Salary of <%= @salary.employee.full_name %> successfully created.', 'alert-info');
+
+<% end %>

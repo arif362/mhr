@@ -1,0 +1,17 @@
+<tr id="payroll-category-<%= category.id %>" >
+  <td> <%= category.name %></td>
+  <td> <%= truncate(category.description, length: 50) %></td>
+  <td> <%= category.is_add ? 'Addition' : 'Deduction' %></td>
+  <td> <%= category.is_percentage ? 'Percentage' : 'Amount' %></td>
+  <td>
+    <%= link_to payroll_category_path(category), class:'btn info-color', remote: true do %>
+        <i class="fa fa-eye"></i>
+    <% end %>
+    <%= link_to edit_payroll_category_path(category), class:'btn warning-color', remote: true do %>
+        <i class="fa fa-pencil-square-o"></i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: category.id, action_on: 'payroll/categories', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"></i>
+    <% end %>
+  </td>
+</tr>

@@ -1,0 +1,93 @@
+<div class="mt75">
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="col-sm-9">
+
+        <div class="module-detail">
+          <h2 class="header-page"> Employee Management </h2>
+
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/employee/employee_list.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/employee/employee_list.png', class: 'img-responsive' %>
+              </a>
+            </div>
+
+            <div class="col-sm-6 text-justify">
+              The Employee Module keeps track of all your Employee Data, including Advances, Advances History, Certificates,
+              Right Access etc. This module also keeps track of Active and Deactivated (previous employee not now present) Employees.
+              If your company employee number is big, this module helps to ease with those data that are difficult to include.
+              Just click 'Upload Employees', download the template and fill up your employees necessary fields then choose that
+              file and click just Import button.
+              <i class="warning-color"> N.B. Please provide your employees required and right information. </i>
+              Search Employee by Name, Employee ID, Email, Phone etc and you can download your Employee List on Export to.
+            </div>
+          </div>
+
+          <div class="row mt20 mb80">
+            <div class="col-sm-6 text-justify">
+              The Advance Payment tab: It allows an employee to request for an advance payment from the salary if needed.
+              The particular employee can make a request through this tab, and the admin/manager evaluates it and can grant/decline
+              employees request from this tab and keeps the record of such decisions.
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/employee/employee_advance.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/employee/employee_advance.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/employee/advance_history.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/employee/advance_history.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6 text-justify">
+              Advance History provides all of data of Employees Advance payments such as 'Advance given', 'Advance return',
+              'Balance' and you can export history report with docx or pdf format.
+            </div>
+          </div>
+
+          <div class="row mt20 mb80">
+            <div class="col-sm-6 text-justify">
+              mhr has a very user friendly Employee Profile menu which provides full information of an employee such as personal info,
+              Attendance, Leave and Settings option to change your password.
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/employee/employee_dashboard.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/employee/employee_dashboard.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/employee/access_right.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/employee/access_right.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6 text-justify">
+              This option allows you to decide which employee is given to what level of authorization. For example: if you recruit a new HR,
+              you just go to the “ACCESS RIGHTS” tab and grant proper access to that particular HR with what authorization and access level
+              you desire to.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <%= render 'home/feature_modules', modules: @modules %>
+
+    </div>
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.preview-attachment').attachmentPreview();
+    });
+</script>
+

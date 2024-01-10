@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @leave_application.message %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @leave_application.note %>
+</p>
+
+<p>
+  <strong>Attachment:</strong>
+  <%= @leave_application.attachment %>
+</p>
+
+<p>
+  <strong>Is approved:</strong>
+  <%= @leave_application.is_approved %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @leave_application.employee_id %>
+</p>
+
+<p>
+  <strong>Leave category:</strong>
+  <%= @leave_application.leave_category_id %>
+</p>
+
+<%= link_to 'Edit', edit_leave_application_path(@leave_application) %> |
+<%= link_to 'Back', leave_applications_path %>

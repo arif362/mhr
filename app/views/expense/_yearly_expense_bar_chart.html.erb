@@ -1,0 +1,32 @@
+<canvas id="lifeExpenseSalaryChart" width="400" height="100"></canvas>
+
+<script type="text/javascript">
+    var ctx2 = document.getElementById("lifeExpenseSalaryChart");
+    var myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: <%= raw @yearly_data[:categories] %>,
+            datasets: [
+                {
+                    label: 'Budget',
+                    data: <%= raw @yearly_data[:budgets] %>,
+                    backgroundColor: <%= raw @colors.reverse %>
+                },
+                {
+                    label: 'Expense',
+                    data: <%= raw @yearly_data[:amounts] %>,
+                    backgroundColor: <%= raw @colors %>
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>

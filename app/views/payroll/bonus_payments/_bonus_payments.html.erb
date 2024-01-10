@@ -1,0 +1,34 @@
+<div class="form-group">
+  <%= label_tag 'Select Reason' %>
+  <div class="input-group">
+    <%= select_tag :reason, options_for_select(current_department.bonus_categories.collect { |bonus| [bonus.name, bonus.id] }, params[:reason]), {class: 'form-control reason-select reset-border-radius', prompt: 'Select Bonus Category...'} %>
+    <span class="input-group-addon reset-border-radius">
+          <%= link_to new_payroll_bonus_category_path(employee_id: @employee.id, inline: true), remote: true do %>
+            <i class="fa fa-plus"></i>
+          <% end %>
+        </span>
+  </div>
+
+</div>
+
+<div id="bonus-payments-form">
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.reason-select').change(function(){
+            $.ajax({
+                url: '<%= new_payroll_bonus_payment_path %>',
+                type: 'get',
+                dataType: 'script',
+                data: {
+                    bonus_category_id: $(this).val(),
+                    employee_id: <%= @employee.id %>,
+                    department_id: <%= current_department.id %>,
+                    checking_year: <%= @start_date.year %>
+                }
+            });
+        });
+    });
+</script>

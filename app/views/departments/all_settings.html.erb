@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="wrap-for-form-wizard">
+    <h3 class="mb20 text-center">Complete your new department settings</h3>
+    <!-- SmartWizard html -->
+    <div id="smartwizard">
+      <ul>
+        <li><a href="#step-1">Step 1<br /><small>General Settings</small></a></li>
+        <li><a href="#step-2">Step 2<br /><small>Employee Designations</small></a></li>
+        <li><a href="#step-3">Step 3<br /><small>Weekend</small></a></li>
+        <li><a href="#step-4">Step 4<br /><small>Leave Categories</small></a></li>
+        <li><a href="#step-5">Step 5<br /><small>Payroll Categories</small></a></li>
+      </ul>
+
+      <div>
+        <div id="step-1" class="">
+
+          <%= render 'departments/all_settings_partials/general' %>
+
+        </div>
+
+        <div id="step-2" class="">
+
+          <%= render 'departments/all_settings_partials/designations' %>
+
+        </div>
+
+        <div id="step-3" class="">
+
+          <%= render 'departments/all_settings_partials/weekend' %>
+
+        </div>
+
+        <div id="step-4" class="">
+
+          <%= render 'departments/all_settings_partials/leave' %>
+
+        </div>
+
+        <div id="step-5" class="">
+          <%= render 'departments/all_settings_partials/payroll' %>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        // Step show event
+        $("#smartwizard").on("showStep", function(e, anchorObject, stepNumber, stepDirection, stepPosition) {
+            //alert("You are on step "+stepNumber+" now");
+            if(stepPosition === 'first'){
+                $("#prev-btn").addClass('disabled');
+            }else if(stepPosition === 'final'){
+                $("#next-btn").addClass('disabled');
+            }else{
+                $("#prev-btn").removeClass('disabled');
+                $("#next-btn").removeClass('disabled');
+            }
+        });
+
+        // Toolbar extra buttons
+        var btnFinish = $('<button></button>').text('Finish')
+                .addClass('btn btn-info')
+                .on('click', function(){ alert('Finish Clicked'); });
+//        var btnCancel = $('<button></button>').text('Cancel')
+//                .addClass('btn btn-danger')
+//                .on('click', function(){ $('#smartwizard').smartWizard("reset"); });
+
+
+        // Smart Wizard
+        $('#smartwizard').smartWizard({
+            selected: 0,
+            theme: 'arrows',
+            transitionEffect:'fade',
+            showStepURLhash: true,
+            toolbarSettings: {toolbarPosition: 'bottom',
+                toolbarExtraButtons: [btnFinish]//, btnCancel]
+            }
+        });
+
+
+        // External Button Events
+        $("#reset-btn").on("click", function() {
+            // Reset wizard
+            $('#smartwizard').smartWizard("reset");
+            return true;
+        });
+
+        $("#prev-btn").on("click", function() {
+            // Navigate previous
+            $('#smartwizard').smartWizard("prev");
+            return true;
+        });
+
+        $("#next-btn").on("click", function() {
+            // Navigate next
+            $('#smartwizard').smartWizard("next");
+            return true;
+        });
+
+        //designation table sorter
+
+        if ($(".designation-list-table").find("tbody").find("tr").size() > 0) {
+            $(".designation-list-table").tablesorter({
+                headers: {
+                    3: {
+                        sorter: false
+                    }
+                },
+                widthFixed: true,
+                widgets: ['zebra']
+            }).tablesorterPager({container: $("#pager1")});
+        }
+
+    });
+</script>

@@ -1,0 +1,2 @@
+module Payroll::BonusCategoriesHelper
+end

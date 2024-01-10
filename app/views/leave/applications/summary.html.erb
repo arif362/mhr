@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="content-wrapper" id="leave-summary-content">
+    <div class="header-wrapper">
+      <h4>
+        Leave Summary
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper">
+      <div class="content-body mt5">
+        <div class="row pb15">
+          <div class="col-md-3">
+            <%= form_tag '', method: 'get', id: 'yearly-leave-summary-form' do %>
+                <%= select_year params[:date].present? ? params[:date][:year].to_i : Date.today, {:start_year => Date.today.year, :end_year => current_department.year}, {class: "form-control"} %>
+            <% end %>
+          </div>
+
+          <div class="col-md-offset-5 col-md-4 clearfix">
+            <div class="pull-right">
+              <% if employee_role == 'admin' %>
+                  <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'reset-border-radius form-control custom-export-to', prompt: 'Export To....'} %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="p10 glass-color-bg text-centerx">
+          <span class="label label-success">T</span> Taken
+          <span class="label label-success ml10">R</span> Remaining
+        </div>
+
+        <div class="leave-summary-table-wrap">
+              <table class="table beaccount-table tablesorter  table-hover table-striped" id="summary_table">
+                <thead>
+                <tr>
+                  <th rowspan="2" style="vertical-align: middle">Employee Name</th>
+                  <% @leave_categories.each do |category| %>
+                      <th colspan="2"><%= category.name + '(' + category.days(params[:date].present? ? params[:date][:year].to_i : Date.today.year).to_s + ')' %></th>
+                  <% end %>
+                  <th>Unpaid Leave</th>
+                </tr>
+                <tr>
+                  <% @leave_categories.each do |category| %>
+                      <th>T</th>
+                      <th>R</th>
+                  <% end %>
+                  <th>T</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @leave_report.each do |employee_id, value| %>
+                    <tr>
+                      <td>
+                        <% if value[:employee].present? %>
+                            <%= link_to employee_profile_path(value[:employee]), remote: true do %>
+                                <%= value[:employee].full_name %>
+                            <% end %>
+                        <% end %>
+                      </td>
+                      <% @leave_categories.each do |category| %>
+                          <td><%= value[category.id][:taken] %></td>
+                          <td><%= value[category.id][:remaining] %></td>
+                      <% end %>
+                      <td><%= value[:total_unpaid] %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+              </div>
+              <%= render 'shared/pagination' if @leave_report.size > 10 %>
+              <div class="no-data-found">
+                <% if @leave_report.size <= 0 %>
+                    <%= render 'shared/no_data_found', message: 'No employee found' %>
+                <% end %>
+              </div>
+          </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#date_year").on('change', function () {
+            $('#yearly-leave-summary-form').submit();
+        });
+
+        /*********pagination and all sorting out from table start**********/
+        var headers = {},
+                $table = $('#summary_table'),
+                i, l = $table.find('thead th').length,
+                sortcolumns;
+        for (i = 0; i < l; i++) {
+            if ($.inArray(i, sortcolumns) < 0) {
+                headers[i] = {
+                    sorter: false
+                }
+            }
+        }
+        $table.tablesorter({
+            widgets: ['zebra'],
+            headers: headers // headers object built above
+        }).tablesorterPager({container: $("#pager")});
+
+        /********pagination and all sorting out from table end***********/
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= summary_leave_applications_path('pdf', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= summary_leave_applications_path('docx', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= summary_leave_applications_path('xls',  params) %>'
+            }
+        });
+    });
+
+</script>

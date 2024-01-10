@@ -1,0 +1,8 @@
+<div class="row toggleable-container reset-padding">
+  <%= render 'shared/toggleable_sidebar', sidebar_menu: @department.sidebar_menu_generator %>
+  <div class="main-content content-body-wrapper">
+    <div class="content-body p0 clearfix" id="department-info">
+      <%= render 'settings', view: @view %>
+    </div>
+  </div>
+</div>

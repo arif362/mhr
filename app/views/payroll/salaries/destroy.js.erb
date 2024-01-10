@@ -1,0 +1,15 @@
+<% if @salary.errors.any? %>
+    popupMessage('Unable to delete salary. Please try again!', 'alert-danger');
+<% else %>
+    popupMessage('Salary successfully deleted', 'alert-info');
+    <% if params[:extras][:state] == Payroll::Salary::STATES[:list] %>
+        $("#employee-salary-<%= @salary.id %>").remove();
+        $("#unconfirm-salary-<%= @salary.id %>").remove();
+        $('#employee-select').html('<%= escape_javascript( select_tag :employee_id, options_for_select(active_employees(@salary.month, @salary.year).collect { |emp| [emp.full_name, emp.id, {class: is_salary_initialized(emp, @salary.month, @salary.year) ? "employee-select-check" : "" }]}), {class: 'custom-chosen form-control custom-label-select employee-change-select-submit', prompt: 'All Employee'} ).html_safe %>');
+        $("#employee_id").chosen();
+        $('.employee-change-select-submit').change(function(){
+            $('#payroll-salaries-sorting-form').submit();
+        });
+    <% end %>
+    $('#global-modal').modal('hide');
+<% end %>

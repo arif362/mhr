@@ -1,0 +1,7 @@
+<% if @advance.errors.present? %>
+    popupMessage("Advance couldn't be updated", "alert-danger");
+<% else %>
+   popupMessage("Advance successfully deleted", "alert-success");
+   $("#global-modal").modal('hide');
+    $(".employee_advance-<%= @advance.id %>").remove();
+<% end %>

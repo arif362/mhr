@@ -1,0 +1,35 @@
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <td> Department</td>
+        <td> Employee ID</td>
+        <td> Name</td>
+        <td> Designation</td>
+        <td> Email</td>
+        <td> Status</td>
+        <td> Address</td>
+        <td> Mobile</td>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @departments.each do |department| %>
+          <% department.employees.each do |employee| %>
+              <tr>
+                <td><%= department.name %></td>
+                <td><%= employee.id_card_no %></td>
+                <td><%= employee.full_name %></td>
+                <td><%= employee.designation.name if employee.designation.present? %></td>
+                <td><%= employee.email %></td>
+                <td><%= employee.is_active ? 'Active' : 'Inactive' %></td>
+                <td><%= employee.present_address %></td>
+                <td><%= employee.mobile %></td>
+              </tr>
+          <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

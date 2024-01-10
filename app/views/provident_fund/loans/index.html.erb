@@ -1,0 +1,57 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Provident Fund Loans
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper" id="provident-fund-rule-content">
+      <% if @provident_fund_loans.present? %>
+          <div class="row actions-button">
+            <div class="add-more-rule clearfix row">
+              <div class="col-md-12 pt20">
+                <div class="row">
+                  <div class="col-sm-8 reset-padding">
+                    <%= form_tag '', method: 'get', id: "advance-employee-status-form" do %>
+                        <div class="col-sm-5">
+                          <%= select_tag :pf_account_id, options_for_select(ProvidentFund::Account.all.collect { |pf| [pf.employee.full_name, pf.id] }), {class: 'custom-chosen form-control custom-label-select employee-change-select-submit', prompt: 'All PF Account'} %>
+                        </div>
+                        <div class="col-sm-3">
+                          <%= select_tag :status, options_for_select(Employees::AdvanceReturn::STATUS.collect { |key, value| [value] }, params[:status]), {class: 'form-control status-change-select-submit'} %>
+                        </div>
+                        <div class="col-sm-3">
+                          <%= submit_tag 'Search', class: 'btn btn-info reset-border-radius' %>
+                        </div>
+                    <% end %>
+                  </div>
+                  <div class="col-sm-4">
+                    <%= link_to new_provident_fund_loan_return_path, class: 'btn btn-default pull-right reset-border-radius' do %>
+                        <i class="fa fa-plus"> </i> Loan Return
+                    <% end %>
+                    <%= link_to new_provident_fund_loan_path, class: 'btn btn-default mr10 pull-right' do %>
+                        <i class="fa fa-plus-circle"></i> New Loan
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row content-body">
+            <div id="advances">
+              <%= render 'advances_table', advances: @provident_fund_loans %>
+            </div>
+          </div>
+      <% else %>
+          <div class="text-center table-cell">
+            <p>
+              You don't have any loan. <%#= link_to 'Learn more', '#', class: 'link' %>
+              <i class="fa fa-info-circle btn btn-info reset-border-radius" data-toggle='popover' data-placement='top' title="Provident Fund Loan" data-content="Click on the New Loan button to create a loan"></i>
+            </p>
+            <%= link_to new_provident_fund_loan_path, class: 'btn btn-default reset-border-radius' do %>
+                <i class="fa fa-plus-circle"></i> New Loan
+            <% end %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

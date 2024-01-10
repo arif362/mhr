@@ -1,0 +1,16 @@
+<tr id="designation-<%= designation.id %>">
+  <td><%= designation.name %></td>
+  <td><%= truncate(designation.description, length: 50) %></td>
+  <td><%= designation.is_active ? 'Active' : 'Inactive' %></td>
+  <td class="actions">
+    <%= link_to designation_path(designation), remote: true, class: 'btn info-color' do %>
+        <i class="fa fa-eye"> </i>
+    <% end %>
+    <%= link_to edit_designation_path(designation), method: :get, remote: true, class: 'btn warning-color' do %>
+        <i class="fa fa-pencil"></i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: designation.id, action_on: 'designations', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"> </i>
+    <% end %>
+  </td>
+</tr>

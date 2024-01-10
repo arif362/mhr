@@ -1,0 +1,8 @@
+$('#salaries').html('<%= escape_javascript( render 'employee_salary').html_safe %>');
+<% if @unconfirmed_salaries.present? %>
+if ($('#salary-notifications').find('.on-pending').length <= 0) {
+    $('#salary-notifications').append('<%= escape_javascript(render 'confirm_page_link').html_safe %>');
+}
+<% else %>
+$('#salary-notifications').find('.on-pending').remove();
+<% end %>

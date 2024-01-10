@@ -1,0 +1,56 @@
+<%= form_for @day_off, html: {id: 'holiday_form'}, remote: true do |f| %>
+    <div class="clearfix">
+      <div class="form-group">
+        <%= f.text_field :title, class: 'form-control reset-border-radius', placeholder: 'Day off title', data: {required: true} %>
+      </div>
+      <div class="form-group date">
+        <%= f.label :date %>
+        <%= f.text_field :date, class: 'numeric float optional form-control input-sm reset-border-radius', readonly: true, data: {required: true} %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :day_off_type %>
+        <%= f.select :day_off_type, options_for_select(Attendance::DayOff::DAYOFF_TYPE.collect { |key, value| [value, value] }, f.object.day_off_type), {}, {class: 'form-control reset-border-radius'} %>
+      </div>
+
+      <div class="form-group dayoff_hour">
+        <%= f.label :hours, 'How many hours you want to off' %>
+        <%= f.text_field :hours, class: 'numeric float optional form-control input-sm reset-border-radius', placeholder: 'In hours' %>
+      </div>
+
+      <div class="form-group clearfix">
+        <div class="pull-right">
+          <%= f.submit class: 'btn btn-warning reset-border-radius' %>
+          <% unless f.object.new_record? %>
+              <%= link_to 'Delete', attendance_day_off_path(f.object.id), method: :delete, remote: true, class: 'btn btn-danger reset-border-radius', confirm: 'Are you sure?' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $('#holiday_form').syftValidator();
+    $(document).ready(function () {
+        $('#attendance_day_off_day_off_type').on('change', function () {
+            var dayoff_type = this.value;
+            if (dayoff_type == '<%= Attendance::DayOff::DAYOFF_TYPE[:custom_holiday] %>') {
+                $('.dayoff_hour').show();
+                $('#attendance_day_off_hours').show();
+                $('#attendance_day_off_hours').attr('data-required', true);
+
+            }
+            else {
+                $('.dayoff_hour').hide();
+                $('#attendance_day_off_hours').removeAttr('data-required');
+                $('#attendance_day_off_hours').removeAttr('value');
+            }
+        });
+
+        <% unless @day_off.new_record? %>
+        <% if @day_off.day_off_type == Attendance::DayOff::DAYOFF_TYPE[:custom_holiday] %>
+        $('.dayoff_hour').show();
+        <% end %>
+        <% end %>
+    });
+</script>

@@ -1,0 +1,187 @@
+<%= form_tag company_feature_settings_path, html: {method: :post} do %>
+    <div class="row mt20">
+      <div class="col-md-8">
+
+        <div id="module-section-container">
+
+          <% @features.each_with_index do |feature, index| %>
+
+              <% if (index % 3) == 0 || index == 0 %>
+                  <div class="row">
+              <% end %>
+              <div class="col-md-4 col-sm-6x col-xs-12x" data-cost="<%= feature.cost %>" data-module-name="<%= feature.name.parameterize %>" data-module-id="<%= feature.id %>">
+                <%= check_box_tag('features[]', feature.id, false, id: "feature_#{feature.id}", checked: @features_id.empty? ? true : @features_id.include?(feature.id)) %>
+                <label for="feature_<%= feature.id %>">
+                  <div class="module-item mb15">
+
+                    <div class="module-item-container p15">
+                      <h3 class="primary-color leadx mt0 mb10"> <%= feature.name %> </h3>
+
+                      <div class="module-description pb15 text-left">
+                        <%= feature.description %>
+                      </div>
+
+                      <p class="module-price text-center primary-color-bg mb0 white-color">
+                        <%#= number_to_currency(feature.cost) %> Free for now
+                      </p>
+                    </div>
+
+                  </div>
+                </label>
+              </div>
+              <% if ((index + 1) % 3) == 0 || (@features.length == index + 1) %>
+                  </div>
+              <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6x col-xs-12x">
+        <div class="text-center">
+          <div class="monthly-cost-table-wrap mb15" id="module-todays-cost">
+            <div class="monthly-cost-table-container hover-color-bg white-color">
+              <div class="lead reset-margin p5">Today's Cost</div>
+            </div>
+            <div class="">
+              <table class="table table-hover table-striped mb0 todays-payment-calculation">
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <td class="red-color"><b>Total</b></td>
+                  <td class='red-color'>
+                    <b><span id="todays-total-cost">0</span></b>
+                  </td>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="monthly-cost-table-wrap mb15">
+            <div class="monthly-cost-table-container hover-color-bg white-color">
+              <div class="lead reset-margin p5">Total Monthly Cost</div>
+            </div>
+            <div class="">
+              <table class="table table-hover table-striped cost-calculation mb0">
+                <tbody>
+                <tr>
+                  <td class="red-color">Employee</td>
+                  <td class='red-color'>
+                    <%#= number_to_currency(2.5, unit: '$ ') %>
+                    Free
+                  </td>
+                </tr>
+                <% if @selected_features.present? %>
+                    <% @selected_features.each do |feature| %>
+                        <tr class="fe-<%= feature.name.parameterize %>">
+                          <td><%= feature.name %></td>
+                          <td>
+                            Free
+                            <%#= number_to_currency(feature.cost, unit: '$ ') %>
+                          </td>
+                        </tr>
+                    <% end %>
+                <% else %>
+                    <% @features.each do |feature| %>
+                        <tr class="fe-<%= feature.name.parameterize %>">
+                          <td><%= feature.name %></td>
+                          <td>
+                          Free
+                          <%#= number_to_currency(feature.cost, unit: '$ ') %></td>
+                        </tr>
+                    <% end %>
+                <% end %>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <td class="red-color"><b>Total</b> &nbsp&nbsp(<span class="primary-color">Free for now)</span>
+                  </td>
+                  <td class='red-color'>
+                    <b><span id="total-monthly-cost">
+                      Free
+                      <%#= number_to_currency(@monthly_cost, unit: '$ ') %>
+                    </span></b>
+                  </td>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="">
+            <button class="submit-btn mb10"> Submit to continue <i class="fa fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+<% end %>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        var features_id = <%= @features_id %>;
+        var newly_selected = [];
+        var todays_cost = 0.0;
+        var monthly_cost = <%= @monthly_cost %>;
+        $("#module-section-container input[type='checkbox']").click(function () {
+            return false;
+            var featureName = $(this).parent().attr('data-module-name');
+            var featureId = parseInt($(this).parent().attr('data-module-id'));
+            var featureCost = parseFloat($(this).parent().attr('data-cost'));
+            if ($(this).is(':checked')) {
+                newCostHtml = "<tr class='fe-" + featureName + "'> <td> " + titleCase(featureName) + " </td> <td> <%= "$ " %>" + featureCost.toFixed(2) + " </td> </tr>";
+                $('.cost-calculation').find('tbody').append(newCostHtml);
+                monthly_cost += featureCost;
+                $('#total-monthly-cost').html('$ ' + monthly_cost.toFixed(2));
+                <% unless @features_id.empty? %>
+                if (features_id.indexOf(parseInt(featureId)) == -1) {
+                    $('#module-todays-cost').show();
+                    newly_selected.push(featureId);
+                    var cal_cost = calculate_remaining_dayscost(featureCost);
+                    newItemHtml = "<tr class='fe-new-" + featureName + "'> <td> " + titleCase(featureName) + " </td> <td> <%= "$ " %>" + cal_cost.toFixed(2) + " </td> </tr>";
+                    $('.todays-payment-calculation').find('tbody').append(newItemHtml);
+                    todays_cost += cal_cost;
+                    $('#todays-total-cost').html('$ ' + todays_cost.toFixed(2));
+                }
+                <% end %>
+            }
+            else {
+                $('.fe-' + featureName).remove();
+                monthly_cost -= featureCost;
+                $('#total-monthly-cost').html('$ ' + monthly_cost.toFixed(2));
+                <% unless @features_id.empty? %>
+                if (newly_selected.indexOf(featureId) > -1) {
+                    $('.fe-new-' + featureName).remove();
+                    newly_selected.splice(newly_selected.indexOf(featureId), 1);
+                    todays_cost -= calculate_remaining_dayscost(featureCost);
+                    $('#todays-total-cost').html('$ ' + todays_cost.toFixed(2));
+                }
+                if (newly_selected.length <= 0) {
+                    $('#module-todays-cost').hide();
+                }
+                <% end %>
+            }
+        });
+    });
+
+    function titleCase(str) {
+        var words = str.toLowerCase().split('-');
+
+        for (var i = 0; i < words.length; i++) {
+            var letters = words[i].split('');
+            letters[0] = letters[0].toUpperCase();
+            words[i] = letters.join('');
+        }
+        return words.join(' ');
+    }
+
+    function calculate_remaining_dayscost(featureCost) {
+        var total_days = <%= (Date.today.end_of_month - Date.today.beginning_of_month).to_i + 1 %>;
+        var remaining_days = <%= (Date.today.end_of_month - Date.today).to_i + 1 %>;
+        var daily_cost = featureCost / parseFloat(total_days);
+        return daily_cost * parseFloat(remaining_days);
+    }
+</script>
+
+

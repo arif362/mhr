@@ -1,0 +1,42 @@
+<div class="table-warapper">
+  <div class="table-warapper-body">
+    <table class="table action-table beaccount-table tablesorter table-responsive salaries-list table-hover table-striped">
+      <thead>
+      <tr>
+        <th>Month</th>
+        <th>Year</th>
+        <th>Amount</th>
+        <th>Issue Date</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody id="employee-salary-summary-tbody">
+      <% salaries.each do |salary| %>
+          <%= render 'payroll/salaries/salary_summary_row', salary: salary %>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="no-data-found">
+      <% unless salaries.present? %>
+          <%= render 'shared/no_data_found', message: 'No salary found' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        if ($(".salaries-list").find("tbody").find("tr").size() > 0) {
+            $(".salaries-list")
+                    .tablesorter({
+                        headers: {
+                            4: {
+                                sorter: false
+                            }
+                        },
+                        widthFixed: true,
+                        widgets: ['zebra']
+                    })
+                    .tablesorterPager({container: $("#pager")});
+        }
+    });
+</script>

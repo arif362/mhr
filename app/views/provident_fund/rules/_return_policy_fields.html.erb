@@ -1,0 +1,18 @@
+<div class="panel panel-default policy-list-item reset-border-radius">
+  <div class="panel-heading reset-border-radius">
+    <%= link_to "Remove", '#', class: 'remove-policy' %>
+  </div>
+  <div class="panel-body reset-border-radius">
+    <div class="return-policy row">
+      <%= builder.hidden_field :_destroy, :class => 'removable' unless builder.object.new_record? %>
+      <div class="col-sm-6">
+        <%= builder.label :year %>
+        <%= builder.text_field :year, class: 'form-control reset-border-radius', required: true %>
+      </div>
+      <div class="col-sm-6">
+        <%= builder.label :company_percentage, 'Percentage' %>
+        <%= builder.text_field :company_percentage, class: 'form-control reset-border-radius', required: true %>
+      </div>
+    </div>
+  </div>
+</div>

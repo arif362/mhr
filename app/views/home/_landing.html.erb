@@ -1,0 +1,402 @@
+<div class="fluid-container">
+  <div id="header-wrapper">
+    <div class="header-content-item">
+      <div class="overlay-item mt40"></div>
+      <div class="text-item">
+        <h3>Human resource automation with <span style="color: #00a5df">M</span>HR.</h3>
+
+        <p>
+          All-in-one option for any kind of organization.
+          <br/>
+          Choose your module/s that fits best for your organization and your requirement, from the multiple options.
+        </p>
+        <%= link_to take_a_tour_path, class: 'btn-with-hover' do %>
+            Read More..
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div id="service-wrapper">
+    <div class="container service-container-wrapper" id="apps">
+      <div class="row service-container">
+        <div class="col-md-12 service-content">
+          <h2 class="title title-h2 title-botom-space text-center">Our Modules</h2>
+
+          <p class="description  text-center"><strong>MHR</strong>
+            has absolutely everything for you to make your life comfortable with
+            <br class="hidden-xs hidden-sm">
+            business  and hr automation.
+          </p>
+        </div>
+      </div>
+
+      <div class="row component-wrapper">
+
+        <div class="components col-md-12 mb20">
+          <div class="components-item col-md-4">
+            <%= link_to modules_employee_path do %>
+                <%= image_tag('icon.svg', width: 45) %>
+                <h3 class="title title-h3">Employee</h3>
+            <% end %>
+
+            <p class="text-left">
+              The Employee Module contains necessary forms and reports to keep track all of your
+              Employee Data, including Advances, Advances History, Certificates, Right Access etc.<br>
+            </p>
+
+            <div class="btn-dual">
+              <%#= link_to modules_employee_path, class: 'btn-outline gray-btn mr10' do %>
+              <%= link_to '#', class: 'btn-outline gray-btn mr10' do %>
+                  LEARN MORE
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+              <%#= link_to watch_video_path('employee'), remote: true, class: 'btn-outline gray-btn' do %>
+              <%= link_to '#', remote: true, class: 'btn-outline gray-btn' do %>
+                  WATCH VIDEO
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+            </div>
+
+          </div>
+          <div class="components-item col-md-4">
+            <!--<i class="fa fa-hand-pointer-o"></i>-->
+            <%= link_to modules_leave_path do %>
+                <%= image_tag('icon.svg', width: 45) %>
+                <h3 class="title title-h3">Leave</h3>
+            <% end %>
+            <p class="text-left">
+              Beaccount has a global leave module.It set leave system for any company world wide. Employees does't need
+              a paper based leave history or leave application form.<br>
+            </p>
+
+            <div class="btn-dual">
+              <%#= link_to modules_leave_path, class: 'btn-outline gray-btn mr10' do %>
+              <%= link_to '#', class: 'btn-outline gray-btn mr10' do %>
+                  LEARN MORE
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+              <%#= link_to watch_video_path('leave'), remote: true, class: 'btn-outline gray-btn' do %>
+              <%= link_to '#', remote: true, class: 'btn-outline gray-btn' do %>
+                  WATCH VIDEO
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+            </div>
+          </div>
+          <div class="components-item col-md-4">
+            <!--<i class="fa fa-refresh"></i>-->
+            <%= link_to modules_attendance_path do %>
+                <%#= image_tag('module_settings/attendance.png', width: 45) %>
+                <%= image_tag('icon.svg', width: 45) %>
+                <h3 class="title title-h3">Attendance</h3>
+            <% end %>
+
+
+            <p class="text-left">
+              The attendance is an activity module for tracking time spent by Employees (or other users) in a
+              Company or in a related group of Institution. Online activity is<br>
+            </p>
+
+            <div class="btn-dual">
+              <%= link_to '#', class: 'btn-outline gray-btn mr10' do %>
+              <%#= link_to modules_attendance_path, class: 'btn-outline gray-btn mr10' do %>
+                  LEARN MORE
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+              <%#= link_to watch_video_path('attendance'), remote: true, class: 'btn-outline gray-btn' do %>
+              <%= link_to '#', remote: true, class: 'btn-outline gray-btn' do %>
+                  WATCH VIDEO
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="components col-md-12 mb20">
+          <div class="components-item col-md-4">
+            <!--<i class="fa fa-fonticons"></i>-->
+            <%= link_to modules_payroll_path do %>
+                <%#= image_tag('module_settings/payroll.png', width: 45) %>
+                <%= image_tag('icon.svg', width: 45) %>
+                <h3 class="title title-h3">Payroll</h3>
+            <% end %>
+            <p class="text-left">
+              All types of salary issue are being merged in payroll module and this management systems has
+              lots of standard reports like department wise gross salary,<br>
+            </p>
+
+            <div class="btn-dual">
+              <%#= link_to modules_payroll_path, class: 'btn-outline gray-btn mr10' do %>
+              <%= link_to '#', class: 'btn-outline gray-btn mr10' do %>
+                  LEARN MORE
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+              <%#= link_to watch_video_path('payroll'), remote: true, class: 'btn-outline gray-btn' do %>
+              <%= link_to '#', remote: true, class: 'btn-outline gray-btn' do %>
+                  WATCH VIDEO
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+            </div>
+
+          </div>
+          <div class="components-item col-md-4">
+            <!--<i class="fa fa-hand-pointer-o"></i>-->
+            <%= link_to modules_provident_fund_path do %>
+                <%#= image_tag('module_settings/provident_fund.png', width: 45) %>
+                <%= image_tag('icon.svg', width: 45) %>
+                <h3 class="title title-h3">Provident Fund</h3>
+            <% end %>
+            <p class="text-left">
+              Provident Fund is to support HR & Finance department. It is designed to process and provide
+              all information starting form recruitment till final settlement at one click.<br>
+            </p>
+
+            <div class="btn-dual">
+              <%#= link_to modules_provident_fund_path, class: 'btn-outline gray-btn mr10' do %>
+              <%= link_to '#', class: 'btn-outline gray-btn mr10' do %>
+                  LEARN MORE
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+              <%#= link_to watch_video_path('provident_fund'), remote: true, class: 'btn-outline gray-btn' do %>
+              <%= link_to '#', remote: true, class: 'btn-outline gray-btn' do %>
+                  WATCH VIDEO
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+            </div>
+          </div>
+          <div class="components-item col-md-4">
+            <!--<i class="fa fa-refresh"></i>-->
+            <%= link_to modules_expense_path do %>
+                <%#= image_tag('module_settings/expense.png', width: 45) %>
+                <%= image_tag('icon.svg', width: 45) %>
+                <h3 class="title title-h3">Expense</h3>
+            <% end %>
+
+
+            <p class="text-left">
+              If you enable the expense module feature, you can implement an approval process that will
+              allow you to monitor costs before your employees actually<br>
+            </p>
+
+            <div class="btn-dual">
+              <%#= link_to modules_expense_path, class: 'btn-outline gray-btn mr10' do %>
+              <%= link_to '#', class: 'btn-outline gray-btn mr10' do %>
+                  LEARN MORE
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+              <%#= link_to watch_video_path('expense'), remote: true, class: 'btn-outline gray-btn' do %>
+              <%= link_to '#', remote: true, class: 'btn-outline gray-btn' do %>
+                  WATCH VIDEO
+                  <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="all-about-free" class="clearfix">
+    <h1 class="free-quate">
+      It's All About <b>FREE!</b> <br/>
+    </h1>
+    <a class="btn btn-warning btn-get-start" href="/registration">
+      GET STARTED NOW!
+    </a>
+  </div>
+
+  <div id="save-your-time" class="clearfix">
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class=" row">
+            <div class="col-sm-3 pl10 save-your-time-item">
+              <%= image_tag('clock.png') %>
+            </div>
+            <div class="col-sm-9">
+              <h3 class="title">
+                Save Your Time with Us
+              </h3>
+
+              <p class="text_3">
+                We make time for what you love. Pay attention, we will show you your worth to them by
+                save your time with us.
+              </p>
+              <!--<a href="#" class="btn btn-default">Read more</a>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class=" row">
+            <div class="col-sm-3 save-your-time-item">
+              <%= image_tag('24_times.png') %>
+            </div>
+            <div class="col-sm-9 pr10">
+              <h3 class="title">
+                The Highest Quality Services
+              </h3>
+
+              <p class="text_3">
+                The core task of a business is to ensure that customers come back, which can be done by delivering
+                excellent service quality. Our mission is to provide the highest quality services of unmatched value to
+                our clients.
+              </p>
+              <!--<a href="#" class="btn btn-default">Read more</a>-->
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Contact Us Section Design -->
+  <div class="contact-us-wrapper" id="contact_us">
+    <div class="contact-us-bg-opacity">
+      <div class="contact-us-container container mt0 ">
+        <div class="contact-us-row row">
+          <h2 class="title title-h2 text-center">Send us a quote</h2>
+
+          <div class="form-wrapper clearfix">
+            <!--send us a quote section-->
+            <%= form_for(@contact_us, url: submit_contact_path, html: {class: 'form-vertical', role: 'form', id: 'send-us-quote-form'}) do |f| %>
+                <div class="form-name-item-row clearfix">
+                  <div class="form-name-item-container col-md-4">
+                    <div class="form-name-item-group form-group">
+                      <!-- <input name='your-name' type="text" class="custom-form-control custom-placeholder" placeholder="Name *" onfocus="this.placeholder=''" onblur="this.placeholder='Name *'"> -->
+                      <%= f.text_field :name, class: "custom-form-control custom-placeholder", placeholder: 'Name *', onfocus: "this.placeholder=''", onblur: "this.placeholder='Name *'", required: true %>
+                    </div>
+                  </div>
+
+                  <div class="form-name-item-container col-md-4">
+                    <div class="form-name-item-group form-group">
+                      <!--  <input name='your-email' type="email" class="custom-form-control custom-placeholder" placeholder="Email *" onfocus="this.placeholder=''" onblur="this.placeholder='Email *'"> -->
+                      <%= f.email_field :email, class: "custom-form-control custom-placeholder", placeholder: 'Email *', onfocus: "this.placeholder=''", onblur: "this.placeholder='Email *'", required: true %>
+                    </div>
+                  </div>
+
+                  <div class="form-name-item-container col-md-4">
+                    <div class="form-name-item-group form-group">
+                      <!--   <input name="your-subject" type="text" class="custom-form-control custom-placeholder" placeholder="Subject" onfocus="this.placeholder=''" onblur="this.placeholder='Subject'"> -->
+                      <%= f.text_field :subject, class: "custom-form-control custom-placeholder", onfocus: "this.placeholder=''", onblur: "this.placeholder='Subject'", placeholder: 'Subject' %>
+                    </div>
+                  </div>
+
+                  <div class="form-name-item-container col-md-12">
+                    <div class="form-name-item-group form-group">
+                      <!--   <textarea name="your-message" class="custom-form-control custom-placeholder" rows="5" placeholder="Message" onfocus="this.placeholder=''" onblur="this.placeholder='Message'"></textarea> -->
+                      <%= f.text_area :message, class: "custom-form-control custom-placeholder", placeholder: 'Message', onfocus: "this.placeholder=''", onblur: "this.placeholder='Message'", rows: 5 %>
+                    </div>
+                  </div>
+                </div>
+
+                <script type="text/javascript">
+                    var onloadCallback = function () {
+                        grecaptcha.render('g_recaptcha', {
+                            'sitekey': '6LcZ8xEUAAAAAJxRTPhrnRslryX_mbXYjkoFTOf1'
+                        });
+                    };
+                </script>
+                <div id="g_recaptcha" class="pl14"></div>
+                <div class="col-xs-12 text-right">
+                  <%= f.submit 'SUBMIT', class: 'custom-button', id: 'send-us-quote-submit-btn' %>
+                </div>
+            <% end %>
+          </div>
+          <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="map-location-wrapper">
+    <!--<h2 class="title title-h2 title-botom-space text-center" style="margin-top: 30px; margin-bottom: 25px">Location</h2>-->
+
+    <div id="map-wrapper">
+      <div class="overlay" onclick="style.pointerEvents='none'"></div>
+
+      <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDhdSgbJabTs9BPFWNI7YV9TPMJuZIVzw0"></script>
+      <div style='overflow:hidden;height:400px;width:100%;'>
+        <div id='gmap_canvas' style='height:400px;width:100%;'></div>
+        <div>
+          <small>
+            <a href="http://www.embedgooglemaps.com/en/">Generate your map here, quick and easy! Give your customers
+              directions Get found</a></small>
+        </div>
+        <div>
+          <small><a href="https://binaireoptieservaringen.nl/optie24/">Betrouwbare aanbieder?</a></small>
+        </div>
+        <style>#gmap_canvas img {
+            max-width: none !important;
+            background: none !important
+        }</style>
+      </div>
+      <script type='text/javascript'>function init_map() {
+          var myOptions = {
+              scrollwheel: false,
+              zoom: 10,
+              center: new google.maps.LatLng(23.8247254, 90.3648627),
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+          marker = new google.maps.Marker({map: map, position: new google.maps.LatLng(23.8247254, 90.3648627)});
+          infowindow = new google.maps.InfoWindow({content: '<strong>MHR</strong><br>Mirpur-12, Pallabi, Road No-03, House No-92<br>'});
+          google.maps.event.addListener(marker, 'click', function () {
+              infowindow.open(map, marker);
+          });
+          infowindow.open(map, marker);
+      }
+      google.maps.event.addDomListener(window, 'load', init_map);</script>
+
+      <script type="text/javascript">
+          $(function () {
+///////////////////Read more button expand//////////////////
+
+              $('#send-us-quote-form').submit(function (event) {
+//                  var nameField = $('#send-us-quote-form').find('#contact_us_name').val();
+//                  var emailField = $('#send-us-quote-form').find('#contact_us_email');
+                  var nameField = $(this).find('#contact_us_name').val();
+                  var emailField = $(this).find('#contact_us_email').val();
+                  var emailPattern = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+                  if (grecaptcha.getResponse() == "") {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      popupMessage('You can\'t proceed! Please check the captcha.', 'alert-danger');
+                  } else {
+                      if (!nameField || !emailField || !emailPattern.test(emailField)) {
+//                          $('#send-us-quote-form').stopPropagation();
+//                          $('#send-us-quote-form').stopPropagation();
+                          event.preventDefault();
+                          event.stopPropagation();
+                          popupMessage('Invalid form! Please ', 'alert-danger');
+                          console.log("check");
+
+                      }
+                  }
+              });
+
+          });
+
+
+      </script>
+
+      <script type="text/javascript">
+          $(function () {
+              $('.fullSliderFirst').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+                  $('.slide-content').addClass('hide');
+                  $('.slider-' + nextSlide).removeClass('hide');
+              }).slick({
+                  dots: !0,
+                  autoplay: true,
+                  infinite: true
+              });
+          });
+      </script>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<%= form_for @advance_return, html: {id: 'advance_return_form'} do |f| %>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <i class="fa fa-newspaper-o"></i>
+      <h4 class="modal-title">Return Advance</h4>
+    </div>
+    <div class="modal-body">
+      <div class="row p15">
+        <div class="form-group">
+          <%= f.label 'Employee' %>
+          <%= f.select :employee_id, @employees, {prompt: 'Select Employee'}, {class: 'custom-chosen form-control custom-label-select change-employee', data: {required: true}} %>
+        </div>
+        <div class="form-group advanse-return-advances-dropdown">
+          <%= f.label 'Advances' %>
+          <%= f.select :advance_id, '', {prompt: 'Select Advance'}, {class: 'custom-chosen form-control custom-label-select', id: 'employees-advance-return-advance', data: {required: true}} %>
+        </div>
+
+        <div class="col-md-6 reset-padding">
+          <div class="form-group">
+            <%= f.label :amount %>
+            <%= f.number_field :amount, class: 'form-control', data: {required: true} %>
+          </div>
+        </div>
+        <div class="col-md-6 reset-padding pl15">
+          <div class="form-group">
+            <%= f.label :date %>
+            <%= f.text_field :date, class: "form-control", data: {required: true} %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= f.hidden_field :return_from, :value => Employees::AdvanceReturn::RETURN_BY[:direct] %>
+    <div class="modal-footer">
+      <div class="pull-right">
+        <%= f.submit "Submit", class: "btn btn-success" %>
+        <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $('#advance_return_form').syftValidator();
+        $('#global-modal').on('shown.bs.modal', function () {
+            $('#employees_advance_return_employee_id', this).chosen();
+        });
+
+        $('.change-employee').change(function () {
+            $.ajax({
+                url: "/employees/advances/employee_advances?employee_id=" + $(this).val(),
+                type: 'get',
+                dataType: 'script'
+            });
+        });
+
+        $('#employees-advance-return-advance').change(function () {
+            if ($(this).val().length > 0) {
+                $('#employees_advance_return_amount').val($(this).find(':selected').attr('amount'));
+            }
+            else {
+                $('#employees_advance_return_amount').val('');
+            }
+        });
+
+        $('#employees_advance_return_date').datetimepicker({
+            format: 'YYYY-MM-DD',
+            defaultDate: "<%= Date.today %>",
+        });
+    });
+
+</script>

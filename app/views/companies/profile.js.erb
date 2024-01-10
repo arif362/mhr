@@ -1,0 +1,6 @@
+var container = $('#info-content');
+<% if @view.present? %>
+container.html('<%= escape_javascript(render @view).html_safe %>');
+<% else %>
+container.html('<%= escape_javascript(render 'companies/templates/company_info').html_safe %>');
+<% end %>

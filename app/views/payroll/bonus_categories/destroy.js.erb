@@ -1,0 +1,10 @@
+<% if @bonus_category.errors.any? %>
+    popupMessage('Unable to delete bonus category, Please try again!', 'alert-danger');
+<% else %>
+    popupMessage('Bonus Category successfully deleted', 'alert-info');
+    $("#payroll-bonus-category-<%= @bonus_category.id %>").remove();
+    $('#global-modal').modal('hide');
+    if ($(".bonus-category-table").find("tbody").find("tr").size() <= 0) {
+        $('.no-data-found').html("<%= escape_javascript(render 'shared/no_data_found', message: 'No bonus category').html_safe %>")
+    }
+<% end %>

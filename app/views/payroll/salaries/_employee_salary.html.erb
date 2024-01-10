@@ -1,0 +1,18 @@
+<div class="col-md-12 reset-padding mt20">
+  <%= render 'salary_detail_header', salary: @salary, salary_month: @salary_month, salary_year: @salary_year %>
+  <div class="col-md-12 reset-padding" id="employee-salary-detail-section">
+    <% if @salary.new_record? %>
+        <%= render "form" %>
+    <% else %>
+        <%= render 'salary_detail' %>
+    <% end %>
+  </div>
+</div>
+
+<div class="col-md-12 reset-padding">
+  <div class="mt30">
+    <h4>Last Salaries</h4>
+    <%= render "payroll/salaries/salaries_summary_table", salaries: @employee.payroll_salaries %>
+  </div>
+</div>
+

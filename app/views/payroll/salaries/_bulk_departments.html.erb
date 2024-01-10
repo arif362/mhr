@@ -1,0 +1,30 @@
+<h3>
+  Departments that hasn't yet received salaries at <span> <%= AppSettings::MONTHS_SHORT_NAME[@combined_salary_month - 1] %> <%= @combined_salary_year %> </span>.
+</h3>
+<table class="table beaccount-table table-hover table-striped table-responsive">
+  <thead>
+  <tr>
+    <th><input type="checkbox" checked id="checkAll"/> <span style="vertical-align: super;">Check All</span></th>
+    <th style="vertical-align: middle;">Department Name</th>
+    <th style="vertical-align: middle;">Number of Employees</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @departments.each do |department| %>
+      <tr>
+        <td><%= check_box_tag "department_ids[]", department.id, true %></td>
+        <td><%= department.name %></td>
+        <td>
+          <% number_of_employee = department.employees.count(:id)%>
+          <%= number_of_employee %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+    $("#checkAll").change(function () {
+        $("input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+</script>

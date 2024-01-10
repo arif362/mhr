@@ -1,0 +1,23 @@
+<tr id="employee-category-taken-<%= employee_category.id %>">
+  <td>
+    <%= employee_category.category.name %>
+  </td>
+  <td>
+    <%= employee_category.category.is_add ? "Additive" : "Deductive" %>
+  </td>
+  <td>
+    <%= employee_category.category.is_percentage ? "Percentage of Basic" : "Fixed Amount" %>
+  </td>
+  <td id="amount-<%= employee_category.category.id %>" class="custom">
+    <%= employee_category.category.is_percentage ? "#{employee_category.percentage}%" : "#{ current_currency } #{employee_category.amount}" %>
+  </td>
+  <td id="actions-<%= employee_category.category.id %>">
+    <%= link_to edit_payroll_employee_category_path(id: employee_category.id, employee_id: @employee.id), remote: true, class:"btn warning-color" do %>
+        <i class="fa fa-pencil-square-o"></i>
+    <% end %>
+
+    <a href="/payroll/employee_categories/<%= employee_category.id %>?employee_id= <%= employee_category.employee_id %>" data-remote="true" data-method="delete" class="btn danger-color" >
+      <i class="fa fa-times"></i>
+    </a>
+  </td>
+</tr>

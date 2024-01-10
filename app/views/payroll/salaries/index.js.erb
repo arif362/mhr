@@ -1,0 +1,5 @@
+<% if params[:employee_id].present? %>
+    $('#salaries').html('<%= escape_javascript( render 'employee_salary').html_safe %>');
+<% else %>
+    $('#salaries').html('<%= escape_javascript( render 'salaries_table', salaries: @salaries).html_safe %>');
+<% end %>

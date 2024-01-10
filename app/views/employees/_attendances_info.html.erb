@@ -1,0 +1,58 @@
+<div class="p10">
+  <div class="text-center">
+    <h3 class="m0"><%= @employee.full_name %></h3>
+    <h4 class="mt0"><%= @employee.email %></h4>
+  </div>
+  <div class="attendance-in-out-search mb10 clearfix">
+    <div class="col-sm-2 reset-padding">
+      <div class="attendance-in-out">
+        <%= in_out_button_select(@employee) %>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <%= form_tag employee_attendances_path(employee_id: current_employee, no_modal: true), remote: true, method: :get, id: 'employees-attendance-form', class: 'form-wrapper' do %>
+          <div class="input-group">
+            <%= text_field_tag :daterange, params[:daterange].present? ? params[:daterange] : Date.today.beginning_of_month.to_s + '  To  ' + Date.today.to_s, class: "form-control reset-border-radius", placeholder: "Search for..." %>
+            <span class="input-group-addon reset-border-radius" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+          </div>
+      <% end %>
+    </div>
+    <div class="col-sm-2 reset-padding clearfix">
+      <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to pull-rightx reset-border-radius', prompt: 'Export To....'} %>
+    </div>
+  </div>
+  <div class="" id="attendance-content">
+    <%= render partial: 'attendances_table', object: @attendances %>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            showDropdowns: true,
+            locale: {
+                format: 'YYYY-MM-DD',
+                separator: '  To  '
+            },
+            maxDate: '<%= Date.today%>',
+            minDate: '<%= current_department.created_at %>'
+        };
+
+        $('input[name="daterange"]').daterangepicker(options).on('apply.daterangepicker', function (ev, picker) {
+            $('#employees-attendance-form').submit();
+        });
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= employee_attendances_path('pdf', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= employee_attendances_path('docx', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= employee_attendances_path('xls',  params) %>'
+            }
+        });
+    });
+</script>

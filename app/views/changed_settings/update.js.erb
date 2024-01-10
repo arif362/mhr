@@ -1,0 +1,8 @@
+<% if @changed_setting.errors.present? %>
+popupMessage('<%= escape_javascript( errors_to_message_string(@changed_setting.errors)).html_safe %>', 'alert-danger');
+<% else %>
+$('#global-modal').modal('hide');
+<% flash.clear %>
+popupMessage('Additional settings updated', 'alert-success');
+$('#changed-setting-<%= @changed_setting.id %>').replaceWith('<%= escape_javascript(render 'changed_setting', changed_setting: @changed_setting).html_safe %>');
+<% end %>

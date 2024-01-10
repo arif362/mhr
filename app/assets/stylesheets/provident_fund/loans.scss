@@ -1,0 +1,10 @@
+// Place all the styles related to the provident_fund/loans controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.provident-fund-loan-form {
+  max-width: 600px;
+  margin: auto;
+  .input_loan_installment {
+    display: none;
+  }
+}

@@ -1,0 +1,29 @@
+<div class="col-sm-3">
+  <div class="module-list ">
+    <h2 class="mb20 mt25 fz20"> Modules </h2>
+    <ul class="clearfix common-ul-style module-features-list">
+      <li>
+        <!--<a href="">-->
+        <!--<i class="fa fa-check text-success"></i>-->
+        <!--<p> Employee </p>-->
+        <!--</a>-->
+        <%= link_to modules_employee_path, class:'fa fa-check text-success p15' do %>
+            Employee
+        <% end %>
+      </li>
+        <% modules.each do |feature|  %>
+           <li>
+             <%= link_to "/modules/#{feature.name.gsub(' ', '_').downcase}", class:'fa fa-check text-success p15' do %>
+                 <%= feature.name %>
+             <% end %>
+           </li>
+        <% end %>
+
+    </ul>
+  </div>
+</div>
+
+<%# if feature.name == 'Leave'%>
+<%# if feature.name == 'Payroll'%>
+<%# if feature.name == 'Expense'%>
+<%# if feature.name == 'Provident Fund'%>

@@ -1,0 +1,26 @@
+Employee Attendances <br><br>
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th> Date</th>
+        <th> In</th>
+        <th> Out</th>
+        <th> Duration</th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @attendances.each do |attendance| %>
+          <tr id="attendance-<%=attendance.id%>">
+            <td><%= format_date(attendance.in_date) %></td>
+            <td><%= get_time_from_datetime(attendance.in_time) %></td>
+            <td><%= get_time_from_datetime(attendance.out_time) %></td>
+            <td><%= format_duration(attendance.duration.to_f) %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

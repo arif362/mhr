@@ -1,0 +1,22 @@
+<tr id="expense-sub-category-<%= expense_sub_category.id %>">
+  <td><%= expense_sub_category.name %></td>
+  <td><%= truncate(expense_sub_category.description, length: 60) %></td>
+  <td>
+    <%= link_to expenses_category_path(expense_sub_category), class: 'btn info-color', remote: true do %>
+        <i class="fa fa-eye"></i>
+    <% end %>
+
+    <%= link_to edit_expenses_category_path(expense_sub_category), class: 'btn warning-color', remote: true do %>
+        <i class="fa fa-pencil-square-o"></i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: expense_sub_category.id, action_on: 'expenses/categories', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"></i>
+    <% end %>
+  </td>
+</tr>
+
+<script type="text/javascript">
+    $('.collapse').on('show.bs.collapse', function () {
+        $('.collapse.in').collapse('hide');
+    });
+</script>

@@ -1,0 +1,9 @@
+$("#attendance-item-<%= @attendance.id %>").remove();
+<% if @absent_data.present? %>
+    $('#attendance-list-table').append("<%= escape_javascript(render 'attendance/attendances/absent_employee_row', data: @absent_data).html_safe %>");
+<% end %>
+$('#global-modal').modal('hide');
+
+if ($(".attendance-table").find("tbody").find("tr").size() <= 0) {
+    $('.no-data-found').html("<%= escape_javascript(render 'shared/no_data_found', message: 'No attendance found').html_safe %>")
+}

@@ -1,0 +1,13 @@
+<% if @budgets.present? %>
+<% @budgets.each do |bud| %>
+$('#expense_budget').attr('action', "/expenses/budgets/update_budget")
+$('#expense_budget').attr('method', "get")
+$("#amount_<%= bud.category_id %>").val(<%= bud.amount %>);
+$(".budget_button").attr("value","Update Budget");
+<% end %>
+<% else %>
+$('#expense_budget').attr('action', "/expenses/budgets")
+$('#expense_budget').attr('method', "post")
+$( "input[name*='amount']" ).val(0);
+$(".budget_button").attr("value","Create Budget");
+<% end %>

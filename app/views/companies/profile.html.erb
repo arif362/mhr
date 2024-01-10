@@ -1,0 +1,12 @@
+<div class="row toggleable-container reset-padding">
+  <%= render 'shared/toggleable_sidebar', sidebar_menu: @company.sidebar_menu_generator %>
+  <div class="main-content content-body-wrapper">
+    <div class="content-body p0" id="info-content">
+      <% if @view.present? %>
+          <%= render @view %>
+      <% else %>
+          <%= render 'companies/templates/company_info' %>
+      <% end %>
+    </div>
+  </div>
+</div>

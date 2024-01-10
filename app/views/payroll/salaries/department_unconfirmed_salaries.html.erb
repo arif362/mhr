@@ -1,0 +1,71 @@
+<div class="row reset-padding secondary-color">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>Payroll Unconfirmed Salaries</h4>
+    </div>
+    <div class="secondary-color">
+      <div class="content-body-wrapper">
+        <div class="row content-body">
+          <% if @salaries.present? %>
+              <%= form_tag confirm_departments_payroll_salaries_path, method: 'get',id: 'unconfirm-salaries-confirm-form' do %>
+                  <div class="table-warapper">
+                    <div class="table-warapper-body">
+                      <table class="table beaccount-table table-responsive salaries-list table-hover table-striped">
+                        <thead>
+                        <tr>
+                          <th><input type="checkbox" checked id="checkAll"/> <span style="vertical-align: super;">Check All</span></th>
+                          <th>Department</th>
+                          <th>Amount</th>
+                        </tr>
+                        </thead>
+                        <% total_salary_of_all_department = 0 %>
+                        <% @salaries.each do |salary| %>
+                            <tr id="unconfirm-salary-<%= salary.department_id %>">
+                              <td><%= check_box_tag 'department_ids[]', salary.department_id, true %></td>
+                              <td><%= salary.department.name %></td>
+                              <td>
+                                <%= (salary.total_salary).round(2) %>
+                                <% total_salary_of_all_department += salary.total_salary %>
+                              </td>
+                            </tr>
+                        <% end %>
+                        <tr >
+                          <td></td>
+                          <td> Total </td>
+                          <td><%= (total_salary_of_all_department).round(2) %></td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <%= submit_tag 'Confirm Salary', class: 'btn btn-info' %>
+                  <%= submit_tag 'Confirm & Print', class: 'btn btn-info', id: 'submit-to-print' %>
+              <% end %>
+          <% else %>
+              <div class="col-md-12 reset-padding">
+                <%= render 'shared/no_data_found', message: 'No unconfirmed salaries found.' %>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $(function(){
+            $("#checkAll").change(function () {
+                $("input:checkbox").prop('checked', $(this).prop("checked"));
+            });
+
+            $('#submit-to-print').click(function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                console.log($("#unconfirm-salaries-confirm-form").attr("action"));
+                $("#unconfirm-salaries-confirm-form").attr("action", "<%= confirm_departments_payroll_salaries_path('pdf') %>").submit();
+                console.log($("#unconfirm-salaries-confirm-form").attr("action"));
+            });
+        });
+    });
+</script>

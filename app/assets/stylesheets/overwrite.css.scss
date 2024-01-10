@@ -1,0 +1,38 @@
+// Tooltips customization from bootstrap
+
+.tooltip {
+  font-size: 13px;
+  font-family: "Anonymous Pro", "Inconsolata", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
+  .tooltip-inner {
+    background: #095B74;
+  }
+  &.top {
+    .tooltip-arrow {
+      border-top-color: #095B74;
+    }
+  }
+
+  &.right {
+    .tooltip-arrow {
+      border-right-color: #095B74;
+    }
+  }
+
+  &.bottom {
+    .tooltip-arrow {
+      border-bottom-color: #095B74;
+    }
+  }
+
+  &.left {
+    .tooltip-arrow {
+      border-left-color: #095B74;
+    }
+  }
+}
+
+.nav-tabs > li > a {
+  &:focus {
+    background: #ffffff;
+  }
+}

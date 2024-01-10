@@ -1,0 +1,7 @@
+<%# if @advance.errors.present? %>
+//    popupMessage("Advance couldn't be updated", "alert-danger");
+<%# else %>
+//    popupMessage("Advance successfully updated", "alert-success");
+//    $("#global-modal").modal('hide');
+//    $(".employee_advance-<%#= @advance.id %>").replaceWith("<%#= escape_javascript( render 'expenses/advances/advance_row', advance: @advance).html_safe %>");
+<%# end %>

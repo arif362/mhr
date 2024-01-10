@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span></button>
+  <i class="fa fa-newspaper-o"></i>
+  <h4 class="modal-title"> Watching video for <%= @module.upcase %> module </h4>
+</div>
+<div class="modal-body">
+  <div class="row p20">
+    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/<%= @video %>" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+  </div>
+</div>

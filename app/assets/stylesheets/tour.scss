@@ -1,0 +1,388 @@
+/* Add Public Variable for Color */
+@import "public_variables";
+
+.tour-main-wrap ul > li {
+  list-style-type: none;
+}
+
+.tour-main-wrap {
+  background-color: #f4f4f4;
+  color: #666;
+}
+
+/* Box Model */
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Button */
+
+.button {
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px #666666 inset;
+  color: #444444 !important;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.725em;
+  font-weight: 400;
+  height: 3.5em;
+  letter-spacing: 0.325em;
+  line-height: 3.5em;
+  padding-bottom: 0;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-top: 0;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.button:hover {
+  color: #EF6480 !important;
+  box-shadow: inset 0 0 0 2px #EF6480;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 480px) {
+  .button {
+    padding: 0;
+  }
+
+}
+
+/* Item */
+
+.product-wrap {
+  padding: 3em 3em 1em 3em;
+  background-color: #ffffff;
+  border-radius: 4px;
+  text-align: center;
+  p {
+    text-align: justify;
+  }
+}
+
+.product-item {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  margin: -3em 0 3em -3em;
+  width: calc(100% + 6em);
+  //height: 15em;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -moz-align-items: center;
+  -webkit-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -moz-justify-content: center;
+  -webkit-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  background-color: #444;
+  color: rgba(255, 255, 255, 0.75);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-item a {
+  color: inherit;
+}
+
+.product-item h3 {
+  color: #ffffff;
+  margin: 0px;
+  padding: 90px;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+
+}
+
+.product-item h3 a {
+  text-decoration: none;
+}
+
+header a:hover {
+  color: #EF6480 !important;
+}
+
+.product-item > * {
+  position: relative;
+  z-index: 1;
+}
+
+.products-wrap {
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -moz-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  width: calc(100% + 2em);
+  margin: -2em 0 0 -2em;
+}
+
+.products-wrap .product-wrap {
+  margin: 2em 0 0 2em;
+  width: calc(50% - 2em);
+}
+
+@media screen and (max-width: 980px) {
+
+  .product-item {
+    height: 25em;
+  }
+
+  .products-wrap {
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -moz-flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin: 0;
+  }
+
+  .products-wrap .product-wrap {
+    width: 100%;
+    margin: 0 0 2em 0;
+  }
+
+  .products-wrap .product-wrap:last-child {
+    margin-bottom: 0;
+  }
+
+}
+
+@media screen and (max-width: 736px) {
+
+  .product-item {
+    height: 15em;
+  }
+
+  .products-wrap .product-wrapitem {
+    margin: 0 0 1em 0;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+
+  .product-wrap {
+    padding: 2em 1em 0.1em 1em;
+  }
+
+  .product-item {
+    height: 12em;
+    margin: -2em 0 2em -1em;
+    width: calc(100% + 2em);
+  }
+
+}
+
+/* Body Wrapper */
+
+.tour-body-wrap {
+  width: 64em;
+  margin: 0 auto;
+  max-width: calc(100% - 4em);
+  padding: 4em 0 2em 0;
+}
+
+.tour-body-wrap > .tour-about-wrap {
+  margin-bottom: 4em;
+}
+
+@media screen and (max-width: 980px) {
+
+  .tour-body-wrap {
+    padding: 2em 0 2em 0;
+  }
+
+  .tour-body-wrap > .tour-about-wrap {
+    margin-bottom: 2em;
+  }
+
+}
+
+@media screen and (max-width: 736px) {
+
+  .tour-body-wrap {
+    max-width: calc(100% - 2em);
+    padding: 1em 0 0.1em 0;
+  }
+
+  .tour-body-wrap > .tour-about-wrap {
+    margin-bottom: 1em;
+  }
+
+}
+
+/* Header */
+
+.tour-header-wrap {
+  background-color: #444;
+  color: rgba(255, 255, 255, 0.75);
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -moz-align-items: center;
+  -webkit-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -moz-justify-content: center;
+  -webkit-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -moz-flex-direction: column;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 8em 0 6em 0;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  text-align: center;
+  position: relative;
+  cursor: default;
+  height: 20em;
+  min-height: 20em;
+  min-height: 75vh;
+}
+
+.tour-header-wrap a {
+  color: inherit;
+}
+
+.tour-header-wrap a:hover {
+  color: #EF6480 !important;
+}
+
+.tour-header-wrap h1 {
+  margin-bottom: 0.5em;
+  color: #fff;
+  font-size: 4em;
+  padding: 0 0.5em 0.25em 0.5em;
+  border-bottom: solid 2px #ffffff;
+  font-weight: 200;
+  font-family: "Pacifico", cursive;
+  text-transform: none;
+  letter-spacing: 0;
+
+}
+
+.tour-header-container {
+  position: relative;
+  z-index: 1;
+}
+
+.tour-header-wrap p {
+  text-transform: uppercase;
+  letter-spacing: 0.325rem;
+  font-weight: 400;
+  font-size: 0.8em;
+  padding: 0 1.25em;
+}
+
+@media screen and (max-width: 1280px) {
+
+  .tour-header-wrap {
+    background-attachment: scroll;
+  }
+
+}
+
+@media screen and (max-width: 736px) {
+
+  .tour-header-wrap {
+    padding: 4em 2em 2em 2em;
+  }
+
+  .tour-header-wrap h1 {
+    font-size: 2.5em;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .tour-header-wrap p {
+    padding: 0;
+  }
+
+  .tour-header-container {
+    max-width: 20em;
+  }
+
+}
+
+/* Main */
+
+#main {
+  padding: 4em 4em 2em 4em;
+  background-color: #ffffff;
+  border-radius: 4px;
+}
+
+#main > header:first-child {
+  text-align: center;
+}
+
+@media screen and (max-width: 736px) {
+
+  #main {
+    padding: 2em 2em 0.1em 2em;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+
+  #main {
+    padding: 2em 1em 0.1em 1em;
+  }
+
+}
+
+/* Description of Tour Page */
+
+.tour-about-wrap {
+  padding: 4em 4em 2em 4em;
+  background-color: #ffffff;
+  border-radius: 4px;
+  text-align: center;
+}
+
+@media screen and (max-width: 736px) {
+
+  .tour-about-wrap {
+    padding: 2em 2em 0.1em 2em;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+
+  .tour-about-wrap {
+    padding: 2em 1em 0.1em 1em;
+  }
+
+  .tour-about-wrap p br {
+    display: none;
+  }
+
+}
+

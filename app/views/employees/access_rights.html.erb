@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="header-wrapper">
+    <h4>
+      Employee Access Permissions
+    </h4>
+  </div>
+
+  <div class="content-body mb10">
+
+    <div class="report-search-form mb10 ml15">
+      <table class="">
+        <tbody>
+        <tr>
+          <td>
+            <label class="custom-label pr5">Select Employee: </label>
+          </td>
+          <td>
+            <%= form_tag '', method: 'get' do %>
+                <%= select_tag :employee_id, options_for_select(@employees.map { |c| [c.full_name, c.id] }, @employee.id), name: "employee_id", :class => "custom-chosen form-control submit-on-change" %>
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="">
+
+      <div class="clearfix">
+        <div class="panel panel-info reset-border-radius">
+          <div class="panel-heading"> <%= @employee.full_name %> </div>
+          <div class="panel-body">
+            <%= render 'employees/general_info', employee: @employee %>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix">
+        <div class="panel panel-info reset-border-radius">
+          <div class="panel-heading reset-border-radius"> Access Permissions</div>
+          <div class="panel-body reset-border-radius">
+            <%# if current_employee.super_admin? %>
+            <% if can_access? 'index', 'access_rights' %>
+                <%= render 'access_rights/set_access_right', access_right: @access_right %>
+            <% end %>
+            <%# end %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="new-modal-wrap modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Attachment</h4>
+          </div>
+          <div class="modal-body text-center">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".popup_link").click(function (e) {
+            var src = $(this).attr('id');
+            $('.modal-body').html('<img width="100%" id="iamge" src=' + src + ' />');
+            $('#myModal').modal('show');
+        });
+    });
+</script>

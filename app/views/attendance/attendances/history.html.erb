@@ -1,0 +1,157 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Attendance History
+      </h4>
+    </div>
+    <div class="content-body">
+      <div class="site-header">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="col-sm-2 reset-padding">
+                  <label class="custom-label"> Attendance: </label>
+                </div>
+                <%= form_tag '', method: 'get', id: 'daterange-working-hour-form' do %>
+                    <div class="col-sm-8 input-group">
+                      <%= text_field_tag :daterange, '', value: params[:daterange], class: 'form-control reset-border-radius ml7' %>
+                      <span class="input-group-addon reset-border-radius" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                    </div>
+                <% end %>
+              </div>
+              <div class="col-sm-6">
+                <table class="pull-right">
+                  <tr>
+                    <td>
+                      <% if employee_role == 'admin' %>
+                          <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To....'} %>
+                      <% end %>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center pt15">
+          <h3>
+            Employee attendance history from
+            <%= params[:daterange].present? ? params[:daterange] : (Date.today.beginning_of_month.strftime('%B %d, %Y') + ' to ' + Date.today.strftime('%B %d, %Y')) %>
+          </h3>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-warapper">
+            <div class="table-warapper-body">
+              <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Working Hour</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @attendances.each do |attendance| %>
+                    <tr>
+                      <td>
+                        <% if attendance.employee.present? %>
+                            <%= link_to employee_profile_path(attendance.employee), remote:true do %>
+                                <%= attendance.employee.full_name %>
+                            <% end %>
+                        <% end %>
+                      </td>
+                      <td><%= attendance.employee.email if attendance.employee.present? %></td>
+                      <td><%= attendance.total_duration.present? ? format_duration(attendance.total_duration) : '0' %></td>
+                      <td class="actions text-center">
+                        <%= link_to employee_attendances_path(attendance.employee, :daterange => (params[:daterange].present? ? params[:daterange] : Date.today.beginning_of_month.strftime('%d-%m-%Y') + ' To ' + Date.today.strftime('%d-%m-%Y'))), remote: true, class: 'text-center' do %>
+                            <i class="fa fa-eye"></i>
+                        <% end %>
+                      </td>
+                    </tr>
+                <% end %>
+                <% @absent_employees.each do |employee| %>
+                    <tr>
+                      <td>
+                        <% if employee.present? %>
+                            <%= link_to employee_profile_path(employee),remote:true do %>
+                                <%= employee.full_name %>
+                            <% end %>
+                        <% end %>
+                      </td>
+                      <td><%= employee.email if employee.present? %></td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+              <%= render 'shared/pagination' if (@attendances.size + @absent_employees.size) > 10 %>
+              <div class="no-data-found">
+                <% if @attendances.size + @absent_employees.size <= 0 %>
+                    <%= render 'shared/no_data_found', message: 'No attendance found' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/modal' %>
+
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            showDropdowns: true,
+            locale: {
+                format: 'DD-MM-YYYY',
+                separator: '  To  '
+            },
+            minDate: '<%= current_department.created_at.strftime('%d-%m-%Y') %>',
+            maxDate: '<%= Date.today.strftime('%d-%m-%Y') %>'
+        };
+
+        if (!<%= params[:daterange].present? %>) {
+            options.startDate = "<%= Date.today.beginning_of_month.strftime('%d-%m-%Y') %>";
+            options.endDate = "<%= Date.today.strftime('%d-%m-%Y') %>";
+        }
+
+        $('input[name="daterange"]').daterangepicker(options).on('apply.daterangepicker', function (ev, picker) {
+            $('#daterange-working-hour-form').submit();
+        });
+
+        if ($(".beaccount-table").find("tbody").find("tr").size() > 0) {
+            $(".beaccount-table").tablesorter({
+                headers: {
+                    3: {
+                        sorter: false
+                    }
+                },
+                widthFixed: true,
+                widgets: ['zebra']
+            }).tablesorterPager({container: $("#pager")});
+        }
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>') {
+                window.location.href = '<%= history_attendance_attendances_path('pdf', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '<%= history_attendance_attendances_path('docx', params) %>'
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '<%= history_attendance_attendances_path('xls',  params) %>'
+            }
+        });
+    });
+</script>

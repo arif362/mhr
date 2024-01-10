@@ -1,0 +1,28 @@
+<a href="javascript:void(0)" data-id="<%= employee_category.category_id %>" data-emp-id="<%= employee_category.id %>" data-value="<%= employee_category.amount.present? ? "#{current_currency} #{employee_category.amount}" : employee_category.percentage.present? ? "#{employee_category.percentage}%" : '' %>" class="btn danger-color cancel-btn">
+  <i class="fa fa-times"></i>
+</a>
+<script type="text/javascript">
+    $(function(){
+        $('.cancel-btn').click(function(){
+            if( $(this).attr('data-value')){
+                var tagElement = '<a class="btn warning-color" data-remote="true" href="/payroll/employee_categories/'+ $(this).attr('data-emp-id') +'/edit?employee_id=' + <%= @employee.id %> + '"><i class="fa fa-pencil-square-o"></i></a><a href="/payroll/employee_categories/'+ $(this).attr('data-emp-id') +'/edit?employee_id=' + <%= @employee.id %> + '"data-remote="true" data-method="delete" class="btn danger-color"><i class="fa fa-times"></i></a>';
+                $('#amount-'+$(this).attr('data-id')).html($(this).attr('data-value'));
+                $('#actions-'+$(this).attr('data-id')).html(tagElement);
+            }
+            else{
+                var tagElement = '<a class="warning-color" data-remote="true" href="/payroll/employee_categories/new?category_id=' + $(this).attr('data-id') + '&employee_id='+ <%= @employee.id %> +'"><i class="fa fa-plus-circle" style="font-size: 20px"></i></a>';
+                $('#amount-'+$(this).attr('data-id')).html('----');
+                $('#actions-'+$(this).attr('data-id')).html(tagElement);
+            }
+
+        });
+
+//        var value = $('#amount-2').text();
+//        if(!value == ''){
+//            $('#actions-2').addClass('pt0');
+//        }
+//        else {
+//            $('#actions-2').addClass('pt0x');
+//        }
+    });
+</script>

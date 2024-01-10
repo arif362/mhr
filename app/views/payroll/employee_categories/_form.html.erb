@@ -1,0 +1,9 @@
+<%= form_for @employee_category, remote: true, class: 'form-inline inline-single-form'  do |f|%>
+    <%= f.hidden_field :employee_id%>
+    <%= f.hidden_field :category_id%>
+    <div class="input-group inline-input-fields">
+      <span class="input-group-addon"><%= f.object.category.is_percentage ? '%' : current_currency %></span>
+      <%= f.number_field f.object.category.is_percentage ? :percentage : :amount , class: 'inline-single-input form-control'%>
+      <span class="input-group-addon"><%= f.submit 'Go', class: 'btn btn-sm reset-padding reset-margin' %></span>
+    </div>
+<% end %>

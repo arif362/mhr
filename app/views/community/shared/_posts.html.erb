@@ -1,0 +1,9 @@
+<div class="comments-and-reply-wrap" id="posts-wrapper">
+  <% if @posts.present? %>
+      <% @posts.each do |post| %>
+          <%= render 'community/shared/post', post: post %>
+      <% end %>
+  <% else %>
+        <%= render 'shared/no_data_found', message: 'No post found' %>
+  <% end %>
+</div>

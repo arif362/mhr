@@ -1,0 +1,12 @@
+calenderArea = $('#calendar');
+<% @day_offs.each do |day_off| %>
+calenderArea.fullCalendar( 'removeEvents', <%= day_off[:id] %>);
+<% end %>
+
+calenderArea.fullCalendar('addEventSource', <%= raw @day_offs.to_json %>);
+
+<% if(@day_offs.length > 0) %>
+    popupMessage('Setting has been updated successfully', 'alert-info');
+<% else %>
+    popupMessage('Unable to update setting, Please check data and try again!', 'alert-danger');
+<% end %>

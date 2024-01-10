@@ -1,0 +1,76 @@
+// Place all the styles related to the daily_progress controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.dp-search{
+  position: absolute;
+  right: 25.5rem;
+  top: 1.2rem;
+}
+
+.task-complete,
+.task-incomplete {
+  padding: 3px 0;
+  list-style: decimal;
+}
+
+.task-complete {
+  color: #2b711b;
+  text-decoration: line-through;
+}
+
+.task-incomplete {
+  color: #730E15;
+}
+.card-header {
+  padding: 7px 13px !important;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.task-lists {
+  li {
+    list-style-type:decimal !important;
+    padding: 3px 0;
+  }
+}
+
+.task-lists-action {
+  list-style: none;
+  li {
+    padding: 3px 0;
+  }
+}
+
+.card {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+}
+
+.card-header:first-child {
+  border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+.card-header{
+  padding: .75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0,0,0,.03);
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.all-check{
+  list-style-type: none;
+  background-color: #0C6A83;
+  color: #fdfdfd;
+  padding: 10px;
+}

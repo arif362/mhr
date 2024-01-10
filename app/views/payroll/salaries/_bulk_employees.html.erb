@@ -1,0 +1,27 @@
+<h3>
+  Employees who hasn't yet received their salaries at <span> <%= Date::MONTHNAMES[@salary_month] %> <%= @salary_year %> </span>.
+</h3>
+<table class="table beaccount-table table-hover table-striped table-responsive">
+  <thead>
+  <tr>
+    <th><input type="checkbox" checked id="checkAll"/> <span style="vertical-align: super;">Check All</span></th>
+    <th style="vertical-align: middle;">Employee Name</th>
+    <th style="vertical-align: middle;">Designation</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @employees.each do |employee| %>
+      <tr>
+        <td><%= check_box_tag "employee_ids[]", employee.id, true %></td>
+        <td><%= employee.full_name %></td>
+        <td><%= employee.designation.name if employee.designation present? %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+    $("#checkAll").change(function () {
+        $("input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+</script>

@@ -1,0 +1,9 @@
+<% if @employee.errors.present? %>
+popupMessage('<%= escape_javascript( errors_to_message_string(@employee.errors) ).html_safe %>', 'alert-danger');
+<% else %>
+$('#employee-list').find('tbody').prepend('<%= escape_javascript(render 'employee_row', employee: @employee).html_safe %>');
+$('.employee-list-table').find('tbody').prepend('<%= escape_javascript(render 'employees/templates/add_employee', employee: @employee).html_safe %>');
+$('#global-modal-large').modal('hide');
+popupMessage('Employee created successfully', 'alert-success');
+$('#no-data-found').remove();
+<% end %>

@@ -1,0 +1,3 @@
+<% title = 'Expense Report ' %>
+<%= render 'expenses/expenses/report_export_header.html.erb', title:  params[:date].present? ? title + params[:date][:year] : title + Date.today.year.to_s %>
+<%= render 'expenses/expenses/report_partial.html.erb' %>

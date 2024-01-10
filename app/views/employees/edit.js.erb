@@ -1,0 +1,3 @@
+$('.sidebar-menu-active').removeClass('sidebar-menu-active');
+$('#global-modal-large').modal({backdrop: 'static', keyboard: false});
+$('#global-modal-large').modal('show').find('.modal-content').html("<%= escape_javascript(render 'form').html_safe %>");

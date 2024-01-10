@@ -1,0 +1,46 @@
+<div class="title-wrap">
+  <div class="text-center pt10">
+    <h4 class="">
+      Upcomming Leaves
+    </h4>
+  </div>
+</div>
+
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container">
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <td>
+          <label> Name </label>
+        </td>
+        <td><label> Leave Type </label></td>
+        <td><label> Total Days </label></td>
+        <td><label> Days </label></td>
+        <td><label>  </label></td>
+      </tr>
+      </thead>
+      <tbody class="custom-pf-table-tbody">
+      <% @recent_leave_days.each do |leave_day| %>
+          <tr>
+            <td><%= leave_day.leave_application.employee.full_name %></td>
+            <td><%= leave_day.leave_application.leave_category.name %></td>
+            <td><%= leave_day.leave_application.total_days %></td>
+            <% days = '' %>
+            <% leave_day.leave_application.leave_days.each do |application_leave_day| %>
+                <% if application_leave_day.is_approved %>
+                    <% days = days.present? ? days + ', ' + application_leave_day.day.to_s : application_leave_day.day.to_s %>
+                <% end %>
+            <% end %>
+            <td><%= days %></td>
+            <td>
+              <%= link_to leave_application_path(leave_day.leave_application, no_admin: true), remote: true do %>
+                  <i class="fa fa-eye"> </i>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

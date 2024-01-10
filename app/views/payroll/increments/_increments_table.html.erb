@@ -1,0 +1,66 @@
+<div class="panelx table-warapperx">
+  <div class="table-warapper-bodyx">
+    <table class="table action-table beaccount-table tablesorter table-responsive increment-list table-hover table-striped">
+      <thead>
+      <tr>
+        <% unless params[:tag].present? %>
+            <th>Employee</th>
+        <% end %>
+        <th>Incremented by</th>
+        <th>Amount</th>
+        <th>Entry Date</th>
+        <th>Effective date</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody id="increments-list">
+      <% increments.each do |increment| %>
+          <%= render 'payroll/increments/increment_row', increment: increment %>
+      <% end %>
+      </tbody>
+    </table>
+    <div id="pager">
+      <%= render 'shared/pagination' if increments.size > 10 %>
+    </div>
+    <div class="no-data-found"></div>
+  </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        if ($(".beaccount-table").find("tbody").find("tr").size() > 0) {
+            $(".beaccount-table").tablesorter({
+                headers: {
+                    <% if params[:tag].present? %>
+                    5: {
+                        sorter: false
+                    },
+                    <% else %>
+                    6: {
+                        sorter: false
+                    },
+                    <% end %>
+                },
+                widthFixed: true,
+                widgets: ['zebra']
+            }).tablesorterPager({container: $("#pager")});
+        }
+
+        <% if params[:tag].present? %>
+            $('#link-to-payroll-increments').show();
+        <% end %>
+
+        if ($(".increment-list").find("tbody").find("tr").size() > 0) {
+            $(".increment-list")
+                    .tablesorter({widthFixed: true, widgets: ['zebra']})
+                    .tablesorterPager({container: $("#pager")});
+        }
+
+        <% if increments.size > 0 %>
+            $('#no-data-found').remove();
+        <% else %>
+            $('#no-data-found').remove();
+            $('.no-data-found').html("<%= escape_javascript(render 'shared/no_data_found', message: 'No increments found').html_safe %>");
+        <% end %>
+    });
+</script>

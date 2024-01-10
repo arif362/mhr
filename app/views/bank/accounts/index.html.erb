@@ -1,0 +1,73 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Bank Accounts
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper" id="bank-account-content">
+      <% if @bank_accounts.present? %>
+          <div class="row actions-button">
+            <div class="add-more-account clearfix">
+              <%= link_to new_bank_account_path, class: 'btn btn-default pull-right' do %>
+                  <i class="fa fa-plus-circle"></i> Add More Account
+              <% end %>
+            </div>
+          </div>
+          <div class="row content-body">
+            <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped">
+              <thead>
+              <tr>
+                <th>Bank Name</th>
+                <th>Branch Name</th>
+                <th>Account Name</th>
+                <th>Ac Number</th>
+                <th>Balance</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @bank_accounts.each do |account| %>
+                  <tr>
+                    <td>
+                      <%= account.bank_name %>
+                    </td>
+                    <td>
+                      <%= account.bank_branch %>
+                    </td>
+                    <td>
+                      <%= account.name %>
+                    </td>
+                    <td>
+                      <%= account.number %>
+                    </td>
+                    <td>
+                      <%= account.balance %>
+                    </td>
+                    <td class="actions">
+                      <%= link_to edit_bank_account_path(account), class: 'btn warning-color' do %>
+                          <i class="fa fa-pencil-square-o"></i>
+                      <% end %>
+                      <%= link_to bank_account_path(account), class: 'btn danger-color', method: :delete, data: {confirm: 'Are you sure?'} do %>
+                          <i class="fa fa-times"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+      <% else %>
+          <div class="text-center table-cell">
+            <p>
+              Current department don't have any bank account. <%#= link_to 'Learn more', '#', class: 'link' %>
+              <i class="fa fa-info-circle btn btn-info reset-border-radius" data-toggle='popover' data-placement='top' title="Open Bank Account" data-content="Click on the create new one button to create bank account"></i>
+            </p>
+            <%= link_to new_bank_account_path, class: 'btn btn-default reset-border-radius' do %>
+                <i class="fa fa-plus-circle"></i> Create new one
+            <% end %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

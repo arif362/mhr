@@ -1,0 +1,38 @@
+<div class="bank-account-form-wrapper">
+  <%= form_for @bank_account, html: {id: 'bank_account_form'} do |f| %>
+      <div class="form-inputs-container form-group">
+        <div class="row">
+          <div class="form-group">
+            <%= f.label 'Account Name' %>
+            <%= f.text_field :name, class: 'form-control', data: {required: true} %>
+          </div>
+          <div class="form-group">
+            <%= f.label 'Account Number' %>
+            <%= f.text_field :number, class: 'form-control', data: {required: true} %>
+          </div>
+          <div class="form-group">
+            <%= f.label :bank_name %>
+            <%= f.text_field :bank_name, class: 'form-control', data: {required: true} %>
+          </div>
+          <div class="form-group">
+            <%= f.label 'Branch Name' %>
+            <%= f.text_field :bank_branch, class: 'form-control', data: {required: true} %>
+          </div>
+          <div class="form-group">
+            <%= f.label :balance %>
+            <%= f.text_field :balance, class: 'form-control', data: {required: true} %>
+          </div>
+          <div class="actionss clearfix">
+            <%= f.submit class: 'btn btn-default pull-right' %>
+            <%= link_to 'Delete Account', bank_account_path(@bank_account), method: :delete, class: 'btn btn-danger pull-right mr10', data: {confirm: 'Are you sure?'} unless @bank_account.new_record? %>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#bank_account_form').syftValidator();
+    });
+</script>

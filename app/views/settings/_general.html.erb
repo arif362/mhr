@@ -1,0 +1,112 @@
+<div class="default-general-settings clearfix p10">
+
+  <h4>Default Settings</h4>
+  <%= form_for @setting, remote: true do |f| %>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :open_time, '*Open Time' %>
+            <%= f.text_field :open_time, class: 'form-control reset-border-radius', id: "department_open_time", value: f.object.open_time.present? ? f.object.open_time.strftime("%I:%M %p") : '', data: {required: true} %>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :close_time %>
+            <%= f.text_field :close_time, class: 'form-control reset-border-radius', id: "department_close_time", value: f.object.close_time.present? ? f.object.close_time.strftime("%I:%M %p") : '' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :working_hours, '*Working Hours' %>
+            <%= f.text_field :working_hours, class: 'form-control reset-border-radius', data: {required: true} %>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <%= f.label :time_zone %>
+            <%= f.time_zone_select :time_zone, nil, {include_blank: true}, {class: 'form-control reset-border-radius'} %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <%= f.label :currency %>
+            <%= f.currency_select :currency, nil, {include_blank: true}, {class: 'form-control reset-border-radius'} %>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <%= f.submit 'Save Changes', class: 'primary-color-bg-with-hover' %>
+      </div>
+  <% end %>
+
+</div>
+
+<div class="additional-general-settings p10">
+  <h4>Additional Working Schedule Time Settings</h4>
+  <p class="text-warning">
+    If you want to change your department 'Working Schedule Time' during at a particular time, create 'Additional Settings'
+    and 'Default Settings' will be omitted at this particular time.
+  </p>
+  <div class="form-groupx clearfix mb10">
+    <%= link_to new_changed_setting_path, remote: true, class: 'btn btn-default reset-border-radius pull-right' do %>
+        <i class="fa fa-plus"> </i> Create Additional Settings
+    <% end %>
+  </div>
+
+  <div>
+    <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped changed-settings-table">
+      <thead>
+      <tr>
+        <th>From Date</th>
+        <th>To Date</th>
+        <th>Open Time</th>
+        <th>Close Time</th>
+        <th>Working Hour</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody id="department-changed-settings-list">
+      <%= render @changed_settings %>
+      </tbody>
+    </table>
+    <div id="pager0">
+      <%= render 'shared/pagination' if @changed_settings.size > 10 %>
+    </div>
+    <div class="no-data-found">
+      <% unless @changed_settings.present? %>
+          <%= render 'shared/no_data_found', message: 'No additional settings found' %>
+      <% end %>
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#department_open_time, #department_close_time').datetimepicker({
+            format: 'LT'
+        });
+
+        if ($(".changed-settings-table").find("tbody").find("tr").size() > 0) {
+            $(".changed-settings-table").tablesorter({
+                headers: {
+                    5: {
+                        sorter: false
+                    }
+                },
+                widthFixed: true,
+                widgets: ['zebra']
+            }).tablesorterPager({container: $("#pager0")});
+        }
+    });
+</script>

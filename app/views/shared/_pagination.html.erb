@@ -1,0 +1,17 @@
+<div id="pager" class="pager clearfix">
+  <div class="pull-left paging-perpage">
+    Per Page:
+    <a href="javascript:void(0)" class="pagesize active" data-pagesize="10">10</a>
+    <a href="javascript:void(0)" class="pagesize" data-pagesize="20">20</a>
+    <a href="javascript:void(0)" class="pagesize" data-pagesize="30">30</a>
+    <a href="javascript:void(0)" class="pagesize" data-pagesize="40">40</a>
+    <a href="javascript:void(0)" class="pagesize" data-pagesize="50">50</a>
+  </div>
+  <div class="pull-right paging-action">
+    <%= image_tag 'shared/first.png', class: 'first height-thirty' %>
+    <%= image_tag 'shared/prev.png', class: 'prev height-thirty' %>
+    <input type="text" class="pagedisplay" readonly/> <!-- this can be any element, including an input -->
+    <%= image_tag 'shared/next.png', class: 'next height-thirty' %>
+    <%= image_tag 'shared/last.png', class: 'last height-thirty' %>
+  </div>
+</div>

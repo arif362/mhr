@@ -1,0 +1,148 @@
+<div class="main-menu clearfix ">
+
+  <ul>
+    <% if employee_signed_in? %>
+        <li>
+          <div class="module-dropdown">
+            <a href="<%= root_path %>" class="module-dropbtn p6 highlight-logoz">
+              <% if get_module_pic.present? %>
+                  <%= image_tag(get_module_pic, style: 'width: 33px') %>
+              <% else %>
+                  <%= image_tag 'icon.svg', style: 'width: 50px' %>
+              <% end %>
+            </a>
+
+            <div class="module-dropdown-content">
+              <div class="clearfix">
+
+                <div class="module-style">
+                  <%= link_to employees_path do %>
+                      <div class="module-icon">
+                        <%= image_tag 'module_settings/employee.png' %>
+                      </div>
+                      <p> Employee </p>
+                  <% end %>
+                </div>
+                <div class="module-style">
+                  <%= link_to attendance_dashboard_path do %>
+                      <div class="module-icon">
+                        <%= image_tag 'module_settings/attendance.png' %>
+                      </div>
+                      <p> Attendance </p>
+                  <% end %>
+                </div>
+                <div class="module-style">
+                  <%= link_to leave_dashboard_path do %>
+                      <div class="module-icon leave-module-pending-notification">
+                        <%= image_tag 'module_settings/leave.png' %>
+                        <% unless leave_pending_notification <= 0 %>
+                            <span> <%= leave_pending_notification %> </span>
+                        <% end %>
+                      </div>
+                      <p> Leave </p>
+                  <% end %>
+                </div>
+                <div class="module-style">
+                  <%= link_to expense_dashboard_path do %>
+                      <div class="module-icon">
+                        <%= image_tag 'module_settings/expense.png' %>
+                      </div>
+                      <p> Expense </p>
+                  <% end %>
+                </div>
+                <div class="module-style">
+                  <%= link_to provident_fund_dashboard_path do %>
+                      <div class="module-icon">
+                        <%= image_tag 'module_settings/provident_fund.png' %>
+                      </div>
+                      <p> Provident Fund </p>
+                  <% end %>
+                </div>
+                <div class="module-style">
+                  <%= link_to payroll_dashboard_path do %>
+                      <div class="module-icon">
+                        <%= image_tag 'module_settings/payroll.png' %>
+                      </div>
+                      <p> Payroll </p>
+                  <% end %>
+                </div>
+                <div class="module-style">
+                  <%= link_to bank_accounts_path do %>
+                      <div class="module-icon">
+                        <%= image_tag 'module_settings/bank.png' %>
+                      </div>
+                      <p> Bank </p>
+                  <% end %>
+                </div>
+                <div class="module-style">
+                  <%= link_to billing_dashboard_path do %>
+                      <div class="module-icon">
+                        <%= image_tag 'module_settings/billing.png' %>
+                      </div>
+                      <p> Billing </p>
+                  <% end %>
+                </div>
+                <div class="module-style">
+                  <%= link_to daily_progress_dashboard_path do %>
+                      <div class="module-icon">
+                        <%= image_tag 'module_settings/projects1.png' %>
+                      </div>
+                      <p> Daily Progress </p>
+                  <% end %>
+                </div>
+              </div>
+              <!--<div class="menu-bottom"></div>-->
+            </div>
+          </div>
+        </li>
+    <% else %>
+        <li>
+          <%= link_to root_path, class: 'pt5 pb5' do %>
+              <%= image_tag('icon.svg', width: 32) %>
+          <% end %>
+        </li>
+    <% end %>
+  </ul>
+
+  <% if employee_signed_in? %>
+      <%= render 'shared/employees/nav_menu_account' %>
+      <% unless current_employee.next_path.present? %>
+          <%= get_module_menus %>
+      <% end %>
+      <% if can_settings_access? %>
+          <%= render 'shared/settings/nav_menu_settings' %>
+      <% end %>
+      <% if can_access?('switch', 'departments') %>
+          <%= render 'shared/settings/switch_department' %>
+      <% end %>
+  <% else %>
+      <div class="landing-nav pull-right">
+        <a href="#" class="pull-right toggle-menu-bar"> <i class="fa fa-bars"></i> </a>
+        <ul class="toggle-menu-hide">
+          <li>
+            <%= link_to company_registration_path do %>
+                Registration
+            <% end %>
+          </li>
+          <li>
+            <%= link_to '' do %>
+                Tour
+            <% end %>
+          </li>
+          <%= render 'shared/about_us' %>
+          <li>
+            <%= link_to pricing_path do %>
+                Apps
+            <% end %>
+          </li>
+          <li>
+            <%= link_to user_login_path do %>
+                Login
+            <% end %>
+          </li>
+        </ul>
+      </div>
+  <% end %>
+
+</div>
+

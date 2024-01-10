@@ -1,0 +1,6 @@
+$('#expense-content').html('<%= escape_javascript( render 'expenses/expenses/index_header_partial').html_safe %>');
+$('.nav-item').removeClass('active-white');
+$('.nav-item-<%= @heading.downcase %>').addClass('active-white');
+options.startDate = "<%= @start_date.to_date.strftime('%d-%m-%Y') %>";
+options.endDate = "<%= @end_date.to_date.strftime('%d-%m-%Y') %>";
+options.tab = "<%= params[:q] %>"

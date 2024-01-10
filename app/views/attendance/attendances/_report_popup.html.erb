@@ -1,0 +1,24 @@
+<div class="att-details-ind">
+  <div class="pop-report-item">
+    <% if dayoff %>
+        <b>Day Off Reason: </b><%= value[day][:day_off].title %><br/>
+        <% if value[day][:day_off].day_off_type == AppSettings::DAYOFF_TYPES[:custom_holiday] %>
+            <b>Day Off Hour: </b><%= value[day][:day_off].hours %><br/>
+        <% end %>
+    <% end %>
+    <% if leave_app %>
+        <b>Leave Type: </b><%= value[day][:leave_status].leave_category.name %><br/>
+        <b>Reason: </b>
+        <%= link_to leave_application_path(value[day][:leave_status], no_admin: true), remote: true do %>
+            <%= truncate(value[day][:leave_status].message, length: 50) %>
+        <% end %>
+    <% end %>
+    <% if in_time %>
+        <b>Worked: </b><%= format_duration(value[day][:total_duration]) %><br/>
+        <b>Intime: </b><%= get_time_from_datetime(value[day][:in_time]) %> <br/>
+        <b>Outtime: </b><%= get_time_from_datetime(value[day][:out_time]) %> <br/>
+        <b>Late Time: </b><%= format_duration(value[day][:late_time]) %> <br/>
+        <b>Over Time: </b><%= format_duration(value[day][:over_time]) %>
+    <% end %>
+  </div>
+</div>

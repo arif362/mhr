@@ -1,0 +1,45 @@
+<div class="row reset-padding">
+  <div class="content-wrapper">
+    <div class="header-wrapper">
+      <h4>
+        Daily Progress Dashboard
+      </h4>
+    </div>
+
+    <div class="secondary-color full-content-wrapper">
+      <div class="row actions-button">
+        <h4 style="float: left;"> Progress of <%= @date %> </h4>
+        <%= link_to 'Next', daily_progress_dashboard_path(date: @next_day), class: 'btn btn-default reset-border-radius pull-right mt10' %>
+        <%= link_to 'Previous', daily_progress_dashboard_path(date: @prev_day), class: 'btn btn-default reset-border-radius pull-right mt10 mr3' %>
+      </div>
+
+      <div class="content-body row mt10 mb10">
+        <% if @progress.present? %>
+            <% @progress.each do |user, tasks| %>
+                <div class="card">
+                  <h3 class="card-header card-primary mt0"> Daily Progress
+                    <b> <%= user.full_name %> </b>
+                    <%= work_progress(tasks) %>
+                  </h3>
+
+                  <div class="panel-body">
+                    <ul>
+                      <% tasks.each do |task| %>
+                          <li class="task-<%= task.is_complete ? 'complete' : 'incomplete' %>">
+                            <%= task.title %>
+                          </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+            <% end %>
+        <% else %>
+            <p class="bs-callout bs-callout-info mt5 mb5 clearfix">
+              No progress tracking of <%= @date %>
+            </p>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="mt75">
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="col-sm-9">
+        <div class="module-detail">
+          <h2 class="page-header"> Bank </h2>
+          <div class="row mt20 mb80">
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/bank/bank_account_list.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/bank/bank_account_list.png', class: 'img-responsive' %>
+              </a>
+            </div>
+            <div class="col-sm-6", style="text-align: justify">
+              Keep track of your bank accounts with this module of ours. How much your account have,
+              and also edit feature which can edit your credentials.
+              There are many more feature to come in this module.
+
+            </div>
+          </div>
+
+          <div class="row mt20 mb80", style="text-align: justify">
+            <div class="col-sm-6">
+              Bank account can be created by filling up some forms. Simple, isn't it!
+
+            </div>
+            <div class="col-sm-6">
+              <a href="javascript:void(0)" data-content="<%= image_path 'modules/bank/create_bank_account.png' %>" class="preview-attachment">
+                <%= image_tag 'modules/bank/create_bank_account.png', class: 'img-responsive' %>
+              </a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <%= render 'home/feature_modules', modules:@modules %>
+
+    </div>
+  </div>
+
+
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('.preview-attachment').attachmentPreview();
+    });
+</script>

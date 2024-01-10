@@ -1,0 +1,135 @@
+$primary-color: #00a5df;
+
+/*Placeholder Design*/
+$ph-color: #fff;
+$ph-fontsize: 12px;
+$ph-fontweight: bold;
+$ph-opacity: 1;
+$ph-text-align: left;
+$ph-letter-spacing: 1px;
+
+@mixin contact-us-pholder() {
+  color: $ph-color;
+  font-size: $ph-fontsize;
+  font-weight: $ph-fontweight;
+  opacity: $ph-opacity;
+  text-align: $ph-text-align;
+  letter-spacing: $ph-letter-spacing;
+}
+
+.form-name-item-group {
+
+  ::-webkit-input-placeholder {
+    @include contact-us-pholder();
+  }
+
+  /* Firefox 18- */
+  :-moz-placeholder {
+    @include contact-us-pholder();
+  }
+
+  /* Firefox 19+ */
+  ::-moz-placeholder {
+    @include contact-us-pholder();
+  }
+
+  :-ms-input-placeholder {
+    @include contact-us-pholder();
+  }
+}
+
+/* Subscribe Placeholder */
+@mixin custome-placeholder($color, $font-size, $font-weight, $text-align, $letter-space, $opacity) {
+  color: $color;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  text-align: $text-align;
+  letter-spacing: $letter-space;
+  opacity: $opacity;
+}
+
+.subscribe-placeholder, #subscribe-input-widget {
+  ::-webkit-input-placeholder {
+    @include custome-placeholder(#000, 12px, normal, left, 1px, 0.3)
+  }
+
+  /* Firefox 18- */
+  :-moz-placeholder {
+    @include custome-placeholder(#000, 12px, normal, left, 1px, 0.3)
+  }
+
+  /* Firefox 19+ */
+  ::-moz-placeholder {
+    @include custome-placeholder(#000, 12px, normal, left, 1px, 0.3)
+  }
+
+  :-ms-input-placeholder {
+    @include custome-placeholder(#000, 12px, normal, left, 1px, 0.3)
+  }
+}
+
+/* Contact Us From Design */
+.contact-us-wrapper {
+  background: image-url("map-image.png") no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-color: #222;
+  //border: 8px solid #fff;
+  .contact-us-bg-opacity {
+    //background-color: rgba(0, 0, 0, 0.8);
+    .contact-us-container {
+      //margin-top: 25px;
+      padding-bottom: 50px;
+      padding-top: 15px;
+      .contact-us-row {
+        h2 {
+          margin-bottom: 50px;
+          margin-top: 70px;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.full-height {
+  min-height: calc( 100vh - 105px);
+}
+
+.custom-button {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  font-size: 17px;
+  letter-spacing: 1px;
+  padding: 10px 30px;
+  text-transform: uppercase;
+}
+
+.custom-form-control:focus {
+  background: transparent;
+  border-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(100, 230, 100, 0.5);
+  outline: 0 none;
+}
+
+.form-name-item-group {
+  input[type = text],
+  input[type = number],
+  input[type = email], textarea {
+    border: 1px solid #a0ce4e;
+    border-color: #fff;
+    padding: 12px 15px;
+    width: 100%;
+    background: transparent;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+}
+
+
+
+
+
+
+

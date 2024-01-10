@@ -1,0 +1,33 @@
+<tr>
+  <td><%= day %></td>
+  <td>
+    <% if value[day][:day_off].present? && value[day][:in_time].present? %>
+        <%= value[day][:day_off].day_off_type[0] + 'P' %>
+    <% elsif value[day][:day_off].present? %>
+        <%= value[day][:day_off].day_off_type[0] %>
+    <% elsif value[day][:in_time].present? %>
+        <i class="fa fa-check success-color" aria-hidden="true"></i>
+    <% elsif value[day][:leave_status].present? %>
+        L
+    <% else %>
+        <i class="fa fa-times danger-color" aria-hidden="true"></i>
+    <% end %>
+  </td>
+  <td><%= value[day][:day_off].present? ? value[day][:day_off].title : '-' %></td>
+  <td><%= (value[day][:day_off].present? && value[day][:day_off].day_off_type == AppSettings::DAYOFF_TYPES[:custom_holiday]) ? value[day][:day_off].hours : '-' %></td>
+  <td><%= value[day][:leave_status].present? ? value[day][:leave_status].leave_category.name : '-' %></td>
+  <td>
+    <% if value[day][:leave_status].present? %>
+        <%= link_to leave_application_path(value[day][:leave_status], no_admin: true), remote: true do %>
+            <%= truncate(value[day][:leave_status].message, length: 20) %>
+        <% end %>
+    <% else %>
+        -
+    <% end %>
+  </td>
+  <td><%= value[day][:in_time].present? ? get_time_from_datetime(value[day][:in_time]) : '-' %></td>
+  <td><%= value[day][:out_time].present? ? get_time_from_datetime(value[day][:out_time]) : '-' %></td>
+  <td><%= value[day][:total_duration] > 0 ? format_duration(value[day][:total_duration]) : '-' %></td>
+  <td><%= value[day][:late_time] > 0 ? format_duration(value[day][:late_time]) : '-' %></td>
+  <td><%= value[day][:over_time] > 0 ? format_duration(value[day][:over_time]) : '-' %></td>
+</tr>

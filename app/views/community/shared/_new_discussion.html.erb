@@ -1,0 +1,25 @@
+<div class="mb30">
+  <p class="">
+    Welcome to the community. We want to hear from you. Ask a question, share your thoughts.
+    Get smarter and help others.
+  </p>
+  <div class="new-discussion-wrap">
+    <% if employee_signed_in? %>
+        <a data-toggle="collapse" data-target="#create-community-discussion">
+          <i class="fa fa-plus-circle pr5"></i>
+          <span>Create New Discussion</span>
+        </a>
+
+        <div id="create-community-discussion" class="collapse">
+            <%= render 'community/posts/form' %>
+        </div>
+
+    <% else %>
+        <a href="#", id="new-discussion-not-login" data-message="Before post you need to log in first." data-scroll-to="#community-login-form" data-scroll-focus="#community-login-email" data-scroll-offset="-55" data-scroll-speed="700" >
+            <i class="fa fa-plus-circle pr5"></i>
+            <span class="">Create New Discussion</span>
+        </a>
+    <% end %>
+
+  </div>
+</div>

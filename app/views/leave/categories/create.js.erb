@@ -1,0 +1,13 @@
+<% if @leave_category.errors.any? %>
+    popupMessage('<%= escape_javascript( errors_to_message_string(@leave_category.errors) ).html_safe %>', 'alert-danger');
+<% else %>
+
+    popupMessage('Leave category successfully created', 'alert-success');
+    $('.leave-list').find('tbody').prepend("<%= escape_javascript(render 'leave/categories/item', leave_category: @leave_category).html_safe %>");
+    $('.leave-category-years-table').find('tbody').prepend("<%= escape_javascript(render 'settings/leave_days_row', leave_category_hash: @leave_category_hash).html_safe %>");
+    $('#global-modal').modal('hide');
+    $('#no-data-found').remove();
+$('.leave-list2').find('tbody').prepend("<%= escape_javascript(render 'departments/all_settings_partials/leave_item', leave_category: @leave_category).html_safe %>");
+
+<% end %>
+

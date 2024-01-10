@@ -1,0 +1,38 @@
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <div class="employee-pf-statement-title">
+      <p>
+        <label class="m0"> Employee Advances </label><br>
+      </p>
+    </div>
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th> Employee</th>
+        <th> Amount</th>
+        <th> Returned</th>
+        <th> Due</th>
+        <th> Status</th>
+        <th> Date</th>
+        <th> Policy</th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @advances.each do |advance| %>
+          <tr class="employee_advance-<%= advance.id %>">
+            <td>
+              <%= advance.employee.full_name if advance.employee.present? %>
+            </td>
+            <td><%= advance.amount %></td>
+            <td><%= return_amount = advance.returned %></td>
+            <td><%= advance.amount - return_amount %></td>
+            <td><%= advance.is_completed ? "Completed" : "Incomplete" %></td>
+            <td><%= format_date_2(advance.date) %></td>
+            <td><%= advance.return_policy %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

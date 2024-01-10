@@ -1,0 +1,96 @@
+<div class="header-wrapper">
+  <h4>
+    <%= @heading.capitalize %> Expense
+  </h4>
+</div>
+<div class="secondary-color">
+  <div class="content-body-wrapper">
+    <div class="row actions-button mb10" >
+      <div class="col-md-6 reset-padding">
+        <%= form_tag '', method: 'get',remote: true, id: 'daterange-expenses-form' do %>
+            <div class="input-group">
+              <%= text_field_tag :daterange, '', value: params[:daterange], class: 'form-control reset-border-radius' %>
+              <span class="input-group-addon reset-border-radius" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+              <% unless @heading == 'All' %>
+                  <%= hidden_field_tag :q, @heading %>
+              <% end %>
+            </div>
+        <% end %>
+      </div>
+      <div class="col-md-6 reset-padding">
+        <div class="pull-right">
+          <div class="btn-group">
+            <%= link_to new_expenses_expense_path, remote: true, class:'btn btn-default reset-border-radius' do%>
+                <i class="fa fa-plus"></i> New Expense
+            <% end %>
+          </div>
+          <div class="btn-group">
+            <%= select_tag :export_to, options_for_select(AppSettings::EXPORT_TO.collect { |opt| [opt.camelize, opt] }), {class: 'form-control custom-export-to reset-border-radius', prompt: 'Export To....'} %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row content-body">
+      <div class="table-warapper" id="expenses-table">
+        <div class="table-warapper-body">
+          <%= render 'expenses/expenses/expenses_table' %>
+          <%= render 'shared/pagination' if @expenses.size > 10 %>
+          <div class="no-data-found">
+            <% unless @expenses.present? %>
+                <%= render 'shared/no_data_found', message: (@heading == 'All' ? 'No' : 'No ' + @heading.capitalize) + ' expense found' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    var options = {
+        showDropdowns: true,
+        locale: {
+            format: 'DD-MM-YYYY',
+            separator: '  To  '
+        },
+        tab: 'All',
+        minDate: '<%= current_department.created_at.strftime('%d-%m-%Y') %>',
+        maxDate: '<%= Date.today.strftime('%d-%m-%Y') %>'
+    };
+    $(function () {
+        if ($(".beaccount-table").find("tbody").find("tr").size() > 0) {
+            $(".beaccount-table")
+                    .tablesorter({
+                        headers: {
+                            6:{
+                                sorter: false
+                            }
+                        },
+                        widthFixed: true,
+                        widgets: ['zebra']
+                    })
+                    .tablesorterPager({container: $("#pager")});
+        }
+
+        if (!<%= params[:daterange].present? %>) {
+            options.startDate = "<%= Date.today.beginning_of_month.strftime('%d-%m-%Y') %>";
+            options.endDate = "<%= Date.today.strftime('%d-%m-%Y') %>";
+        }
+
+        $('input[name="daterange"]').daterangepicker(options).on('apply.daterangepicker', function (ev, picker) {
+            $('#daterange-expenses-form').submit();
+        });
+
+        $('#export_to').on('change', function () {
+            var export_to = $(this).val();
+            if (export_to == '<%= AppSettings::EXPORT_TO[0] %>' ) {
+                window.location.href = '/expenses/expenses.pdf?q='+ options['tab']+'&daterange='+options['startDate']+'  To  '+options['endDate']
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[2] %>') {
+                window.location.href = '/expenses/expenses.docx?q='+ options['tab']+'&daterange='+options['startDate']+'  To  '+options['endDate']
+            }
+            else if (export_to == '<%= AppSettings::EXPORT_TO[1] %>') {
+                window.location.href = '/expenses/expenses.xls?q='+ options['tab']+'&daterange='+options['startDate']+'  To  '+options['endDate']
+            }
+        });
+    });
+</script>

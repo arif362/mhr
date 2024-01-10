@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span></button>
+  <i class="fa fa-newspaper-o"></i>
+  <h4 class="modal-title"> <%= @remark.new_record? ? 'Add new Remark' : 'Edit Remark' %> </h4>
+</div>
+<%= form_for @remark, html: {id: 'remark_form'} do |f| %>
+
+    <div class="modal-body">
+      <% @remarks.each do |remark| %>
+          <% if remark.is_admin %>
+              <div class="row remark-row">
+                <h5 class="remark-name">
+                  <%= remark.remarked_by.full_name if remark.remarked_by.present? %>
+                </h5>
+
+                <p class="remark-message-admin"><%= remark.message %></p>
+              </div>
+          <% else %>
+              <div class="row remark-row" style="text-align: right">
+                <h5 class="remark-name">
+                  <%= remark.remarked_by.full_name if remark.remarked_by.present? %>
+                </h5>
+                <!--<div class="pull-right" style="max-width: 400px; border: 1px solid #cdcdcd; border-radius: 5px; padding: 10px">-->
+                <!--<%#= remark.message %>-->
+                <!--</div>-->
+                <p class="remark-message-staff"><%= remark.message %></p>
+              </div>
+          <% end %>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.label :message, text = 'Remark' %>
+        <%= f.text_area :message, class: 'form-control reset-border-radius', placeholder: "Enter your remark", rows: '5', data: {required: true} %>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <%= hidden_field_tag :remarkable_object, params[:remarkable_object] %>
+      <%= hidden_field_tag :remarkable_type, params[:remarkable_type] %>
+      <div class="pull-right">
+        <%= f.submit 'Send', class: 'btn btn-primary invite-submit' %>
+        <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $('#remark_form').syftValidator();
+        $('.category-change').change(function () {
+            $.ajax({
+                url: "/expenses/categories/" + $(this).val() + "/sub_categories",
+                type: 'get',
+                dataType: 'script'
+            });
+        });
+        $('#expenses_expense_date').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+
+        $("[name='expenses_expense[is_approved]']").bootstrapSwitch({
+            radioAllOff: true,
+            onColor: "success",
+            offColor: "danger",
+            onText: 'Accept',
+            offText: 'Reject',
+            onSwitchChange: function () {
+
+            }
+        });
+    });
+</script>

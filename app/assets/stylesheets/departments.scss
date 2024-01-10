@@ -1,0 +1,32 @@
+.department-form-wrapper {
+  max-width: 650px;
+  margin: auto;
+  .form-inputs-container {
+    margin-top: 20px;
+  }
+  input {
+    border-radius: 0 !important;
+  }
+  .select-account-employee {
+    max-width: 400px;
+    margin: auto;
+  }
+  .profile-view {
+    padding: 10px;
+    h2 {
+      margin: 5px 0 15px 0;
+      font-size: 16px;
+    }
+    img {
+      width: 55px;
+      height: 50px;
+      margin: auto;
+    }
+  }
+}
+
+.step-content-wrapper {
+  max-width: 650px;
+  margin-bottom: 50px !important;
+  margin: auto;
+}

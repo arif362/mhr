@@ -1,0 +1,76 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Provident Fund Account
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper" id="provident-fund-rule-content">
+      <% if @accounts.present? %>
+          <div class="row actions-button">
+            <div class="add-more-rule clearfix">
+              <%= link_to new_provident_fund_account_path, class: 'btn btn-default pull-right' do %>
+                  <i class="fa fa-plus-circle"></i> Add More Account
+              <% end %>
+            </div>
+          </div>
+          <div class="row content-body">
+            <table class="table action-table beaccount-table tablesorter table-responsive table-hover table-striped">
+              <thead>
+              <tr>
+                <th>Account ID</th>
+                <th>Employee</th>
+                <!--<th>Email</th>-->
+                <th>Rule</th>
+                <th>Effective Date</th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @accounts.each do |account| %>
+                  <tr>
+                    <td> #<%= account.id %> </td>
+                    <td><%= link_to account.employee.full_name, employee_profile_path(account.employee), remote: true %> </td>
+                    <!--<td><%#= account.employee.email %> </td>-->
+                    <td>
+                      Company <%= account.rule.company_contribution %>%,
+                      Employee <%= account.rule.employee_contribution %>%
+                    </td>
+                    <td>
+                      <%= format_date(account.effective_date) %>
+                    </td>
+                    <td>
+                      <%= link_to 'Contribution', provident_fund_account_contributions_path(account) %>
+                    </td>
+                    <td>
+                      <%= link_to 'Statement', provident_fund_account_statement_path(account) %>
+                    </td>
+                    <td class="actions">
+                      <%= link_to edit_provident_fund_account_path(account), class: 'btn warning-color' do %>
+                          <i class="fa fa-pencil-square-o"></i>
+                      <% end %>
+                      <%= link_to provident_fund_account_path(account), class: 'btn danger-color', method: :delete, data: {confirm: 'Are you sure?'} do %>
+                          <i class="fa fa-times"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+      <% else %>
+          <div class="text-center table-cell">
+            <p>
+              Current department don't have any PF account. <%#= link_to 'Learn more', '#', class: 'link' %>
+              <i class="fa fa-info-circle btn btn-info reset-border-radius" data-toggle='popover' data-placement='top' title="Provident Fund Account" data-content="Click on the create new one button to create provident fund account then it will show the account  list  "></i>
+            </p>
+            <%= link_to new_provident_fund_account_path, class: 'btn btn-default reset-border-radius' do %>
+                <i class="fa fa-plus-circle"></i> Create new one
+            <% end %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

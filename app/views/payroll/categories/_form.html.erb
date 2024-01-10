@@ -1,0 +1,77 @@
+<%= form_for @category, html: {id: 'category_form'}, remote: true do |f| %>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+      <i class="fa fa-newspaper-o"></i>
+      <h4 class="modal-title"> Add New Category </h4>
+    </div>
+    <div class="modal-body">
+      <%= f.hidden_field :department_id %>
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control', data: {required: true} %>
+      </div>
+      <div class="form-group">
+        <%= f.label :description %>
+        <%= f.text_area :description, rows: 3, class: 'form-control' %>
+      </div>
+      <div class="form-group clearfix">
+        <div class="form-group col-sm-6 reset-margin reset-padding">
+          <%= f.label "Addition/Deduction" %> <br/>
+          <%= f.radio_button :is_add, true %>
+        </div>
+        <div class="form-group  col-sm-6  reset-margin reset-padding">
+          <%= f.label "Percentage/Amount" %> <br/>
+          <%= f.radio_button :is_percentage, true %>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <%= f.submit class: 'btn btn-primary' %>
+      <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $(function () {
+        $('#category_form').syftValidator();
+        $("[name='payroll_category[is_add]']").bootstrapSwitch({
+            radioAllOff: true,
+            onColor: "success",
+            offColor: "warning",
+            onText: 'Addition',
+            offText: 'Deduction',
+            onSwitchChange: function () {
+
+            }
+        });
+        $("[name='payroll_category[is_percentage]']").bootstrapSwitch({
+            radioAllOff: true,
+            onColor: "success",
+            offColor: "success",
+            onText: 'Percentage',
+            offText: 'Amount',
+            onSwitchChange: function () {
+
+            }
+        });
+    });
+</script>
+
+<!--<div class="form-group clearfix">-->
+<!--<div class="form-group col-sm-6 reset-margin reset-padding">-->
+<%#= f.label "Type of this Category" %> <!--<br/>-->
+<!--<%#= f.radio_button :is_add , 'addition', :checked => true %>-->
+<%#= f.label :is_add , 'Addition' %><!--<br/>-->
+<!--<%#= f.radio_button :is_add , 'deduction' %>-->
+<!--<%#= f.label :is_add , 'Deduction' %>-->
+<!--</div>-->
+<!--<div class="form-group  col-sm-6  reset-margin reset-padding">-->
+<%#= f.label "Percentage/Amount" %> <!--<br/>-->
+<!--<%#= f.radio_button :is_percentage, false %>-->
+<!--<%#= f.radio_button :is_percentage , 'percentage', :checked => true %>-->
+<%#= f.label :is_percentage , 'Percentage' %><!--<br/>-->
+<!--<%#= f.radio_button :is_percentage , 'bdt' %>-->
+<!--<%#= f.label :is_percentage , 'BDT' %>-->
+<!--</div>-->
+<!--</div>-->

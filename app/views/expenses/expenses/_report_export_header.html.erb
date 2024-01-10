@@ -1,0 +1,11 @@
+<div class="text-center">
+  <h3><%= title %></h3>
+  <% if @expense_category.present? %>
+      <h4>
+        Category: <b><%= @expense_category.name %></b>
+      </h4>
+  <% end %>
+  <h4>
+    Department: <b><%= current_department.name %></b>
+  </h4>
+</div>

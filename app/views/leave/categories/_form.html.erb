@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <i class="fa fa-newspaper-o"></i>
+  <h4 class="modal-title"> <%= @leave_category.new_record? ? 'Create new leave category' : 'Edit leave category' %> </h4>
+</div>
+<%= form_for @leave_category, html:{ id: 'leave-category-form' }, remote: true do |f| %>
+    <div class="modal-body">
+      <div class="form-group">
+        <%= f.label :name, '*Leave category title' %><br>
+        <%= f.text_field :name, class: 'form-control', data:{ required: true } %>
+      </div>
+      <div class="form-group">
+        <%= f.label :description %>
+        <%= f.text_area :description, class: 'form-control', rows: '3' %>
+      </div>
+    </div>
+
+    <%= hidden_field_tag :department_id, params[:department_id] %>
+
+    <div class="modal-footer">
+      <div class="pull-right">
+        <%= f.submit class: 'btn btn-primary invite-submit' %>
+        <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+      </div>
+    </div>
+<% end %>
+<script type="text/javascript">
+    $(function(){
+        $('#leave-category-form').syftValidator();
+    });
+</script>

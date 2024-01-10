@@ -1,0 +1,45 @@
+// Place all the styles related to the payroll controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "public_variables";
+@import "public";
+
+.dashboard-name-image {
+  //background-color: $guest-color;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 25px;
+  height: $employee-list-img-width-height;
+  line-height: $employee-list-img-width-height;
+  margin: auto auto 10px;
+  text-align: center;
+  width: $employee-list-img-width-height;
+}
+
+.dashboard-employee-info {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.different-report-row {
+  .different-report-col {
+    border-right: 2px solid #ddd;
+    a {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: #555;
+      &:hover {
+        text-decoration: none;
+        color: #555;
+      }
+    }
+    &:last-child {border-right: inherit}
+  }
+
+}
+
+.payroll-employee-brief {
+  border-right: solid 1px #cccccc;
+  margin: -10px 0 -10px 0;
+}

@@ -1,0 +1,21 @@
+<div class="col-md-12">
+  <p class="lead text-center" style="padding-top: 10px;">Don't receive confirmation </p>
+  <div class="bg-box-forget-pass clearfix">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class:'form-vertical',role:'form' }) do |f| %>
+        <%= devise_error_messages! %>
+
+        <div class="col-md-12">
+          <div class="form-group col-md-10">
+            <%= f.email_field :email, autofocus: true, id: 'email', class: 'form-control' %>
+          </div>
+
+          <div class="form-group  col-md-2">
+            <%= f.submit "Submit", class:'btn btn-primary' %>
+          </div>
+
+        </div>
+    <% end %>
+  </div>
+</div>
+
+

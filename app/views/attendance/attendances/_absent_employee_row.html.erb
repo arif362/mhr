@@ -1,0 +1,32 @@
+<tr id="absent-item-<%= data[:employee].id %>">
+  <td>
+    <% if data[:employee].present? %>
+        <%= link_to employee_profile_path(data[:employee]), remote: true do %>
+            <%= data[:employee].full_name %>
+        <% end %>
+        <%= link_to employee_wise_report_attendance_attendances_path(employee_id: data[:employee].id, date: {month: Date.today.month, year: Date.today.year}), class: 'attendance-report-link', title: 'Attendance Report' do %>
+            <i class="fa fa-pie-chart"> </i>
+        <% end %>
+        <%= link_to stats_attendance_attendances_path(employee_id: data[:employee].id), class: 'attendance-report-link', title: 'Attendance Stats' do %>
+            <i class="fa fa-line-chart"> </i>
+        <% end %>
+    <% end %>
+  </td>
+  <td><%= data[:employee].email if data[:employee].present? %></td>
+  <td>
+    <% if data[:leave_application].present? %>
+        <%= link_to leave_application_path(data[:leave_application], no_admin: true), class: 'info-color', remote: true do %>
+            <%= data[:leave_application].leave_category.name %>
+        <% end %>
+    <% else %>
+        -
+    <% end %>
+  </td>
+  <td>-</td>
+  <td>-</td>
+  <td>
+    <%= link_to new_attendance_attendance_path(employee_id: data[:employee].id, selected_date: (params[:date].present? ? params[:date] : Date.today)), class: 'btn warning-color', remote: true do %>
+        <i class="fa fa-plus secondary-guest-color"></i>
+    <% end %>
+  </td>
+</tr>

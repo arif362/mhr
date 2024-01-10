@@ -1,0 +1,75 @@
+<div class="row reset-padding">
+  <div class="content-wrapper" id="rule-content">
+    <div class="header-wrapper">
+      <h4>
+        Provident Fund Dashboard
+      </h4>
+    </div>
+    <div class="content-body-wrapper secondary-color full-content-wrapper">
+      <% if @process_contribution %>
+          <div class="row actions-button">
+            <div class="bs-callout bs-callout-info mt5 mb5">
+              <h4> Process provident fund contribution </h4>
+              Provident fund contribution has not been processed in last session.
+              <%= link_to '#process-contribution-modal', class: 'pull-right', data: {toggle: 'modal', target: '#process-contribution-modal'} do %>
+                  <i class="fa fa-cog"></i> Process contribution now
+              <% end %>
+            </div>
+          </div>
+      <% end %>
+
+      <% if @unconfirmed_contributions.present? %>
+          <div class="content-body row mt10">
+            <%= render 'unconfirmed_contribution', contributions: @unconfirmed_contributions %>
+          </div>
+      <% end %>
+
+      <div class="content-body row" style="background: #ffffff;">
+        <div class="company-contribution">
+          <h2> Total company contribution: <%= @company_contributions.values.sum %> </h2>
+          <canvas id="com-contribution" height="60"></canvas>
+        </div>
+        <div class="employee-contribution">
+          <h2> Total employee contribution: <%= @employee_contributions.values.sum %> </h2>
+          <canvas id="emp-contribution" height="60"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'provident_fund/contributions/process_contribution' %>
+
+<script type="text/javascript">
+    ctx = document.getElementById("com-contribution");
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: <%= raw contribution_label(@company_contributions.keys) %>,
+            datasets: [{
+                label: 'Company Contribution',
+                fill: true,
+                borderWidth: 3,
+                borderColor: 'rgba(49, 176, 213, 1)',
+                data: <%= @company_contributions.values %>,
+                backgroundColor: "rgba(49, 176, 213, 1)"
+            }]
+        }
+    });
+
+    ctx = document.getElementById("emp-contribution");
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: <%= raw contribution_label(@employee_contributions.keys) %>,
+            datasets: [{
+                label: 'Employee Contribution',
+                fill: true,
+                borderWidth: 3,
+                borderColor: 'rgba(26, 119, 145, 1)',
+                data: <%= @employee_contributions.values %>,
+                backgroundColor: "rgba(26, 119, 145, 1)"
+            }]
+        }
+    });
+</script>

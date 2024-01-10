@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span></button>
+  <i class="fa fa-newspaper-o"></i>
+  <h4 class="modal-title">Advance of <%= advance.employee.first_name %></h4>
+</div>
+
+<div class="modal-body">
+  <table class="table table-user-information table-striped">
+    <tbody>
+    <tr>
+      <td> <label> Given To </label> </td>
+      <td> <%= advance.employee.full_name %> </td>
+    </tr>
+    <tr>
+      <td> <label> Amount </label> </td>
+      <td> <%= advance.amount %> </td>
+    </tr>
+    <tr>
+      <td> <label> Status </label> </td>
+      <td> <%= advance.is_completed ? "Completed" : "Incomplete" %> </td>
+    </tr>
+    <tr>
+      <td> <label> Date </label> </td>
+      <td> <%= format_date(advance.date) %> </td>
+    </tr>
+    <tr>
+      <td> <label> Return Policy </label> </td>
+      <td> <%= advance.return_policy %> </td>
+    </tr>
+
+    <tr>
+      <% if advance.return_policy.present? && advance.return_policy == AppSettings::ADVANCE_TYPES[:installment] %>
+      <td> <label> Number Of Installment (Month) </label> </td>
+      <td> <%= advance.installment %> </td>
+      <% end %>
+    </tr>
+    </tbody>
+
+  </table>
+</div>
+
+<div class="modal-footer">
+  <div class="pull-right">
+    <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+  </div>
+</div>

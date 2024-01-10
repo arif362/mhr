@@ -1,0 +1,127 @@
+<div class="m10">
+
+  <div class="row ">
+    <div class="col-md-12">
+
+      <h4> Generate Weekend For Current Year</h4>
+      <p class="text-warning text-justify">
+       In this section there are two fantastic way to generate weekend. Firstly, You can select a day from drop down menu for generating
+        a weekend like friday or sunday then click the Generate Weekend List button. The selected day will be marked in a color
+        which days will indicate as weekend. Secondly, you can click on the date of calender
+        to generate a Custom Holiday (for example: Xmas day or independent day) with the title , day off type and hours. This is very important for
+        report generation like salary report attendance report.
+
+      </p>
+    </div>
+  </div>
+
+  <div class="mb20">
+    <%= form_tag generate_attendance_day_offs_path, remote: true, id: 'dayoff-generator-form' do %>
+        <table class="table weekend-table">
+          <tbody>
+          <tr>
+            <td> <%= label_tag :weekend, 'Select Weekend' %> </td>
+            <td>
+              <%= select_tag :weekend, options_for_select(7.times.collect { |day| Date::DAYNAMES[day] }), {prompt: 'Select weekend for current year', class: 'form-control'} %>
+            </td>
+            <td>
+              <input type="submit" class="primary-color-bg-with-hover" value="Generate Weekend List" name="commit" data-toggle='popover' data-placement='bottom' data-content="This option for generating weekend for current year. You have to generate weekend in every year.">
+            </td>
+          </tr>
+          </tbody>
+        </table>
+    <% end %>
+  </div>
+  <div id="calendar"></div>
+</div>
+<div class="new-modal-wrap modal fade" id="custom_holiday" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <i class="fa fa-newspaper-o"></i>
+        <h4 class="modal-title" id="myModalLabel">Custom Holiday</h4>
+      </div>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+</div>
+<div class="new-modal-wrap modal fade" id="weakend-generate-confirm" tabindex="-1" role="dialog" aria-labelledby="weakendConfirm" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <i class="fa fa-newspaper-o"></i>
+        <h4 class="modal-title" id="weakendConfrirm">Weakend Generate</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure the selected day (<b id="weekend-day-modal"></b> ) will be weekend of The current department?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button id="confirm-generate-weekend" class="btn btn-primary"> Yes</button>
+        <div class="btn btn-default" data-dismiss="modal"> Cancel</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover'
+        });
+        var calenderArea = $('#calendar');
+        calenderArea.fullCalendar({
+            defaultDate: '<%= Date.today %>',
+            editable: true,
+            eventLimit: true,
+            events: <%= raw @department.events.to_json %>,
+            eventRender: function (event, element) {
+                event.editable = false;
+                event.draggable = false;
+            },
+            dayClick: function (date, jsEvent, view) {
+                date = date.format();
+                $.ajax({
+                    url: '<%= new_attendance_day_off_path %>',
+                    type: 'get',
+                    dataType: 'script',
+                    data: {date: date}
+                });
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                date = calEvent.start.format();
+                $.ajax({
+                    url: '<%= new_attendance_day_off_path %>',
+                    type: 'get',
+                    dataType: 'script',
+                    data: {date: date}
+                });
+            }
+        });
+
+        $('#confirm-generate-weekend').click(function (e) {
+            e.preventDefault();
+            $('#weakend-generate-confirm').modal('hide');
+            $('#dayoff-generator-form').submit();
+        });
+
+
+        $('.generate-weekend').click(function (e) {
+            e.preventDefault();
+
+            if ($('#weekend').val() == '') {
+                popupMessage('Please select weekend day.', 'alert-danger');
+            }
+            else {
+                $('#weakend-generate-confirm').modal('show');
+                $('#weakend-generate-confirm').find('#weekend-day-modal').html($('#weekend').val());
+            }
+        });
+
+        $('.fc-today-button').trigger('click');
+    });
+</script>

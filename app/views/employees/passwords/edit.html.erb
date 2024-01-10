@@ -1,0 +1,46 @@
+<div class="body-wrapper mt80 min-height-viewport-80">
+  <div class="col-md-12">
+    <div class="bg-box sign-in-box clearfix">
+      <div class="circle-logo">
+        <i class="fa fa-lock fa-5x"></i>
+      </div>
+      <div class="col-md-12 signin-inputs-wrapper clearfix">
+        <h1 class="sign-in-title">Change Password</h1>
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class:'form-vertical', role:'form' }) do |f| %>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon fa fa-key" id="basic-addon1"></span>
+                <%= f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control input-field-height',placeholder: 'New Password', id:'employee_password' %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon fa fa-key"></span>
+                <%= f.password_field :password_confirmation, autocomplete: "off", id: 'employee_password_confirmation', class:'form-control input-field-height', placeholder: 'Confirm new Password' %>
+              </div>
+            </div>
+            <div id="message"></div>
+            <%= f.hidden_field :reset_password_token %>
+
+            <div class="form-group btn-section">
+              <%= f.submit "Reset", class: 'sign-in-btn reset-border-radius' %>
+            </div>
+
+            <%= render "employees/shared/links" %>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$('#employee_password, #employee_password_confirmation').on('keyup', function () {
+if ($('#employee_password').val() == $('#employee_password_confirmation').val()) {
+$('#message').html(' Password matched').css('color', 'green');
+} else
+$('#message').html(' Password not matched').css('color', 'red');
+});
+
+</script>

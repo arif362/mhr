@@ -1,0 +1,31 @@
+<canvas id="employeeProgressReportsChart" width="400" height="140"></canvas>
+<script>
+    var ctx = document.getElementById("employeeProgressReportsChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: <%= raw @employees %>,
+            datasets:
+                [{
+                label: 'Progress',
+                data: <%= raw @employees_progress %>,
+                backgroundColor: <%= raw @colors.reverse %>,
+                borderColor:<%= raw @colors.reverse %>,
+                borderWidth: 1
+
+                }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        steps: 10,
+                        stepValue: 10,
+                        max: 100
+                    }
+                }]
+            }
+        }
+    });
+</script>

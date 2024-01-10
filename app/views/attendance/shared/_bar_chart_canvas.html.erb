@@ -1,0 +1,37 @@
+<%= include_gon %>
+<canvas id="employees-attendances" width="400" height="100"></canvas>
+<div id="no-data" style="font: 30px Calibri; color: #FC6938; text-align: center; position: relative; top: -50px;">No
+  data found to display graph
+</div>
+<script type="text/javascript">
+    $(function () {
+        var ctx = document.getElementById("employees-attendances");
+        if (gon.graph_data != '' && gon.graph_data != null) {
+            $('#no-data').hide();
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: gon.graph_label,
+                    datasets: [{
+                        label: '',
+                        data: gon.graph_data,
+                        backgroundColor: gon.graph_color
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+            $('#employees-attendances').focus();
+        }
+        else {
+            $('#no-data').show().text('Not enough data to display graph');
+        }
+    });
+</script>

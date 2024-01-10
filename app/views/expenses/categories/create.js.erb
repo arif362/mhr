@@ -1,0 +1,21 @@
+<% if @expense_category.errors.present? %>
+    popupMessage('Unable to create new expense category, Please check your data and try again', 'alert-danger');
+<% else %>
+    <% if @expense_category.expense_category_id.present? %>
+        popupMessage('Expense subcategory successfully created', 'alert-success');
+        $('#sub-categories-of-<%= @expense_category.expense_category_id %>').find('#expense-sub-category-table-body').append("<%= escape_javascript(render 'expenses/categories/sub_category_item', expense_sub_category: @expense_category).html_safe %>");
+        $('#no-data-found-<%= @expense_category.expense_category_id %>').remove();
+    <% else %>
+        popupMessage('Expense category successfully created', 'alert-success');
+        $('#expense-category-table-body').append("<%= escape_javascript(render 'expenses/categories/category_item', expense_category: @expense_category).html_safe %>");
+        $('#expense-category-table-body').append("<%= escape_javascript(render 'expenses/categories/inner_sub_categories', expense_category: @expense_category).html_safe %>");
+        $('#no-data-found').remove();
+        $('.accordian-body').on('show.bs.collapse', function () {
+            $(this).closest("table")
+                    .find(".collapse.in")
+                    .not(this)
+                    .collapse('toggle')
+        });
+    <% end %>
+    $('#global-modal').modal('hide');
+<% end %>

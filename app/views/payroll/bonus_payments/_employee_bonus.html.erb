@@ -1,0 +1,30 @@
+<div class="col-md-5 reset-padding">
+  <div class="text-center">
+    <%= image_tag @employee.image.present? ? @employee.image.large.url : 'employees/default_profile_image.png', class: "employee-salary-image" %>
+  </div>
+  <div>
+    <h3 class="text-center">
+      <%= link_to employee_path(@employee) do %>
+          <%= @employee.full_name %>
+      <% end %>
+    </h3>
+    <h4 class="text-center">
+      <%= @employee.designation.name if @employee.designation.present? %>
+    </h4>
+    <% if @employee.basic_salary.present? %>
+        <div class="text-center">
+          <%= label_tag 'Basic Salary: '%>
+          <%= amount_with_currency('%.02f' % @employee.get_basic_salary) %> </i>
+        </div>
+    <% end %>
+  </div>
+  <div>
+    <%= label_tag 'Given Bonuses : ' %>
+    <%= render "payroll/bonus_payments/bonus_payments_table", bonuses: @bonuses %>
+  </div>
+</div>
+<div class="col-md-7">
+  <div id="employee-bonus-detail-section">
+    <%= render 'payroll/bonus_payments/bonus_payments' %>
+  </div>
+</div>

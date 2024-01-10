@@ -1,0 +1,4 @@
+$('#employee-<%= @employee.id %>').replaceWith('<%= escape_javascript(render 'employee_row', employee: @employee).html_safe %>');
+$('#global-modal').modal('hide');
+popupMessage("Employee has been activated successfully", 'alert-success');
+

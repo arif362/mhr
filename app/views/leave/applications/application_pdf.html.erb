@@ -1,0 +1,99 @@
+
+<div class="employee-pf-statement-wrap">
+  <div class="employee-pf-statement-container pt40">
+    <div class="clearfix">
+      <div class="employee-pf-statement-title pull-left" style="width: 60%">
+        <p>
+          <label class="m0"> Statement of Leave Application </label><br>
+          <span class="m0"> <%= @leave_application.employee.full_name.upcase %> </span>
+        </p>
+
+
+        <div class="employee-pf-statement-info">
+          <span> <%= @leave_application.employee.designation.name if @leave_application.employee.designation.present? %> </span><br>
+          <span> <%= @leave_application.employee.present_address %> </span>
+        </div>
+
+      </div>
+      <div class="right-statement-info-wrap pull-left" style="width: 40%">
+        <label class="m0">
+          Requested leave days
+        </label>
+        <ul class="common-ul-style statement-info-ul-wrap">
+          <li>
+            <span> Category </span>
+            <%= @leave_application.leave_category.name if @leave_application.leave_category.present? %>
+          </li>
+
+          <li>
+            <span> Type </span>
+            <%= @leave_application.is_paid ? 'Paid' : 'Unpaid' %>
+          </li>
+
+          <li>
+            <span> Approved </span>
+            15, April 2017 15, April 2017 15, April 2017 15
+          </li>
+
+          <li>
+            <span> Rejected </span>
+            15, April 2017
+          </li>
+
+          <li>
+            <span> Pending </span>
+            15, April 2017
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt20">
+    <div class="leave-sms-wrap">
+      <%= simple_format(@leave_application.message) %>
+    </div>
+    <% if @leave_application.note.present?  %>
+        <div class="leave-remark-wrap">
+          <label> Remark </label><br>
+          <div class="leave-remark-container">
+            <%= @leave_application.note %>
+          </div>
+        </div>
+    <% end %>
+
+    <div class="signature-wrap mt70">
+      <div class="authorised-signature clearfix">
+        <div class="left-signature">
+          ------------------------------- <br>
+          Authorized Signature
+
+          <ul class="common-ul-style statement-info-ul-wrap">
+            <br><li>
+              <span> Employee ID </span>
+              <%#= @leave_application.leave_category.name if @leave_application.leave_category.present? %>
+            </li>
+            <br><li>
+              <span> Name </span>
+              <%#= @leave_application.leave_category.name if @leave_application.leave_category.present? %>
+            </li>
+            <br><li>
+              <span> Designation </span>
+              <%#= @leave_application.leave_category.name if @leave_application.leave_category.present? %>
+            </li>
+          </ul>
+
+        </div>
+        <div class="right-signature">
+          ------------------------------- <br>
+          Employee's Signature
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+</div>

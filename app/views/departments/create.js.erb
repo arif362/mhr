@@ -1,0 +1,8 @@
+<% if @department.errors.present? %>
+    popupMessage('<%= escape_javascript( errors_to_message_string(@department.errors)).html_safe %>', 'alert-danger');
+<% else %>
+    $('#global-modal').modal('hide');
+    <% flash.clear %>
+    popupMessage('Department created successfully', 'alert-success');
+    $('#department_list').prepend('<%= escape_javascript(render 'companies/templates/add_department', department: @department).html_safe %>');
+<% end %>

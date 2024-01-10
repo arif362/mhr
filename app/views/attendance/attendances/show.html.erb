@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>In date:</strong>
+  <%= format_date(@attendance.in_date) %>
+</p>
+
+<p>
+  <strong>In time:</strong>
+  <%= @attendance.in_time %>
+</p>
+
+<p>
+  <strong>Out time:</strong>
+  <%= @attendance.out_time %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @attendance.duration %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @attendance.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_attendance_path(@attendance) %> |
+<%= link_to 'Back', attendances_path %>

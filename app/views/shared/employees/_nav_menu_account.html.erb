@@ -1,0 +1,29 @@
+<ul class="pull-right">
+  <li class="top-menu-dropdown">
+    <a class="dropdown-toggle <%= 'navbar-profile-image-wrapper' if current_employee.image.present? %>" href="#" data-toggle="dropdown">
+      <% if current_employee.image.present? %>
+          <%= image_tag(current_employee.image, class: 'img-circle navbar-profile-image') %>
+      <% else %>
+          <i class="fa fa-user"></i>
+      <% end %>
+    </a>
+
+    <ul class="top-menu-dropdown-content last-dropdown">
+      <% unless current_employee.next_path.present? %>
+          <li>
+            <%= link_to employee_path(current_employee) do %>
+                <i class="fa fa-user"></i> Profile
+            <% end %>
+          </li>
+          <li>
+            <hr/>
+          </li>
+      <% end %>
+      <li>
+        <a href="/logout" data-method="delete">
+          <i class="fa fa-sign-out"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>

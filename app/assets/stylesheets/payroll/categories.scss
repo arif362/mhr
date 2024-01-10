@@ -1,0 +1,8 @@
+.emplyee-select-form {
+  text-align: left;
+  //margin: 10px 0;
+  input, select, .chosen-container {
+    max-width: 300px;
+    display: inline-block;
+  }
+}

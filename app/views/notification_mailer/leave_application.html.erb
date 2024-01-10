@@ -1,0 +1,12 @@
+<%= content_for :email_subject do %>
+    <%= @leave_application.is_paid ? 'Paid' : 'Unpaid' %> leave application
+<%end%>
+<b><%= @leave_application.employee.full_name %></b>
+, <%= @leave_application.employee.designation.name if @leave_application.employee.designation.present? %>
+, Leave Category: <%= @leave_application.leave_category.name if @leave_application.leave_category.present? %>
+
+<p>
+  <%= simple_format(@leave_application.message) %>
+</p>
+
+<%= link_to 'Details', leave_applications_url %>

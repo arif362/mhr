@@ -1,0 +1,8 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span></button>
+  <i class="fa fa-newspaper-o"></i>
+
+  <h4 class="modal-title">Increment of <b><%= @increment.employee.full_name.titleize %></b></h4>
+</div>
+<%= render "payroll/increments/#{controller.action_name.to_s}_info"%>

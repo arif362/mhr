@@ -1,0 +1,46 @@
+<table class="table table-user-information table-striped">
+  <tbody>
+  <tr>
+    <td><label> Loan To </label></td>
+    <td>
+      <%= link_to employee_profile_path(loan.provident_fund_account.employee), remote: true do %>
+          <%= loan.provident_fund_account.employee.full_name %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td><label> Amount </label></td>
+    <td> <%= loan.amount %> </td>
+  </tr>
+  <tr>
+    <td><label> Returned </label></td>
+    <td> <%= return_amount = loan.returned %> </td>
+  </tr>
+  <tr>
+    <td><label> Due </label></td>
+    <td> <%= loan.amount - return_amount %> </td>
+  </tr>
+  <tr>
+    <td><label> Status </label></td>
+    <td> <%= loan.is_closed ? 'Completed' : 'Incomplete' %> </td>
+  </tr>
+  <tr>
+    <td><label> Date </label></td>
+    <td> <%= format_date(loan.date) %> </td>
+  </tr>
+  <tr>
+    <td><label> Return Policy </label></td>
+    <td>
+      <%= loan.return_policy %>
+      <% if loan.return_policy.present? && loan.return_policy == AppSettings::ADVANCE_TYPES[:installment] %>
+          (<%= loan.installment %>)
+      <% end %>
+    </td>
+  </tr>
+  </tbody>
+
+</table>
+<div id="advances-history">
+  <h4> <%= loan.provident_fund_account.employee.full_name %>'s Loan History</h4>
+  <%= render partial: 'history' %>
+</div>

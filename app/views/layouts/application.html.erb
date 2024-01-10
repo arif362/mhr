@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Mihisoft | MHR </title>
+  <%= favicon_link_tag 'icon.svg' %>
+  <link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.mhr.com" />
+  <meta property="og:image" content="<%= image_url('landing_bg.png') %>"/>
+  <%= csrf_meta_tags %>
+
+</head>
+<body class="<%= controller_name %> <%= action_name %>">
+<%= include_gon(init: true) %>
+<%= render 'shared/notification' %>
+<%= render 'shared/header' %>
+<%= render 'shared/fixed_attendance_button' %>
+<div class="container-fluid employees-dashboard site-container ">
+  <div class="row">
+    <div class="col-md-12">
+      <%= yield %>
+    </div>
+  </div>
+</div>
+<%= render 'shared/modal' %>
+<%= render 'shared/flash_message' %>
+<%= render 'shared/footers_selection' %>
+<%= render 'shared/feedback' %>
+<%= render 'shared/google_analytics' %>
+</body>
+</html>

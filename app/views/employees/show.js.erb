@@ -1,0 +1,9 @@
+$('.sidebar-menu-active').removeClass('sidebar-menu-active');
+<% if @view.present? %>
+$('#employee-profile-content').html('<%= escape_javascript( render  'employees/passwords/update_password' )%>');
+$('.employee-settings').addClass('sidebar-menu-active');
+<% else %>
+$('#employee-profile-content').html('<%= escape_javascript(render 'show_info') %>');
+$('.information').addClass('sidebar-menu-active');
+<% end %>
+

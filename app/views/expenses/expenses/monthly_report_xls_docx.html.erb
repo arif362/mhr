@@ -1,0 +1,86 @@
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <div class="employee-pf-statement-title">
+      <p>
+        <label class="m0"> Monthly Expense Report </label><br>
+      </p>
+    </div>
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th> Category</th>
+        <% (@start_date..@end_date).each do |date| %>
+            <th> <%= date.day %></th>
+        <% end %>
+        <th><b> Total</b></th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @expense_categories.each do |category| %>
+          <tr>
+            <td>
+              <%= category.name %>
+            </td>
+            <% (@start_date..@end_date).each do |date| %>
+                <% day = date.day %>
+                <td>
+                  <%= @expense_report[category.id][day][:amount] %>
+                </td>
+            <% end %>
+            <td>
+              <b>
+                <%= @expense_report[category.id][:total_amount] %>
+              </b>
+            </td>
+          </tr>
+
+          <% if category.expense_sub_categories.present? %>
+              <tr>
+                <td colspan="<%= (@end_date.day - @start_date.day) + 3 %>">Sub categories(<%= num_of_sub =  category.expense_sub_categories.count %>)</td>
+              </tr >
+              <% category.expense_sub_categories.each do |sub_category| %>
+                  <tr>
+                    <td>
+                      <%= sub_category.name %>
+                    </td>
+                    <% (@start_date..@end_date).each do |date| %>
+                        <% day = date.day %>
+                        <td>
+                          <%= @expense_report[category.id][:sub_category_report][sub_category.id][day][:amount] %>
+                        </td>
+                    <% end %>
+                    <td>
+                      <b>
+
+                        <%= @expense_report[category.id][:sub_category_report][sub_category.id][:total_amount] %>
+                      </b>
+                    </td>
+                  </tr>
+              <% end %>
+              <% if num_of_sub > 0 %>
+                  <tr>
+                    <td><b>Subcategory Total</b></td>
+                    <% (@start_date..@end_date).each do |date| %>
+                        <td>
+                          <b>
+                            <%= @expense_report[category.id][:sub_category_report][:month_total][date.day] %>
+                          </b>
+                        </td>
+                    <% end %>
+                    <td>
+                      <b>
+                        <%= @expense_report[category.id][:sub_category_report][:month_total][:amount] %>
+                      </b>
+                    </td>
+                  </tr>
+              <% end %>
+              <tr>
+                <td colspan="<%= (@end_date.day - @start_date.day) + 3 %>"> </td>
+              </tr >
+          <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

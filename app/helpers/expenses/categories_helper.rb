@@ -1,0 +1,2 @@
+module Expenses::CategoriesHelper
+end

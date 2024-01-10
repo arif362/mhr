@@ -1,0 +1,25 @@
+<tr id="bonus-<%= bonus.id %>">
+  <% unless params[:employee_id].present? %>
+      <td>
+        <% if bonus.employee.present? %>
+            <%= link_to employee_profile_path(bonus.employee), remote:true do%>
+                <%= bonus.employee.full_name %>
+            <% end %>
+        <% end %>
+      </td>
+  <% end %>
+  <td><%= truncate(bonus.reason, length: 50) %></td>
+  <td><%= bonus.amount %></td>
+  <td><%= format_date bonus.date %></td>
+  <td class="actions">
+    <%= link_to payroll_bonus_payment_path(bonus), class:'btn info-color', remote: true do %>
+        <i class="fa fa-eye"></i>
+    <% end %>
+    <%= link_to edit_payroll_bonus_payment_path(bonus, employee_id: params[:employee_id].present? ? params[:employee_id] : ''), class:'btn warning-color', remote: true do %>
+        <i class="fa fa-pencil"></i>
+    <% end %>
+    <%= link_to confirm_settings_path(action_item_id: bonus.id, action_on: 'payroll/bonus_payments', action_type: AppSettings::ACTIONS[:delete]), remote: true, class: 'btn danger-color' do %>
+        <i class="fa fa-times"></i>
+    <% end %>
+  </td>
+</tr>

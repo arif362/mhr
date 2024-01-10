@@ -1,0 +1,12 @@
+<% if @leave_application.errors.any? %>
+    popupMessage('<%= escape_javascript( errors_to_message_string( @leave_application.errors ) ).html_safe %>','alert-danger');
+<% else %>
+    popupMessage('Leave application successfully sent', 'alert-success');
+    <% if Date.today.year == params[:year].to_i %>
+        $('#leave-application-list').prepend('<%= escape_javascript(render 'leave/applications/applied_list', application: @leave_application)%>');
+    <% else %>
+        $('#employee-profile-content').html('<%= escape_javascript(render 'leave/applications/status')%>');
+    <% end %>
+    $('#global-modal').modal('hide');
+    $('#no-data-found').remove();
+<% end %>

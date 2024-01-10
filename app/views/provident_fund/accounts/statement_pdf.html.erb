@@ -1,0 +1,51 @@
+
+<div class="employee-pf-statement-wrap">
+  <div class="employee-pf-statement-container pt40">
+    <div class="employee-pf-statement-title">
+      <p>
+        <label class="m0"> Statement of Provident Fund Account </label><br>
+        <span class="m0"> <%= @employee.full_name.upcase %> </span>
+      </p>
+    </div>
+
+    <div class="employee-pf-statement-info">
+      <span> <%= @employee.designation.name %> </span><br>
+      <span> <%= @employee.present_address %> </span>
+    </div>
+  </div>
+</div>
+    <div class="pf-statement-body-wrap">
+      <div class="pf-statement-body-container pt40">
+        <table class="custom-pf-table">
+          <thead class=" custom-pf-table-thead">
+          <tr>
+            <td> Date</td>
+            <td> Type</td>
+            <td> Debit</td>
+            <td> Credit(Return)</td>
+            <td> Balance</td>
+          </tr>
+          </thead>
+          <tbody class="custom-pf-table-tbody">
+          <% balance = 0 %>
+          <% @statements.each do |statement| %>
+              <tr class="tr-pf-products">
+                <td> <%= statement.created_at.strftime('%d %b, %Y') %> </td>
+                <td> <%= statement.transable_type.split('::').last %> </td>
+                <td> <%= statement.debit.present? ? statement.debit.round(2) : '-' %> </td>
+                <td> <%= statement.credit.present? ? statement.credit.round(2) : '-' %> </td>
+                <td> <%= (balance += (statement.debit.present? ? -statement.debit : statement.credit)).round(2) %> </td>
+              </tr>
+          <% end %>
+          <tr class="total-pf-amount">
+            <td colspan="3"></td>
+            <td><strong>Net Balance</strong></td>
+            <td><strong> <%= balance.round(2) %> </strong></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>

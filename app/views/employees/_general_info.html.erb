@@ -1,0 +1,54 @@
+<table class="table table-striped table-hover">
+  <tr>
+    <td>Department</td>
+    <td>
+      <%= employee.department.name if employee.department.present? %>
+    </td>
+  </tr>
+  <tr>
+    <td>Designation</td>
+    <td>
+      <%= employee.designation.name if employee.designation.present? %>
+    </td>
+  </tr>
+  <tr>
+    <td>Employment Type</td>
+    <td>
+      <%= employee.role %>
+    </td>
+  </tr>
+  <tr>
+    <td>Email Address</td>
+    <td>
+      <%= employee.email %>
+    </td>
+  </tr>
+  <tr>
+    <td>Mobile</td>
+    <td>
+      <%= employee.mobile %>
+    </td>
+  </tr>
+  <tr>
+    <td>Address</td>
+    <td>
+      <%= employee.address %>
+    </td>
+  </tr>
+  <tr>
+    <td>Profile Picture</td>
+    <td>
+      <% if employee.image? %>
+          <%= link_to "#", id: employee.image_url, class: :popup_link do %>
+              Photo
+          <% end %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>Status</td>
+    <td>
+      <%= employee.is_active ? "Active" : "Deactive" %>
+    </td>
+  </tr>
+</table>

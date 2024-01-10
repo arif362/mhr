@@ -1,0 +1,39 @@
+<div class="pf-statement-body-wrap">
+  <div class="pf-statement-body-container pt40">
+    <div class="employee-pf-statement-title">
+      <p>
+        <label class="m0"> Attendance History </label><br>
+      </p>
+    </div>
+    <table class="custom-pf-table">
+      <thead class="custom-pf-table-thead">
+      <tr>
+        <th> Employee</th>
+        <th> Email</th>
+        <th> Working Hour</th>
+      </tr>
+      </thead>
+
+      <tbody class="custom-pf-table-tbody">
+      <% @attendances.each do |attendance| %>
+          <tr>
+            <td>
+              <%= attendance.employee.full_name if attendance.employee.present? %>
+            </td>
+            <td><%= attendance.employee.email if attendance.employee.present? %></td>
+            <td><%= attendance.total_duration.present? ? format_duration(attendance.total_duration) : '0' %></td>
+          </tr>
+      <% end %>
+      <% @absent_employees.each do |employee| %>
+          <tr>
+            <td>
+              <%= employee.full_name if employee.present? %>
+            </td>
+            <td><%= employee.email if employee.present? %></td>
+            <td>-</td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<%= form_for @increment, remote:true do |f| %>
+    <div class="modal-body">
+
+      <div class="col-md-offset-1 col-md-10">
+        <table class="table table-user-information table-stripedx">
+          <tbody>
+          <tr>
+            <td> <%= f.label 'Employee' %> </td>
+            <td> <%= f.object.employee.full_name %> </td>
+          </tr>
+          <tr>
+            <td> <%= f.label 'Incremented By' %> </td>
+            <td> <%= f.object.incremented_by %> </td>
+          </tr>
+          <tr>
+            <td> <%= f.label "Issue Date" %> </td>
+            <td> <%= f.object.created_at.strftime("%Y-%m-%d") %> </td>
+          </tr>
+          <tr>
+            <td> <%= f.label 'Status' %> </td>
+            <td> <%= f.object.is_active ? "Active": "Inactive" %> </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="">
+        <div class="form-group">
+          <%= f.label 'Amount' %>
+          <%= f.text_field :increment_amount, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label "Effective Date" %>
+          <%= f.text_field :active_date, class: 'form-control' %>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <%= f.submit 'Save Changes', class: 'btn btn-success' %>
+      <div class="btn btn-default" data-dismiss='modal'>Cancel</div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    $('#payroll_increment_active_date').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    });
+</script>
