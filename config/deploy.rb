@@ -39,36 +39,36 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/sys
 # set :assets_prefix, 'pipeline_assets'
 
 # Default value for keep_releases is 5
-set :keep_releases, 5
+set :keep_releases, 2
 
-namespace :deploy do
-  #before :deploy, "deploy:check_revision"
-  #after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
-  after :finishing, 'deploy:cleanup'
-  #before 'deploy:setup_config', 'nginx:remove_default_vhost'
-  #after 'deploy:setup_config', 'nginx:reload'
-  #after 'deploy:setup_config', 'monit:restart'
-  after 'deploy:publishing', 'deploy:restart'
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
-
-  # after :publishing, :restart
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
-end
+# namespace :deploy do
+#   #before :deploy, "deploy:check_revision"
+#   #after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
+#   after :finishing, 'deploy:cleanup'
+#   #before 'deploy:setup_config', 'nginx:remove_default_vhost'
+#   #after 'deploy:setup_config', 'nginx:reload'
+#   #after 'deploy:setup_config', 'monit:restart'
+#   after 'deploy:publishing', 'deploy:restart'
+#
+#   # desc 'Restart application'
+#   # task :restart do
+#   #   on roles(:app), in: :sequence, wait: 5 do
+#   #     # Your restart mechanism here, for example:
+#   #     execute :touch, release_path.join('tmp/restart.txt')
+#   #   end
+#   # end
+#
+#   # after :publishing, :restart
+#
+#   # after :restart, :clear_cache do
+#   #   on roles(:web), in: :groups, limit: 3, wait: 10 do
+#   #     # Here we can do anything such as:
+#   #     # within release_path do
+#   #     #   execute :rake, 'cache:clear'
+#   #     # end
+#   #   end
+#   # end
+# end
 
 # task :upload_secret_files do
 #   on roles(:all) do |host|
