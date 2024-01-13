@@ -88,7 +88,7 @@ gem 'will_paginate'
 
 # for reporting pdf, word export
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+# gem 'wkhtmltopdf-binary'
 gem 'htmltoword'
 gem 'cancancan'
 gem 'inherited_resources', '~> 1.7'
