@@ -21,14 +21,14 @@ set :repo_url, "git@github.com:arif362/mhr.git"
 
 # Default value for :pty is false
 # set :pty, true
-server ENV['SERVER_IP'],
-       :user => ENV['SERVER_USER'],
+server '52.77.102.62',
+       :user => 'ubuntu',
        :roles => %w{web app db}
 
 set :rvm_ruby_version, '2.4.0'
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml config/secrets.yml config/application.yml}
+set :linked_files, %w{config/database.yml config/secrets.yml config/application.yml puma.rb}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/sitemaps public/assets public/uploads pdf_files}

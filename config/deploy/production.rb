@@ -38,11 +38,11 @@
 #
 # Global options
 # --------------
-#  set :ssh_options, {
-#    keys: %w(/home/rlisowski/.ssh/id_rsa),
-#    forward_agent: false,
-#    auth_methods: %w(password)
-#  }
+set :ssh_options, {
+  forward_agent: true,
+  user: "ubuntu",
+  keys: %w(~/.ssh/id_rsa ~/.ssh/mihisoft_website.pem),
+}
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
@@ -57,7 +57,7 @@
 #     # password: "please use keys"
 #   }
 
-set :deploy_to, "/home/ubuntu/apps/mhr"
+set :deploy_to, "/home/ubuntu/app/mhr"
 set :rails_env, "production"
 set :branch, 'main'
 # set :branch, 'daily_progress'
