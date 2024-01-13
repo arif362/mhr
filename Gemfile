@@ -62,14 +62,14 @@ group :development, :test do
   # gem 'factory_girl_rails'
   gem 'faker'
   gem 'simplecov', :require => false
-
-  gem 'capistrano', require: false
-  gem 'capistrano-rvm', require: false
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-bundler', require: false
 end
 
 group :development do
+  gem 'capistrano', require: false
+  gem 'capistrano3-puma',   require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-bundler', require: false
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
