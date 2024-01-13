@@ -110,8 +110,6 @@ gem 'gon'
 gem 'nested_form'
 gem "acts_as_archival"
 gem 'paranoia'
-
-group :production do
-  gem 'unicorn'
-end
+# Use the Puma web server [https://github.com/puma/puma]
+gem "puma", "~> 5.0"
 gem 'exception_notification'

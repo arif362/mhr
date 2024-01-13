@@ -57,7 +57,7 @@
 #     # password: "please use keys"
 #   }
 
-set :deploy_to, "/home/deployer/apps/beaccount"
+set :deploy_to, "/home/ubuntu/apps/mhr"
 set :rails_env, "production"
-set :branch, 'master'
+set :branch, 'main'
 # set :branch, 'daily_progress'

@@ -1,8 +1,8 @@
 # config valid only for current version of Capistrano
 lock "3.10.0"
 
-set :application, "hrm_erp"
-set :repo_url, "git@bitbucket.org:arif362/hrm_erp.git"
+set :application, "mhr"
+set :repo_url, "git@github.com:arif362/mhr.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -21,11 +21,11 @@ set :repo_url, "git@bitbucket.org:arif362/hrm_erp.git"
 
 # Default value for :pty is false
 # set :pty, true
-server '178.62.114.210',
-       :user => 'ubuntu',
+server ENV['SERVER_IP'],
+       :user => ENV['SERVER_USER'],
        :roles => %w{web app db}
 
-set :rvm_ruby_version, '2.3.1'
+set :rvm_ruby_version, '2.4.0'
 
 # Default value for :linked_files is []
 set :linked_files, %w{config/database.yml config/secrets.yml config/application.yml}

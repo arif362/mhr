@@ -59,3 +59,6 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+set :deploy_to, "/home/ubuntu/apps/mhr"
+set :rails_env, "staging"
+set :branch, 'main'
