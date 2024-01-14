@@ -24,14 +24,14 @@
   font-size: 26px;
   font-weight: bold;
   font-family: 'Josefin Slab', serif;
-  color: #074E66 !important;
+  color: darkcyan !important;
 }
 
 #feedback-form {
   background: #ffffff;
   .main-form {
     h5 {
-      color: #074E66;
+      color: darkcyan;
       margin-bottom: 8px;
       font-size: 19px;
       font-family: 'Josefin Slab', serif;
@@ -87,7 +87,7 @@
         width: 20px;
         height: 19px;
         outline: none;
-        border: 3px solid #074E66;
+        border: 3px solid darkcyan;
         background: #fff;
         cursor: pointer;
         border-radius: 100%;
@@ -151,7 +151,7 @@
       }
 
       .radio input:checked + i, .radio1 input:checked + i, .radio2 input:checked + i, .radio3 input:checked + i {
-        border: 3px solid #074E66;
+        border: 3px solid darkcyan;
         background: #fff;
       }
     }

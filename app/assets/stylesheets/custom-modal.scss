@@ -1,7 +1,7 @@
 @import 'public_variables';
 
-//@include filter-gradient(#074e66 , #0c6a85 , vertical); // IE6-9
-//@include background-image(linear-gradient(top, #074e66 0%,#0f6a9b 50%,#0f6296 52%,#0c6a85 100%));
+//@include filter-gradient(darkcyan , darkslategray , vertical); // IE6-9
+//@include background-image(linear-gradient(top, darkcyan 0%,#0f6a9b 50%,#0f6296 52%,darkslategray 100%));
 
 $modal-body-bg: #fdfdfd !important;
 $modal-title-bg: #333 !important;
@@ -56,13 +56,13 @@ $modal-content-bg: #fdfdfd !important;
       background-color: $beaccount-table-color;
       //background: rgba(0, 0, 0, 0) linear-gradient(to top, $beaccount-table-color -20%, #14B6E1 200%) repeat scroll 0 0;
       /* For cross platform */
-      //background: -webkit-linear-gradient(top, #074e66 0%,#074e66 50%,#074e66 51%,#0c6a85 100%);
-      //background: -o-linear-gradient(top, #074e66 0%,#074e66 50%,#074e66 51%,#0c6a85 100%);
-      //background: -ms-linear-gradient(top, #074e66 0%,#074e66 50%,#074e66 51%,#0c6a85 100%);
-      //background: -moz-linear-gradient(top, #074e66 0%,#074e66 50%,#074e66 51%,#0c6a85 100%);
-      //background: linear-gradient(to top, #074e66 0%,#074e66 50%,#074e66 51%,#0c6a85 100%);
+      //background: -webkit-linear-gradient(top, darkcyan 0%,darkcyan 50%,darkcyan 51%,darkslategray 100%);
+      //background: -o-linear-gradient(top, darkcyan 0%,darkcyan 50%,darkcyan 51%,darkslategray 100%);
+      //background: -ms-linear-gradient(top, darkcyan 0%,darkcyan 50%,darkcyan 51%,darkslategray 100%);
+      //background: -moz-linear-gradient(top, darkcyan 0%,darkcyan 50%,darkcyan 51%,darkslategray 100%);
+      //background: linear-gradient(to top, darkcyan 0%,darkcyan 50%,darkcyan 51%,darkslategray 100%);
       /* Another gradient if looks like good  */
-      //background: linear-gradient(to top,  #074e66 0%,#074e66 50%,#074e66 51%,#0c6a85 100%);
+      //background: linear-gradient(to top,  darkcyan 0%,darkcyan 50%,darkcyan 51%,darkslategray 100%);
       margin-left: -5px;
       margin-right: -5px;
       border-bottom: none;

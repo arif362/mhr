@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>MHR</title>
+  <title>EHR</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
@@ -225,21 +225,21 @@
                 Hi <%= @company_owner_new.full_name %> </h3>
 
               <div style="color: #095B74; text-align: left; font-size: 15px;">
-                <p> Welcome to mhr! Thanks so much for joining us. You’re on your way to super-productivity and
+                <p> Welcome to EHR! Thanks so much for joining us. You’re on your way to super-productivity and
                   beyond! </p>
               </div>
 
               <p style="font-size: 15px;" class="paragraph">
-                mhr is a best HRM and business  and hr automation service provider. mhr provides web and desktop
+                EHR is a best HRM and business  and hr automation service provider. EHR provides web and desktop
                 based solution. It's not a matter what type or size of business. We offer module based service and
                 have lot's of module. Choose your module that are best fit for your business.
               </p>
 
               <p style="font-size: 15px;" class="paragraph">
-                <b> What is our price? </b> mhr provides all of the module absulately free. Only pay for the
+                <b> What is our price? </b> EHR provides all of the module absulately free. Only pay for the
                 desktop(Offline) based solution.
                 Contact us for our desktop based solution and for learn more click
-                <a href="<%= take_a_tour_url %>">here</a>.
+                <a href="<%= pricing_url %>">here</a>.
               </p>
 
               <p style="font-size: 15px;" class="paragraph">
@@ -315,7 +315,7 @@
                     <table width="187" cellpadding="0" align="left" cellspacing="0" style="text-align:center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="full_width">
                       <tr>
                         <td>
-                          <img src="<%= image_url('module_settings/employee.png') %>" alt="" title="" align="center" border="0" style="display: inline-block; border:0;"/>
+                          <img src="<%= image_url('icon.svg') %>" alt="" title="" align="center" border="0" style="display: inline-block; border:0;"/>
                         </td>
                       </tr>
                       <tr>
@@ -334,7 +334,8 @@
                           <p class="feature-description">
                             A complete employee module to fill your need. Employtee lists, records, detail, profile and
                             many more with leave features <br/>
-                            <%= link_to modules_employee_url, class: 'learn-more' do %>
+                            <%#= link_to modules_employee_url, class: 'learn-more' do %>
+                            <%= link_to '#', class: 'learn-more' do %>
                                 Learn More
                             <% end %>
 
@@ -355,7 +356,7 @@
                     <table width="187" cellpadding="0" align="right" cellspacing="0" style="text-align:center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="full_width">
                       <tr>
                         <td>
-                          <img src="<%= image_url('module_settings/attendance.png') %>" alt="" title="" align="center" border="0" style="display: inline-block; border:0;"/>
+                          <img src="<%= image_url('icon.svg') %>" alt="" title="" align="center" border="0" style="display: inline-block; border:0;"/>
                         </td>
                       </tr>
                       <tr>
@@ -375,7 +376,8 @@
                             The attendance is an activity module for tracking time spent by Employees (or other users)
                             in a
                             Company or in a related group of Institution <br/>
-                            <%= link_to modules_attendance_url, class: 'learn-more' do %>
+                            <%#= link_to modules_attendance_url, class: 'learn-more' do %>
+                            <%= link_to '#', class: 'learn-more' do %>
                                 Learn More
                             <% end %>
                           </p>
@@ -403,7 +405,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <img src="<%= image_url('module_settings/leave.png') %>" alt="" title="" align="center" border="0" style="display: inline-block; border:0;"/>
+                    <img src="<%= image_url('icon.svg') %>" alt="" title="" align="center" border="0" style="display: inline-block; border:0;"/>
                   </td>
                 </tr>
                 <tr>
@@ -420,9 +422,10 @@
                 <tr>
                   <td>
                     <p class="feature-description">
-                      mhr has a global leave module.It can set leave system for any firm world wide.
+                      EHR has a global leave module.It can set leave system for any firm world wide.
                       Employees do not need a paper any more <br/>
-                      <%= link_to modules_leave_url, class: 'learn-more' do %>
+                      <%#= link_to modules_leave_url, class: 'learn-more' do %>
+                      <%= link_to '#', class: 'learn-more' do %>
                           Learn More
                       <% end %>
                     </p>
@@ -446,7 +449,7 @@
                     <table width="187" cellpadding="0" align="left" cellspacing="0" style="text-align:center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="full_width">
                       <tr>
                         <td>
-                          <img src="<%= image_url('module_settings/payroll.png') %>" alt="" title="" align="center" border="0" style="display: inline-block; border:0;"/>
+                          <img src="<%= image_url('icon.svg') %>" alt="" title="" align="center" border="0" style="display: inline-block; border:0;"/>
                         </td>
                       </tr>
                       <tr>
@@ -465,7 +468,8 @@
                           <p class="feature-description">
                             All types of salary issue are being merged in payroll module and this management systems has
                             lots of standard reports like department wise gross salary <br/>
-                            <%= link_to modules_payroll_url, class: 'learn-more' do %>
+                            <%#= link_to modules_payroll_url, class: 'learn-more' do %>
+                            <%= link_to '#', class: 'learn-more' do %>
                                 Learn More
                             <% end %>
                           </p>
@@ -485,7 +489,7 @@
                     <table width="187" cellpadding="0" align="right" cellspacing="0" style="text-align:center; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="full_width">
                       <tr>
                         <td>
-                          <img src="<%= image_url('module_settings/provident_fund.png') %>" alt="" title="" align="center" border="0" style="display: inline-block; border:0;"/>
+                          <img src="<%= image_url('icon.svg') %>" alt="" title="" align="center" border="0" style="display: inline-block; border:0;"/>
                         </td>
                       </tr>
                       <tr>
@@ -504,7 +508,8 @@
                           <p class="feature-description">
                             Provident Fund is to support HR & Finance Department. It is designed to process and provide
                             all information about provident fund, investments, loans <br/>
-                            <%= link_to modules_provident_fund_url, class: 'learn-more' do %>
+                            <%#= link_to modules_provident_fund_url, class: 'learn-more' do %>
+                            <%= link_to '#', class: 'learn-more' do %>
                                 Learn More
                             <% end %>
                           </p>
@@ -551,7 +556,8 @@
                     <p class="feature-description">
                       If you enable the expense module feature, you can implement an approval process that will
                       allow you to monitor costs and many other things <br/>
-                      <%= link_to modules_expense_url, class: 'learn-more' do %>
+                      <%#= link_to modules_expense_url, class: 'learn-more' do %>
+                      <%= link_to '#', class: 'learn-more' do %>
                           Learn More
                       <% end %>
                     </p>
@@ -616,7 +622,7 @@
         <table width="500" align="center" border="0" cellpadding="0" cellspacing="0" class="content_width">
           <tr>
             <td style="color: #fff; font-family: 'Raleway', Helvetica, Arial, sans-serif; font-size: 30px; text-transform:uppercase; line-height:38px; letter-spacing:1px; text-align:center; font-weight: 400;">
-              mhr bioMetric attendance software
+              EHR bioMetric attendance software
             </td>
           </tr>
         </table>
@@ -646,7 +652,7 @@
                     <a href="<%= contact_us_url %>" style="display: inline-block; padding: 15px; background: #ffffff; margin-right: 20px; color: #3d4959; font-family: 'Raleway', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; text-transform:uppercase;text-decoration:none;">
                       Get It Now
                     </a>
-                    <a href="<%= take_a_tour_url %>" style="display: inline-block; padding: 15px; background: #ffffff; color: #3d4959; font-family: 'Raleway', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; text-transform:uppercase;text-decoration:none;">
+                    <a href="<%= pricing_url %>" style="display: inline-block; padding: 15px; background: #ffffff; color: #3d4959; font-family: 'Raleway', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 700; text-transform:uppercase;text-decoration:none;">
                       Learn More
                     </a>
                   </td>
@@ -692,7 +698,7 @@
                 <tr>
                   <td>
                     <div class="text-logo">
-                      <span style="color: #00BBEA">Be</span>quent
+                      <span style="color: #00BBEA">E</span>HR
                     </div>
                   </td>
                 </tr>
@@ -711,7 +717,7 @@
               <table align="right" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="full_width mobile-left-content">
                 <tr>
                   <td style="color: #414d5f; font-family: 'Raleway', Helvetica, Arial, sans-serif; font-size: 14px; letter-spacing:0.5px; font-weight: 400;">
-                    <a href="<%= take_a_tour_url %>" style="color: #414d60; text-decoration:none;">about</a>
+                    <a href="<%= pricing_url %>" style="color: #414d60; text-decoration:none;">about</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="<%= contact_us_url %>" style="color: #414d60; text-decoration:none;">contact</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -778,7 +784,7 @@
               <table align="right" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="full_width mobile-left-content">
                 <tr>
                   <td>
-                    <a href="http://facebook.com/mhr" target="_blank" style="color: #414d60; text-decoration:none;">
+                    <a href="http://facebook.com/ehr" target="_blank" style="color: #414d60; text-decoration:none;">
                       <img src="<%= image_url('facebook.png') %>" alt="" title="" border="0" style="border:0; display: inline-block;"/>
                     </a>
                     <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
@@ -786,11 +792,11 @@
                     <!--<img src="<%#= image_url('google.png') %>" alt="" title="" border="0" style="border:0; display: inline-block;"/>-->
                     <!--</a>-->
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="http://twitter.com/becuent" target="_blank" style="color: #414d60; text-decoration:none;">
+                    <a href="http://twitter.com/ehr" target="_blank" style="color: #414d60; text-decoration:none;">
                       <img src="<%= image_url('twitter.png') %>" alt="" title="" border="0" style="border:0; display:inline-block;"/>
                     </a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="http://linkedin.com/company/mhr" target="_blank" style="color: #414d60; text-decoration:none;">
+                    <a href="http://linkedin.com/company/ehr" target="_blank" style="color: #414d60; text-decoration:none;">
                       <img src="<%= image_url('linkedin.png') %>" alt="" title="" border="0" style="border:0; display:inline-block;"/>
                     </a>
                   </td>

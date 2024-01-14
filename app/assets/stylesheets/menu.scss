@@ -43,7 +43,7 @@ $icon-color: #00a5df;
 }
 
 .main-menu ul > li {
-  //border-right: solid 1px #0C6A85;
+  //border-right: solid 1px darkslategray;
   a {
     &:hover {
       background: $menu-hover-bg-color;
@@ -256,7 +256,7 @@ $icon-color: #00a5df;
   height: 25px;
   margin-left: 10px;
   ul {
-    background: #074E66;
+    background: darkcyan;
     display: none;
     position: absolute;
     left: -80px;
@@ -283,7 +283,7 @@ $icon-color: #00a5df;
       content: '';
       border-width: 10px;
       border-style: solid;
-      border-color: transparent transparent #074E66 transparent;
+      border-color: transparent transparent darkcyan transparent;
       left: 80px;
       top: -18px;
     }
@@ -298,7 +298,7 @@ $icon-color: #00a5df;
     top: 7px;
   }
   &:hover {
-    background: #0C6A85;
+    background: darkslategray;
     border-color: #cccccc;
     cursor: pointer;
     ul {
@@ -327,7 +327,7 @@ $icon-color: #00a5df;
     ul {
       border-top: solid 1px #ffffff;
       opacity: 0.95;
-      background: #074E66;
+      background: darkcyan;
       position: absolute;
       top: 45px;
       float: none;

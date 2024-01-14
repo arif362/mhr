@@ -135,7 +135,7 @@ body.settings.billing {
       margin-right: 8px;
     }
     &:hover {
-      color: #0c6a85;
+      color: darkslategray;
     }
   }
 }
@@ -320,13 +320,13 @@ body.settings.billing {
 .pagination {
   em {
     &.current {
-      background: #0C6A85;
+      background: darkslategray;
       color: #fdfdfd;
     }
   }
   a {
     &:hover {
-      background: #0C6A85;
+      background: darkslategray;
       color: #fdfdfd;
     }
   }
@@ -408,7 +408,7 @@ body.settings.billing {
   margin: auto;
   button {
     border-radius: 0px;
-    color: #074E66;
+    color: darkcyan;
     font-weight: bold;
   }
   .add-button {
@@ -424,18 +424,18 @@ body.settings.billing {
 .active-white {
   a {
     background: #fdfdfd;
-    color: #074E66 !important;
+    color: darkcyan !important;
     &:hover {
       background: #fdfdfd !important;
-      color: #074E66 !important;
+      color: darkcyan !important;
     }
   }
 }
 
 .tab-wrapper {
-  background: #074E66;
+  background: darkcyan;
   padding: 10px 0px 0px 0px;
-  border-top: solid 1px #0C6A85;
+  border-top: solid 1px darkslategray;
   .nav-tabs {
     margin: auto;
     max-width: 1000px;
@@ -448,7 +448,7 @@ body.settings.billing {
         height: 100%;
         width: 100%;
         &:hover {
-          background: #0C6A85;
+          background: darkslategray;
           border: 1px solid transparent;
           border-bottom: none;
           color: #fdfdfd;
@@ -456,7 +456,7 @@ body.settings.billing {
       }
       &.active {
         a {
-          color: #074E66;
+          color: darkcyan;
           background: #FDFDFD;
         }
         a:hover {
@@ -503,7 +503,7 @@ body.settings.billing {
       font-weight: bolder;
       font-size: 15px;
       padding-bottom: 5px;
-      color: #074E66;
+      color: darkcyan;
     }
     input {
       padding-top: 5px;
@@ -696,7 +696,7 @@ $employee-list-img-width-height: 80px;
 
 @keyframes blinker {
   50% {
-    background: #0c6a85;
+    background: darkslategray;
   }
 }
 

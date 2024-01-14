@@ -9,11 +9,11 @@
       <div class="actions-button pt10 pb10x clearfix">
         <div class="pull-left">
           <% if params[:all].present? %>
-              <%= link_to employees_path, style: 'color: #0C6A85' do %>
+              <%= link_to employees_path, style: 'color: darkslategray' do %>
                   <i class="fa fa-user-times"></i> Only active employee
               <% end %>
           <% else %>
-              <%= link_to employees_path(all: true), style: 'color: #0C6A85' do %>
+              <%= link_to employees_path(all: true), style: 'color: darkslategray' do %>
                   <i class="fa fa-check-square"></i> All employee including inactive
               <% end %>
           <% end %>

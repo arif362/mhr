@@ -25,7 +25,7 @@ $bd-radius: 5px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-    background: #074e6a none repeat scroll 0 0;
+    background: darkcyan none repeat scroll 0 0;
     border: 5px solid #f0f0f0;
     height: 120px;
     margin: auto auto 20px auto;
@@ -81,7 +81,7 @@ $bd-radius: 5px;
 .btn-section {
   .sign-in-btn {
     text-decoration: none;
-    background: #074e6a none repeat scroll 0 0;
+    background: darkcyan none repeat scroll 0 0;
     border: medium none;
     border-radius: 5px;
     box-shadow: 0 0 10px #666464 inset;
@@ -93,7 +93,7 @@ $bd-radius: 5px;
     padding: 3%;
     width: 99%;
     &:hover {
-      background: #0C6A85;
+      background: darkslategray;
     }
   }
 }
