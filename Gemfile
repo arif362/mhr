@@ -15,7 +15,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'delayed_job', "~> 4.1.1"
 gem 'delayed_job_active_record', "~> 4.1.0"
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # scheduler gem
 gem 'rufus-scheduler'
@@ -103,7 +103,7 @@ gem 'friendly_id', '~> 5.1.0'
 # for geocoding ones location
 gem 'geocoder'
 
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin'#, github: 'activeadmin'
 
 # get your Rails variables in your js
 gem 'gon'

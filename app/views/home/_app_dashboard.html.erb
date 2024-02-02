@@ -13,16 +13,19 @@
 
           <div>
             <ul>
+
               <li>
                 <%= link_to employees_path, class: 'somethings' do %>
-                    <%= image_tag('module_settings/employee.png') %>
+                    <%#= image_tag('module_settings/employee.png') %>
+                      <%= image_tag('icon.svg', width: 45) %>
                     <p class="text-center">Employee</p>
                 <% end %>
               </li>
               <% @company_modules.each do |app| %>
                   <li>
                     <%= link_to app.feature.url, class: 'somethings' do %>
-                        <%= image_tag(app.feature.logo) %>
+                        <%#= image_tag(app.feature.logo) %>
+                      <%= image_tag('icon.svg', width: 45) %>
                         <p class="text-center"><%= app.feature.name %></p>
                     <% end %>
                   </li>
@@ -40,7 +43,8 @@
               <% @available_modules.each do |app| %>
                   <li>
                     <%= link_to settings_path, class: 'somethings' do %>
-                        <%= image_tag(app.logo) %>
+                        <%#= image_tag(app.logo) %>
+                      <%= image_tag('icon.svg', width: 45) %>
                         <p class="text-center"><%= app.name %></p>
                     <% end %>
                   </li>
@@ -57,35 +61,40 @@
             <ul>
               <li>
                 <a>
-                    <%= image_tag('module_settings/point_of_sale.png') %>
+                    <%#= image_tag('module_settings/point_of_sale.png') %>
+                  <%= image_tag('icon.svg', width: 45) %>
                     <p class="text-center">Point of Sale</p>
                 </a>
               </li>
 
               <li>
                 <a>
-                    <%= image_tag('module_settings/projects.png') %>
+                    <%#= image_tag('module_settings/projects.png') %>
+                  <%= image_tag('icon.svg', width: 45) %>
                     <p class="text-center">Task Manager</p>
                 </a>
               </li>
 
               <li>
                 <a>
-                    <%= image_tag('module_settings/performance.png') %>
+                    <%#= image_tag('module_settings/performance.png') %>
+                  <%= image_tag('icon.svg', width: 45) %>
                     <p class="text-center">Performance</p>
                 </a>
               </li>
 
               <li>
                 <a>
-                    <%= image_tag('module_settings/timesheets.png') %>
+                    <%#= image_tag('module_settings/timesheets.png') %>
+                  <%= image_tag('icon.svg', width: 45) %>
                     <p class="text-center">Scheduling</p>
                 </a>
               </li>
 
               <li>
                 <a>
-                    <%= image_tag('module_settings/plane.png') %>
+                    <%#= image_tag('module_settings/plane.png') %>
+                  <%= image_tag('icon.svg', width: 45) %>
                     <p class="text-center">Mass Mailling</p>
                 </a>
               </li>
