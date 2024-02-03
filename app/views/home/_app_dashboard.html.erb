@@ -13,13 +13,13 @@
             <div class="content-body-wrapper">
               <div class="row content-body_feature feature-table-wrapper mt0 asad">
                 <h2> <%= current_company.name %>'s Modules </h2>
-                <div class="row mt20#">
-                  <div class="col-md-2">
+                <div class="row mr200 ml200">
+                  <div class="col-md-4">
                       <div class="module-section-container# card primary-color-bg" style="margin: 6px">
                         <%= link_to employees_path, class: 'somethings' do %>
                         <%#= image_tag('module_settings/employee.png') %>
                           <div style="text-align: center">
-                            <%= image_tag('icon.svg', width: 45) %>
+                            <%= image_tag('module-common.png', class:'module-common') %>
                           </div>
                           <p class="module-price text-center  mb0 white-color" style="font-size: 18px">
                             Employee
@@ -29,12 +29,12 @@
 
                   </div>
                   <% @company_modules.each do |app| %>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                       <div class="module-section-container# card primary-color-bg" style="margin: 6px">
                         <%= link_to app.feature.url, class: 'somethings' do %>
                           <%#= image_tag(app.feature.logo) %>
                           <div style="text-align: center">
-                            <%= image_tag('icon.svg', width: 45) %>
+                            <%= image_tag('module-common.png', class:'module-common') %>
                           </div>
                           <p class="module-price text-center  mb0 white-color" style="font-size: 18px">
                            <%= app.feature.name %>
@@ -62,15 +62,15 @@
                       <div class="col-md-3">
                         <div class="module-section-container card primary-color-bg" style="margin: 6px">
                           <%= link_to settings_path, class: 'somethings' do %>
-                            <%#= image_tag(app.logo) %>
-                            <div style="text-align: center">
-                              <%= image_tag('icon.svg', width: 45) %>
+                            <%= image_tag(app.logo) %>
+                            <div style="text-align: center; border-radius: 25px ">
+                              <%= image_tag('module-common.png', class:'module-common') %>
                             </div>
 
                             <p class="module-price text-center  mb0 white-color" style="font-size: 18px">
                               <%= app.name %>
                             </p>
-<!--                            <p class="text-center"><%#= app.name %></p>-->
+                            <p class="text-center"><%= app.name %></p>
                           <% end %>
                         </div>
                       </div>
