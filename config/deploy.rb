@@ -21,7 +21,7 @@ set :repo_url, "git@github.com:arif362/mhr.git"
 
 # Default value for :pty is false
 # set :pty, true
-server '52.77.102.62',
+server '18.142.23.30',
        :user => 'ubuntu',
        :roles => %w{web app db}
 
