@@ -62,14 +62,14 @@
 
 
 # Feature.delete_all
-Feature.create!(name: 'Attendance', cost: 2500, description: 'The attendence is an activity module for tracking time spent by Employees.', app_module: 'Attendance', url: '/attendance/dashboard', logo: 'module_settings/attendance.png')
-Feature.create!(name: 'Leave', cost: 2500, description: 'MHR has a global leave module-it can set leave system for any firm.', app_module: 'Leave', url: '/leave/dashboard', logo: 'module_settings/leave.png')
-Feature.create!(name: 'Payroll', cost: 2500, description: 'Payroll is the sum of all financial records of salaries for an employee.', app_module: 'Payroll', url: '/payroll/dashboard', logo: 'module_settings/payroll.png')
-Feature.create!(name: 'Expense', cost: 2500, description: 'Expense will allow you to monitor costs before your employees.', app_module: 'Expenses', url: '/expenses/expenses', logo: 'module_settings/expense.png')
-Feature.create!(name: 'Provident Fund', cost: 2500, description: 'Provident Fund is designed to process and provide all.', app_module: 'ProvidentFund', url: '/provident_fund/dashboard', logo: 'module_settings/provident_fund.png')
-Feature.create!(name: 'Inventory', cost: 2500, description: 'Provident Fund is designed to process and provide all.', app_module: 'Inventory', url: '#', logo: 'module_settings/inventory_management.png')
-Feature.create!(name: 'Bank', cost: 2500, description: 'Bank is designed to process and provide all.', app_module: 'Bank', url: '/bank/accounts', logo: 'module_settings/provident_fund.png')
-Feature.create!(name: 'Daily Progress', cost: 2500, description: 'Daily Progress is designed to keep track of daily tasks of employees and provide all.', app_module: 'DailyProgress', url: '/daily_progress/dashboard', logo: 'module_settings/daily_progress.png')
+# Feature.create!(name: 'Attendance', cost: 2500, description: 'The attendence is an activity module for tracking time spent by Employees.', app_module: 'Attendance', url: '/attendance/dashboard', logo: 'module_settings/attendance.png')
+# Feature.create!(name: 'Leave', cost: 2500, description: 'MHR has a global leave module-it can set leave system for any firm.', app_module: 'Leave', url: '/leave/dashboard', logo: 'module_settings/leave.png')
+# Feature.create!(name: 'Payroll', cost: 2500, description: 'Payroll is the sum of all financial records of salaries for an employee.', app_module: 'Payroll', url: '/payroll/dashboard', logo: 'module_settings/payroll.png')
+# Feature.create!(name: 'Expense', cost: 2500, description: 'Expense will allow you to monitor costs before your employees.', app_module: 'Expenses', url: '/expenses/expenses', logo: 'module_settings/expense.png')
+# Feature.create!(name: 'Provident Fund', cost: 2500, description: 'Provident Fund is designed to process and provide all.', app_module: 'ProvidentFund', url: '/provident_fund/dashboard', logo: 'module_settings/provident_fund.png')
+# Feature.create!(name: 'Inventory', cost: 2500, description: 'Provident Fund is designed to process and provide all.', app_module: 'Inventory', url: '#', logo: 'module_settings/inventory_management.png')
+# Feature.create!(name: 'Bank', cost: 2500, description: 'Bank is designed to process and provide all.', app_module: 'Bank', url: '/bank/accounts', logo: 'module_settings/provident_fund.png')
+# Feature.create!(name: 'Daily Progress', cost: 2500, description: 'Daily Progress is designed to keep track of daily tasks of employees and provide all.', app_module: 'DailyProgress', url: '/daily_progress/dashboard', logo: 'module_settings/daily_progress.png')
 
 # CompanyFeature.delete_all
 #
@@ -78,6 +78,5 @@ Feature.create!(name: 'Daily Progress', cost: 2500, description: 'Daily Progress
 #   Community::Category.create!(title: feature.name, description: feature.description)
 # end
 
-# Feature.find_by_app_module('Expense').update_attributes(app_module: 'Expenses')
 
 AdminUser.create!(email: 'admin@mihisoft.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
