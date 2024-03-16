@@ -3,7 +3,7 @@
     <div class="header-content-item">
       <div class="overlay-item mt40"></div>
       <div class="text-item">
-        <h3>Human resource automation with <span style="color: #00a5df">M</span>HR.</h3>
+        <h3>Human resource Management with <span style="color: #00a5df">M</span>HR.</h3>
 
         <p>
           All-in-one option for any kind of organization.
@@ -21,7 +21,7 @@
     <div class="container service-container-wrapper" id="apps">
       <div class="row service-container">
         <div class="col-md-12 service-content">
-          <h2 class="title title-h2 title-botom-space text-center">Our Modules</h2>
+          <h2 class="title title-h2 title-botom-space text-center">Our Services</h2>
 
           <p class="description  text-center"><strong>MHR</strong>
             has absolutely everything for you to make your life comfortable with
@@ -34,6 +34,33 @@
       <div class="row component-wrapper">
 
         <div class="components col-md-12 mb20">
+          <div class="components-item col-md-4">
+            <!--<i class="fa fa-refresh"></i>-->
+            <%= link_to modules_attendance_path do %>
+              <%#= image_tag('module_settings/attendance.png', width: 45) %>
+              <%= image_tag('icon.svg', width: 45) %>
+              <h3 class="title title-h3">Attendance</h3>
+            <% end %>
+
+
+            <p class="text-left">
+              The attendance is an activity module for tracking time spent by Employees (or other users) in a
+              Company or in a related group of Institution. Online activity is<br>
+            </p>
+
+            <div class="btn-dual">
+              <%= link_to '#', class: 'btn-outline gray-btn mr10' do %>
+                <%#= link_to modules_attendance_path, class: 'btn-outline gray-btn mr10' do %>
+                LEARN MORE
+                <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+              <%#= link_to watch_video_path('attendance'), remote: true, class: 'btn-outline gray-btn' do %>
+              <%= link_to '#', remote: true, class: 'btn-outline gray-btn' do %>
+                WATCH VIDEO
+                <i class="fa fa-play-circle icon-extra-small"></i>
+              <% end %>
+            </div>
+          </div>
           <div class="components-item col-md-4">
             <%= link_to modules_employee_path do %>
                 <%= image_tag('icon.svg', width: 45) %>
@@ -83,36 +110,36 @@
               <% end %>
             </div>
           </div>
+        </div>
+
+        <div class="components col-md-12 mb20">
           <div class="components-item col-md-4">
             <!--<i class="fa fa-refresh"></i>-->
-            <%= link_to modules_attendance_path do %>
-                <%#= image_tag('module_settings/attendance.png', width: 45) %>
-                <%= image_tag('icon.svg', width: 45) %>
-                <h3 class="title title-h3">Attendance</h3>
+            <%= link_to modules_expense_path do %>
+              <%#= image_tag('module_settings/expense.png', width: 45) %>
+              <%= image_tag('icon.svg', width: 45) %>
+              <h3 class="title title-h3">Expense</h3>
             <% end %>
 
 
             <p class="text-left">
-              The attendance is an activity module for tracking time spent by Employees (or other users) in a
-              Company or in a related group of Institution. Online activity is<br>
+              If you enable the expense module feature, you can implement an approval process that will
+              allow you to monitor costs before your employees actually<br>
             </p>
 
             <div class="btn-dual">
+              <%#= link_to modules_expense_path, class: 'btn-outline gray-btn mr10' do %>
               <%= link_to '#', class: 'btn-outline gray-btn mr10' do %>
-              <%#= link_to modules_attendance_path, class: 'btn-outline gray-btn mr10' do %>
-                  LEARN MORE
-                  <i class="fa fa-play-circle icon-extra-small"></i>
+                LEARN MORE
+                <i class="fa fa-play-circle icon-extra-small"></i>
               <% end %>
-              <%#= link_to watch_video_path('attendance'), remote: true, class: 'btn-outline gray-btn' do %>
+              <%#= link_to watch_video_path('expense'), remote: true, class: 'btn-outline gray-btn' do %>
               <%= link_to '#', remote: true, class: 'btn-outline gray-btn' do %>
-                  WATCH VIDEO
-                  <i class="fa fa-play-circle icon-extra-small"></i>
+                WATCH VIDEO
+                <i class="fa fa-play-circle icon-extra-small"></i>
               <% end %>
             </div>
           </div>
-        </div>
-
-        <div class="components col-md-12 mb20">
           <div class="components-item col-md-4">
             <!--<i class="fa fa-fonticons"></i>-->
             <%= link_to modules_payroll_path do %>
@@ -158,33 +185,6 @@
                   <i class="fa fa-play-circle icon-extra-small"></i>
               <% end %>
               <%#= link_to watch_video_path('provident_fund'), remote: true, class: 'btn-outline gray-btn' do %>
-              <%= link_to '#', remote: true, class: 'btn-outline gray-btn' do %>
-                  WATCH VIDEO
-                  <i class="fa fa-play-circle icon-extra-small"></i>
-              <% end %>
-            </div>
-          </div>
-          <div class="components-item col-md-4">
-            <!--<i class="fa fa-refresh"></i>-->
-            <%= link_to modules_expense_path do %>
-                <%#= image_tag('module_settings/expense.png', width: 45) %>
-                <%= image_tag('icon.svg', width: 45) %>
-                <h3 class="title title-h3">Expense</h3>
-            <% end %>
-
-
-            <p class="text-left">
-              If you enable the expense module feature, you can implement an approval process that will
-              allow you to monitor costs before your employees actually<br>
-            </p>
-
-            <div class="btn-dual">
-              <%#= link_to modules_expense_path, class: 'btn-outline gray-btn mr10' do %>
-              <%= link_to '#', class: 'btn-outline gray-btn mr10' do %>
-                  LEARN MORE
-                  <i class="fa fa-play-circle icon-extra-small"></i>
-              <% end %>
-              <%#= link_to watch_video_path('expense'), remote: true, class: 'btn-outline gray-btn' do %>
               <%= link_to '#', remote: true, class: 'btn-outline gray-btn' do %>
                   WATCH VIDEO
                   <i class="fa fa-play-circle icon-extra-small"></i>
@@ -258,7 +258,7 @@
     <div class="contact-us-bg-opacity">
       <div class="contact-us-container container mt0 ">
         <div class="contact-us-row row">
-          <h2 class="title title-h2 text-center">Send us a quote</h2>
+          <h2 class="title title-h2 text-center">Contact us</h2>
 
           <div class="form-wrapper clearfix">
             <!--send us a quote section-->

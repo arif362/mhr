@@ -5,18 +5,18 @@
     <div class="reg-wrap-header">
       <%= render 'shared/account_progress_bar', step_value: 0 %>
 
-      <h4 class="">
+      <h4 class="" style="font-size: 13px">
         To create your Company account provide your personal and company's profile information. This information
         can be changed at anytime once your Company account is activated.
       </h4>
 
     </div>
 
-    <div class="reg-form-wrap">
+    <div class="reg-form-wrap" >
       <%= form_for(resource, as: resource_name,html: { id: 'company-registration' }) do |f| %>
           <div class="reg-form-column col-md-12">
-            <div class="your-profile-container">
-              <h3 class="text-center mt0">Your Profile</h3>
+            <div class="your-profile-container" style="border: 2px solid cadetblue;margin-top: 12px">
+              <h3 class="text-center mt0">Profile Info</h3>
 
               <div class="row your-profile-row">
                 <div class="col-md-6 pl0 your-profile-media-col">

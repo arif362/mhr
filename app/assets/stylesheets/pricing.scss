@@ -10,9 +10,9 @@ $accent_hover: darkslategray;
 #pp {
   .pricing {
     border-radius: 5px;
-    background: $accent;
-    padding: 40px 0 20px;
-    color: #fff;
+    //background: $accent;
+    //padding: 40px 0 20px;
+    //color: #fff;
     -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .3);
     -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .3);
     box-shadow: 0 0 3px rgba(0, 0, 0, .3);
@@ -34,14 +34,14 @@ $accent_hover: darkslategray;
       }
     }
     & .title {
-      background: $accent_hover;
-      margin: 40px 0 0;
+      //background: $accent_hover;
+      //margin: 40px 0 0;
       padding: 10px;
       font-size: 18px;
       text-align: center;
       text-transform: uppercase;
       font-weight: 700;
-      color: #ffffff;
+      //color: #ffffff;
     }
     & .content {
       //display: none;
@@ -82,6 +82,6 @@ $accent_hover: darkslategray;
         }
       }
     }
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
   }
 }

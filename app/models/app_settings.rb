@@ -4,9 +4,9 @@ class AppSettings
   MONTHS_SHORT_NAME = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
 
   REGISTRATION_PROGRESS = {
-      create_account: 'Create Account',
-      company_profile: 'Company Profile',
-      select_module: 'Select Module',
+      create_account: 'User Info',
+      company_profile: 'Company Info',
+      select_module: 'Select Services',
       # finalize: 'Finalize'
   }
 

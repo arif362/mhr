@@ -131,20 +131,21 @@
         <ul class="toggle-menu-hide">
           <li>
             <%= link_to company_registration_path do %>
-                Registration
-            <% end %>
-          </li>
-          <li>
-            <%= link_to '' do %>
-                Tour
+                Get Start
             <% end %>
           </li>
           <%= render 'shared/about_us' %>
           <li>
-            <%= link_to pricing_path do %>
-                Apps
+            <%= link_to "#{root_url }#contact_us" do %>
+              Contact us
             <% end %>
           </li>
+          <li>
+            <%= link_to pricing_path do %>
+                Services
+            <% end %>
+          </li>
+
           <li>
             <%= link_to user_login_path do %>
                 Login

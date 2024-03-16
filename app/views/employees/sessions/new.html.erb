@@ -1,9 +1,10 @@
 <div class="clearfix body-wrapper mt80 min-height-viewport-80">
   <div class="col-md-12">
-    <div class="bg-box sign-in-box clearfix">
-      <div class="circle-logo">
-        <i class="fa fa-user fa-5x"></i>
-      </div>
+    <div class="bg-box sign-in-box clearfix" style="border: 2px solid cadetblue">
+      <h3 style="text-align: center"> Login Info</h3>
+<!--      <div class="circle-logo">-->
+<!--        <i class="fa fa-user fa-5x"></i>-->
+<!--      </div>-->
       <div class="col-md-12 signin-inputs-wrapper clearfix">
         <!--<h1 class="sign-in-title">Sign In</h1>-->
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-vertical', role:'form'}) do |f| %>

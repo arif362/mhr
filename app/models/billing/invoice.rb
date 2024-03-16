@@ -53,6 +53,8 @@
 #
 module Billing
   class Invoice < ActiveRecord::Base
+    self.table_name = 'billing_invoices'
+
     # include ::OSB
     DISCOUNT_TYPE = %w(% FLAT)
     include DateFormats

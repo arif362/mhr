@@ -70,9 +70,12 @@ $ph-letter-spacing: 1px;
 
 /* Contact Us From Design */
 .contact-us-wrapper {
-  background: image-url("map-image.png") no-repeat;
+  background-image: image-url("m_4.png");
+  background-repeat: no-repeat;
   background-size: cover;
-  background-position: center center;
+  //background: image-url("map-image.png") no-repeat;
+  //background-size: cover;
+  //background-position: center center;
   background-color: #222;
   //border: 8px solid #fff;
   .contact-us-bg-opacity {

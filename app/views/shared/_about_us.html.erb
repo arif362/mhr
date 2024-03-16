@@ -5,19 +5,34 @@
 
   <ul class="top-menu-dropdown-content last-dropdown">
     <li>
-      <%= link_to community_posts_path do %>
-          Blog
-      <% end %>
-    </li>
-    <li>
-      <%= link_to modules_employee_path do %>
-          Resources
+      <%= link_to "#{root_url }#contact_us" do %>
+        Who we are
       <% end %>
     </li>
     <li>
       <%= link_to "#{root_url }#contact_us" do %>
-          Contact us
+        What we do
       <% end %>
     </li>
+    <li>
+      <%= link_to "#{root_url }#contact_us" do %>
+        How we do
+      <% end %>
+    </li>
+<!--    <li>-->
+      <%#= link_to community_posts_path do %>
+<!--          Blog-->
+      <%# end %>
+<!--    </li>-->
+<!--    <li>-->
+      <%#= link_to modules_employee_path do %>
+<!--          Resources-->
+      <%# end %>
+<!--    </li>-->
+<!--    <li>-->
+      <%#= link_to "#{root_url }#contact_us" do %>
+<!--          Contact us-->
+      <%# end %>
+<!--    </li>-->
   </ul>
 </li>
